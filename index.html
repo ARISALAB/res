@@ -183,8 +183,7 @@
             <span class="pill">Σύνολο ατόμων: <span id="totalGuests" class="mono"></span></span>
           </div>
           <div class="inline">
-                    <button class="btn secondary" id="exportCsvBtn" title="Εξαγωγή κρατήσεων σε CSV">📤 Εξαγωγή CSV</button>
-
+            <button class="btn secondary" id="exportCsvBtn" title="Εξαγωγή κρατήσεων σε CSV">📤 Εξαγωγή CSV</button>
             <button id="resetAllBtn" class="btn secondary">🗑️ Διαγραφή Όλων</button>
           </div>
         </div>
@@ -249,7 +248,6 @@
       }catch(err){ console.error('Supabase insert error', err); return { ok:false, error:err } }
     }
     
-    // ΤΡΟΠΟΠΟΙΗΜΕΝΗ ΣΥΝΑΡΤΗΣΗ ΓΙΑ ΑΝΑΚΤΗΣΗ ΑΝΑ ΗΜΕΡΟΜΗΝΙΑ
     async function supaFetchReservations(date = null){
         if(!supa) return [];
         try{
@@ -395,14 +393,11 @@
         notes: (data.notes||'').trim(), createdAt: new Date().toISOString()
       };
 
-      // 1) Αποθήκευση τοπικά
       db.add(rec);
 
-      // 2) Προαιρετικά: Supabase
       const supaRes = await supaInsertReservation(rec);
       if(supaRes?.ok){ toast('Αποθηκεύτηκε στη Supabase ✔'); }
 
-      // 3) Προαιρετικά: Netlify Forms
       try{ await fetch('/', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: new URLSearchParams({ 'form-name':'reservation', ...data }).toString() }); }catch{}
 
       form.reset(); initForm(); toast('Η κράτηση καταχωρήθηκε ✔');
@@ -416,12 +411,10 @@
       const tbody = $('#adminTable tbody');
       const adminDateInput = $('#adminDate');
       
-      // Ορίζει την προεπιλεγμένη ημερομηνία στην τρέχουσα ημέρα αν είναι κενή
       if (!adminDateInput.value) {
         adminDateInput.value = new Date().toISOString().split('T')[0];
       }
       
-      // ΝΕΟ: Ανάκτηση δεδομένων για την επιλεγμένη ημερομηνία
       const selectedDate = adminDateInput.value;
       const list = await supaFetchReservations(selectedDate);
       
@@ -465,18 +458,15 @@
         } 
       };
       
-      // Ανοίγει το modal μόνο αν δεν είναι ήδη ανοιχτό.
       if(!modal.open) {
           modal.showModal();
       }
     }
 
-    // ΠΡΟΣΘΗΚΗ: Listener για το πεδίο ημερομηνίας στο admin modal
     $('#adminDate').addEventListener('change', () => {
       openAdmin();
     });
 
-    // Εξαγωγή CSV
     $('#exportCsvBtn').addEventListener('click', async ()=>{
       const list = await supaFetchReservations();
       if(!list.length){ toast('Δεν υπάρχουν κρατήσεις για εξαγωγή', 'warn'); return; }
@@ -486,15 +476,11 @@
       const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `reservations_${new Date().toISOString().slice(0,10)}.csv`; a.click(); URL.revokeObjectURL(url);
     });
 
-    // Συντομεύσεις
     document.addEventListener('keydown', (e)=>{ if(e.shiftKey && (e.key === 'A' || e.key === 'α' || e.key === 'Α')){ $('#adminBtn').click(); } });
 
-    // Ζωντανές ενημερώσεις διαθεσιμότητας
     ['change','input'].forEach(evt=>{ $('#date').addEventListener(evt, ()=>{ updateSlotStates(); }); $('#guests').addEventListener(evt, ()=>{ updateSlotStates(); }); });
 
-    // Init
     initForm(); updateSlotStates();
   </script>
 </body>
-</html>   
-
+</html>
