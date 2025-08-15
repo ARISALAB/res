@@ -398,7 +398,36 @@
     // Init
     initForm(); updateSlotStates();
   </script>
+  
+<script>
+  document.getElementById('reservationForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const reservationData = {
+      name: document.getElementById('name').value,
+      date: document.getElementById('date').value,
+      time: document.getElementById('time').value,
+      guests: parseInt(document.getElementById('guests').value, 10)
+    };
+
+    const res = await fetch('/.netlify/functions/add-reservation', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(reservationData)
+    });
+
+    const result = await res.json();
+    if (result.success) {
+      alert('Η κράτηση καταχωρήθηκε επιτυχώς!');
+      document.getElementById('reservationForm').reset();
+    } else {
+      alert('Σφάλμα: ' + result.error);
+    }
+  });
+</script>
+
 </body>
 </html>
    
+
 
