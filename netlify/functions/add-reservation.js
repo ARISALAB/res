@@ -14,7 +14,7 @@ exports.handler = async (event) => {
   try {
     const data = JSON.parse(event.body);
 
-    // 1️⃣ Αποθήκευση στο Supabase
+
     const { error } = await supabase
       .from('reservations')
       .insert([{
@@ -30,7 +30,7 @@ exports.handler = async (event) => {
       return { statusCode: 500, body: JSON.stringify({ message: 'Database insert error' }) };
     }
 
-    // 2️⃣ Αποστολή email
+    
     let transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
