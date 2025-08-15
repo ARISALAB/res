@@ -4,7 +4,408 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Κρατήσεις Εστιατορίου</title>
-  <meta name="description" content="Ελαφριά εφαρμογή κρατήσεων για εστιατόριο (HTML/CSS/JS). Έτοιμη για GitHub & Netlify."/>
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Κρατήσεις – Ο Κήπος της Πανδρόσου</title>
+  <meta name="description" content="Single‑file εφαρμογή κρατήσεων για τον Κήπο της Πανδρόσου (Pandrosou Garden). Έτοιμη για GitHub & Netlify, με Admin PIN και (προαιρετικά) Supabase."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg:#0b0f16; --card:#111827; --muted:#9ca3af; --text:#e5e7eb; --brand:#22d3ee; --brand-2:#7c3aed; --ok:#10b981; --warn:#f59e0b; --err:#ef4444; --shadow:0 10px 30px rgba(0,0,0,.35); --radius-xl:20px; }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial; margin:0; color:var(--text);
+      background: radial-gradient(1200px 600px at 80% -100px, rgba(124,58,237,.25), transparent 60%),
+                  radial-gradient(900px 500px at -20% -120px, rgba(34,211,238,.20), transparent 60%), var(--bg);
+    }
+    a{color:var(--brand)}
+    .container{max-width:1100px;margin:0 auto;padding:24px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:10px 0 24px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--brand),var(--brand-2));box-shadow:var(--shadow)}
+    h1{font-size:clamp(22px,3vw,32px);margin:0}
+    .sub{color:var(--muted);margin-top:4px;font-size:14px}
+
+    .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:24px}
+    @media (max-width:900px){.grid{grid-template-columns:1fr}}
+
+    .card{background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));
+      border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-xl);padding:20px;box-shadow:var(--shadow);backdrop-filter:blur(6px)}
+    .card h2{margin:0 0 14px;font-size:20px}
+
+    form .row{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    @media (max-width:640px){form .row{grid-template-columns:1fr}}
+
+    label{display:block;font-size:12px;color:var(--muted);margin:8px 0 6px}
+    input,select,textarea{width:100%;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.02);color:var(--text);padding:12px;border-radius:12px;outline:none}
+    textarea{min-height:92px;resize:vertical}
+    input:focus,select:focus,textarea:focus{border-color:var(--brand)}
+
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:999px;background:linear-gradient(135deg,var(--brand),var(--brand-2));border:none;color:white;font-weight:700;cursor:pointer;box-shadow:var(--shadow)}
+    .btn.secondary{background:none;border:1px dashed rgba(255,255,255,.2);color:var(--text);font-weight:600}
+    .btn:disabled{opacity:.6;cursor:not-allowed}
+
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);font-size:12px;color:var(--muted)}
+    .inline{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+
+    .slots{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px}
+    @media (max-width:640px){.slots{grid-template-columns:repeat(2,1fr)}}
+    .slot{padding:10px;text-align:center;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.02);cursor:pointer;user-select:none}
+    .slot.disabled{opacity:.35;cursor:not-allowed;text-decoration:line-through}
+    .slot.active{outline:2px solid var(--brand);background:rgba(34,211,238,.12)}
+
+    .flex{display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .hint{font-size:12px;color:var(--muted)}
+
+    table{width:100%;border-collapse:collapse}
+    th,td{text-align:left;padding:10px;border-bottom:1px solid rgba(255,255,255,.08)}
+    tr:hover td{background:rgba(255,255,255,.02)}
+
+    .empty{text-align:center;padding:24px;color:var(--muted)}
+    .ok{color:var(--ok)}.warn{color:var(--warn)}.err{color:var(--err)}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
+
+    footer{margin:26px 0;text-align:center;color:var(--muted);font-size:12px}
+    .kbd{font-size:12px;padding:2px 6px;border-radius:6px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12)}
+
+    .welcome p{margin:.6em 0;color:#d1d5db}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo"></div>
+        <div>
+          <h1>Σύστημα Κρατήσεων</h1>
+          <div class="sub">Ο Κήπος της Πανδρόσου · Pandrosou Garden</div>
+        </div>
+      </div>
+      <div class="inline">
+        <span class="pill">Κατάσταση: <span id="statusDot" class="ok">online</span></span>
+        <button class="btn secondary" id="exportCsvBtn" title="Εξαγωγή κρατήσεων σε CSV">📤 Εξαγωγή CSV</button>
+        <button class="btn secondary" id="adminBtn" title="Διαχειριστικό">🔐 Διαχειριστής</button>
+      </div>
+    </header>
+
+    <div class="grid">
+      <!-- ΑΡΙΣΤΕΡΑ: Φόρμα Κράτησης -->
+      <section class="card">
+        <h2>Κάνε Κράτηση</h2>
+        <form id="bookingForm" name="reservation" data-netlify="true">
+          <input type="hidden" name="form-name" value="reservation" />
+
+          <div class="row">
+            <div>
+              <label for="date">Ημερομηνία</label>
+              <input type="date" id="date" name="date" required />
+            </div>
+            <div>
+              <label for="time">Ώρα</label>
+              <select id="time" name="time" required></select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="guests">Άτομα</label>
+              <select id="guests" name="guests" required>
+                <option value="">Επιλογή</option>
+              </select>
+            </div>
+            <div>
+              <label for="name">Ονοματεπώνυμο</label>
+              <input type="text" id="name" name="name" placeholder="Π.χ. Γιάννης Παπαδόπουλος" required />
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="phone">Τηλέφωνο</label>
+              <input type="tel" id="phone" name="phone" placeholder="69XXXXXXXX" pattern="^(\+\d{1,3}\s?)?\d{10}$" required />
+            </div>
+            <div>
+              <label for="email">Email (προαιρετικό)</label>
+              <input type="email" id="email" name="email" placeholder="you@example.com" />
+            </div>
+          </div>
+
+          <div>
+            <label for="notes">Σχόλια</label>
+            <textarea id="notes" name="notes" placeholder="Αλλεργίες, παιδικό καρεκλάκι, ειδική περίσταση…"></textarea>
+          </div>
+
+          <div class="inline" style="margin-top:12px">
+            <button class="btn" type="submit">🗓️ Καταχώρηση Κράτησης</button>
+            <span class="hint">Με την υποβολή, η κράτηση αποθηκεύεται τοπικά και (προαιρετικά) στη Supabase/Netlify Forms.</span>
+          </div>
+        </form>
+
+        <div class="inline" style="margin-top:14px">
+          <span class="pill">Ώρες λειτουργίας: <span id="hoursLabel" class="mono"></span></span>
+          <span class="pill">Διαθέσιμες θέσεις/ώρα: <span id="capacityLabel" class="mono"></span></span>
+        </div>
+
+        <div style="margin-top:18px">
+          <label>Γρήγορη επιλογή ώρας</label>
+          <div class="slots" id="quickSlots"></div>
+        </div>
+      </section>
+
+      <!-- ΔΕΞΙΑ: Καλωσόρισμα / Ιστορία -->
+      <aside class="card welcome">
+        <h2>Καλώς ήρθατε!</h2>
+        <p>
+          Στον «Κήπο της Πανδρόσου» γιορτάζουμε την αθηναϊκή φιλοξενία μέσα σε έναν καταπράσινο χώρο, λίγα βήματα από την καρδιά της Πλάκας. 
+          Από μια μικρή αυλή γειτονιάς εξελιχθήκαμε σε στέκι για φίλους, οικογένειες και ταξιδιώτες που αναζητούν απλές, καθαρές 
+          γεύσεις με άρωμα Μεσογείου. Οι συνταγές μας τιμούν τα εποχικά υλικά και τον σεβασμό στην πρώτη ύλη. Καθίστε αναπαυτικά· 
+          ο κήπος θα φροντίσει τα υπόλοιπα.
+        </p>
+        <h2 style="margin-top:14px">Welcome to Pandrosou Garden</h2>
+        <p>
+          A hidden green courtyard in the heart of Plaka, Athens. What started as a tiny neighborhood yard became a home for friends, 
+          families and travelers seeking honest Mediterranean flavors. Our menu follows the seasons and celebrates fresh local produce. 
+          Relax and enjoy—let the garden do the magic.
+        </p>
+      </aside>
+    </div>
+
+    <!-- Διαχειριστικό (κρυφό για πελάτες, ανοίγει με PIN) -->
+    <dialog id="adminModal" style="border:none; border-radius: 14px; background: var(--card); color: var(--text); width:min(720px, 96vw);">
+      <form method="dialog" style="padding: 18px 18px 0">
+        <div class="flex">
+          <h3 style="margin: 0">Πίνακας Διαχείρισης</h3>
+          <button class="btn secondary">✖ Κλείσιμο</button>
+        </div>
+      </form>
+      <div style="padding: 0 18px 18px">
+        <div class="inline" style="justify-content:space-between">
+          <div class="inline">
+            <span class="pill">Σύνολο κρατήσεων: <span id="totalCount" class="mono"></span></span>
+            <span class="pill">Σύνολο ατόμων: <span id="totalGuests" class="mono"></span></span>
+          </div>
+          <div class="inline">
+            <button id="resetAllBtn" class="btn secondary">🗑️ Διαγραφή Όλων</button>
+          </div>
+        </div>
+
+        <div style="margin-top: 12px; max-height: 50vh; overflow:auto">
+          <table id="adminTable">
+            <thead>
+              <tr>
+                <th>Ημερομηνία</th><th>Ώρα</th><th>Όνομα</th><th>Άτομα</th><th>Τηλέφωνο</th><th>Email</th><th>Σχόλια</th><th></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <div id="adminEmpty" class="empty">Δεν υπάρχουν καταχωρημένες κρατήσεις.</div>
+        </div>
+      </div>
+    </dialog>
+
+    <footer>
+      <div>Tip: Άνοιγμα Διαχειριστικού με <span class="kbd">Shift</span> + <span class="kbd">A</span>. PIN: <span class="mono">2468</span></div>
+    </footer>
+  </div>
+
+  <!-- Supabase (προαιρετικό) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    // ---- ΡΥΘΜΙΣΕΙΣ ----
+    const SETTINGS = {
+      openingHour: 12, closingHour: 23, slotMinutes: 30,
+      capacityPerSlot: 40, maxGuestsPerReservation: 12,
+      adminPin: "2468"
+    };
+
+    // Συμπλήρωσε για Supabase & θέσε enabled:true όταν είσαι έτοιμος
+    const SUPABASE = {
+      enabled: true,
+      url: "https://https://ycbsivdjurcnzijdyhwi.supabase.co",
+      anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InljYnNpdmRqdXJjbnppamR5aHdpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUyMzcxOTQsImV4cCI6MjA3MDgxMzE5NH0.IDrqsdjWjOiwVem57k4q2-g3krpBMGUuF_7yVsE1ZmA"
+    };
+
+    // ---- SUPABASE INIT ----
+    const supa = (window.supabase && SUPABASE.enabled && SUPABASE.url && SUPABASE.anonKey)
+      ? window.supabase.createClient(SUPABASE.url, SUPABASE.anonKey)
+      : null;
+
+    async function supaInsertReservation(rec){
+      if(!supa) return { ok:false, skipped:true };
+      try{
+        const { error } = await supa.from('reservations').insert({
+          id: rec.id,
+          date: rec.date,
+          time: rec.time,
+          guests: rec.guests,
+          name: rec.name,
+          phone: rec.phone,
+          email: rec.email,
+          notes: rec.notes,
+          created_at: rec.createdAt
+        });
+        if(error) throw error;
+        return { ok:true };
+      }catch(err){ console.error('Supabase insert error', err); return { ok:false, error:err } }
+    }
+
+    // ---- ΒΟΗΘΗΤΙΚΑ ----
+    const pad = n => String(n).padStart(2, '0');
+    function* timeRange(startHour, endHour, stepMinutes){
+      let d = new Date(); d.setHours(startHour,0,0,0);
+      const end = new Date(); end.setHours(endHour,0,0,0);
+      while(d <= end){ yield `${pad(d.getHours())}:${pad(d.getMinutes())}`; d.setMinutes(d.getMinutes()+stepMinutes); }
+    }
+    const $ = s => document.querySelector(s);
+    const $$ = s => Array.from(document.querySelectorAll(s));
+
+    function toast(msg, type = 'info'){
+      const div = document.createElement('div');
+      div.textContent = msg;
+      div.style.cssText = `position: fixed; inset: auto 16px 16px auto; background: ${type==='error'?'#ef4444':type==='warn'?'#f59e0b':'#10b981'}; color:white; padding:10px 14px; border-radius: 10px; box-shadow: var(--shadow); z-index:9999;`;
+      document.body.appendChild(div);
+      setTimeout(()=>div.remove(), 2200);
+    }
+
+    // ---- ΑΠΟΘΗΚΕΥΣΗ (LocalStorage) ----
+    const LS_KEY = 'restaurant_reservations_v1';
+    const db = {
+      all(){ return JSON.parse(localStorage.getItem(LS_KEY) || '[]'); },
+      save(list){ localStorage.setItem(LS_KEY, JSON.stringify(list)); },
+      add(rec){ const l = db.all(); l.push(rec); db.save(l); },
+      clear(){ localStorage.removeItem(LS_KEY); }
+    };
+
+    // ---- ΔΙΑΘΕΣΙΜΟΤΗΤΑ ----
+    function getCapacityUsed(date, time){
+      const list = db.all().filter(r => r.date === date && r.time === time);
+      return list.reduce((s, r)=> s + Number(r.guests), 0);
+    }
+    function isSlotAvailable(date, time, guests){
+      const used = getCapacityUsed(date, time);
+      return used + Number(guests) <= SETTINGS.capacityPerSlot;
+    }
+
+    // ---- UI INIT ----
+    function initForm(){
+      const date = $('#date');
+      const today = new Date();
+      date.value = today.toISOString().split('T')[0];
+      date.min = today.toISOString().split('T')[0];
+
+      const timeSel = $('#time');
+      timeSel.innerHTML = '<option value="">Επιλογή</option>';
+      const slots = [];
+      for (const t of timeRange(SETTINGS.openingHour, SETTINGS.closingHour, SETTINGS.slotMinutes)) {
+        slots.push(t);
+        const opt = document.createElement('option'); opt.value = t; opt.textContent = t; timeSel.appendChild(opt);
+      }
+
+      const quick = $('#quickSlots');
+      quick.innerHTML = '';
+      slots.forEach(t => {
+        const b = document.createElement('div'); b.className = 'slot'; b.textContent = t;
+        b.addEventListener('click', ()=>{
+          if(b.classList.contains('disabled')) return;
+          $('#time').value = t; $$('.slot').forEach(x=>x.classList.remove('active')); b.classList.add('active');
+        });
+        quick.appendChild(b);
+      });
+
+      const g = $('#guests');
+      for(let i=1;i<=SETTINGS.maxGuestsPerReservation;i++){
+        const opt = document.createElement('option'); opt.value = String(i); opt.textContent = String(i); g.appendChild(opt);
+      }
+
+      $('#hoursLabel').textContent = `${pad(SETTINGS.openingHour)}:00 – ${pad(SETTINGS.closingHour)}:00 / ${SETTINGS.slotMinutes}'`;
+      $('#capacityLabel').textContent = SETTINGS.capacityPerSlot;
+
+      updateSlotStates();
+    }
+
+    function updateSlotStates(){
+      const date = $('#date').value; const guests = Number($('#guests').value || 1);
+      $$('#quickSlots .slot').forEach(el => { const t = el.textContent; el.classList.remove('disabled'); if(!isSlotAvailable(date, t, guests)) el.classList.add('disabled'); });
+    }
+
+    // ---- ΥΠΟΒΟΛΗ ΦΟΡΜΑΣ ----
+    $('#bookingForm').addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const form = e.currentTarget;
+      const data = Object.fromEntries(new FormData(form).entries());
+
+      if(!data.date || !data.time || !data.guests || !data.name || !data.phone){ toast('Συμπλήρωσε όλα τα υποχρεωτικά πεδία', 'error'); return; }
+      if(!isSlotAvailable(data.date, data.time, data.guests)){ toast('Το συγκεκριμένο slot δεν έχει διαθεσιμότητα', 'error'); return; }
+
+      const rec = {
+        id: crypto.randomUUID(), date: data.date, time: data.time, guests: Number(data.guests),
+        name: data.name.trim(), phone: data.phone.trim(), email: (data.email||'').trim(),
+        notes: (data.notes||'').trim(), createdAt: new Date().toISOString()
+      };
+
+      // 1) Αποθήκευση τοπικά
+      db.add(rec);
+
+      // 2) Προαιρετικά: Supabase
+      const supaRes = await supaInsertReservation(rec);
+      if(supaRes?.ok){ toast('Αποθηκεύτηκε στη Supabase ✔'); }
+
+      // 3) Προαιρετικά: Netlify Forms
+      try{ await fetch('/', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: new URLSearchParams({ 'form-name':'reservation', ...data }).toString() }); }catch{}
+
+      form.reset(); initForm(); toast('Η κράτηση καταχωρήθηκε ✔');
+    });
+
+    // ---- Admin ----
+    $('#adminBtn').addEventListener('click', ()=>{ const pin = prompt('PIN Διαχειριστή'); if(pin === SETTINGS.adminPin){ openAdmin(); } else if(pin){ toast('Λάθος PIN', 'error'); } });
+
+    function openAdmin(){
+      const modal = $('#adminModal'); const tbody = $('#adminTable tbody');
+      const list = db.all().sort((a,b)=> (a.date+a.time).localeCompare(b.date+b.time));
+      const totalGuests = list.reduce((s,r)=> s+Number(r.guests), 0);
+      $('#totalCount').textContent = list.length; $('#totalGuests').textContent = totalGuests;
+
+      tbody.innerHTML = '';
+      if(!list.length){ $('#adminEmpty').style.display = 'block'; } else { $('#adminEmpty').style.display = 'none'; }
+      list.forEach(rec =>{
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td class="mono">${rec.date}</td><td class="mono">${rec.time}</td><td>${rec.name}</td><td>${rec.guests}</td><td class="mono">${rec.phone}</td><td class="mono">${rec.email||'-'}</td><td>${rec.notes||''}</td><td><button class="btn secondary" data-remove="${rec.id}">Διαγραφή</button></td>`;
+        tbody.appendChild(tr);
+      });
+
+      tbody.querySelectorAll('[data-remove]').forEach(btn=> btn.addEventListener('click', ()=>{
+        const id = btn.getAttribute('data-remove'); const next = db.all().filter(r=> r.id!==id); db.save(next); toast('Διαγράφηκε', 'warn'); openAdmin();
+      }));
+
+      $('#resetAllBtn').onclick = () => { if(confirm('Οριστική διαγραφή όλων των κρατήσεων;')){ db.clear(); openAdmin(); toast('Μηδενίστηκαν όλα', 'warn'); } };
+      modal.showModal();
+    }
+
+    // Εξαγωγή CSV
+    $('#exportCsvBtn').addEventListener('click', ()=>{
+      const list = db.all(); if(!list.length){ toast('Δεν υπάρχουν κρατήσεις για εξαγωγή', 'warn'); return; }
+      const headers = ['id','date','time','guests','name','phone','email','notes','createdAt'];
+      const rows = [headers.join(',')].concat(list.map(o=> headers.map(h=>`"${String(o[h]??'').replaceAll('"','\"')}"`).join(',')));
+      const blob = new Blob(["\uFEFF" + rows.join('\n')], {type:'text/csv;charset=utf-8;'});
+      const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `reservations_${new Date().toISOString().slice(0,10)}.csv`; a.click(); URL.revokeObjectURL(url);
+    });
+
+    // Συντομεύσεις
+    document.addEventListener('keydown', (e)=>{ if(e.shiftKey && (e.key === 'A' || e.key === 'α' || e.key === 'Α')){ $('#adminBtn').click(); } });
+
+    // Ζωντανές ενημερώσεις διαθεσιμότητας
+    ['change','input'].forEach(evt=>{ $('#date').addEventListener(evt, ()=>{ updateSlotStates(); }); $('#guests').addEventListener(evt, ()=>{ updateSlotStates(); }); });
+
+    // Init
+    initForm(); updateSlotStates();
+  </script>
+</body>
+</html>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
@@ -500,4 +901,5 @@
     updateSlotStates();
   </script>
 </body>
+
 </html>
