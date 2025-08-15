@@ -11,6 +11,7 @@ export const handler = async (event) => {
   try {
     const reservation = JSON.parse(event.body);
 
+    // Δημιουργία Supabase client
     const supabase = createClient(
       process.env.SUPABASE_URL,
       process.env.SUPABASE_SERVICE_ROLE
@@ -33,7 +34,6 @@ export const handler = async (event) => {
     };
   }
 };
-      statusCode: 500,
       body: JSON.stringify({ error: err.message })
     };
   }
