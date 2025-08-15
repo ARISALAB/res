@@ -1,4 +1,13 @@
-"dependencies": {
-  "nodemailer": "^6.9.11",
-  "@supabase/supabase-js": "^2.39.7"
+{
+  "name": "pandrosou-garden",
+  "version": "1.0.0",
+  "description": "Pandrosou Garden Reservations",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.7",
+    "nodemailer": "^6.9.11"
+  }
 }
