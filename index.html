@@ -15,6 +15,7 @@
     body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial; margin:0; color:var(--text);
       background: radial-gradient(1200px 600px at 80% -100px, rgba(124,58,237,.25), transparent 60%),
               radial-gradient(900px 500px at -20% -120px, rgba(34,211,238,.20), transparent 60%), var(--bg);
+      background-attachment: fixed;
     }
     a{color:var(--brand)}
     .container{max-width:1100px;margin:0 auto;padding:24px}
@@ -25,7 +26,13 @@
     .sub{color:var(--muted);margin-top:4px;font-size:14px}
 
     .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:24px}
-    @media (max-width:900px){.grid{grid-template-columns:1fr}}
+    @media (max-width:900px){
+      .grid{
+        grid-template-columns:1fr;
+        display: flex;
+        flex-direction: column-reverse;
+      }
+    }
 
     .card{background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));
       border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-xl);padding:20px;box-shadow:var(--shadow);backdrop-filter:blur(6px)}
@@ -36,6 +43,7 @@
 
     label{display:block;font-size:12px;color:var(--muted);margin:8px 0 6px}
     input,select,textarea{width:100%;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.02);color:var(--text);padding:12px;border-radius:12px;outline:none}
+    option { color: #000; background-color: rgba(255,255,255,.95); }
     textarea{min-height:92px;resize:vertical}
     input:focus,select:focus,textarea:focus{border-color:var(--brand)}
 
@@ -71,99 +79,207 @@
 </head>
 <body>
   <div class="container">
-    <header>
-      <div class="brand">
-        <div class="logo"></div>
-        <div>
-          <h1>Σύστημα Κρατήσεων</h1>
-          <div class="sub">Ο Κήπος της Πανδρόσου · Pandrosou Garden</div>
-        </div>
-      </div>
-      <div class="inline">
-        <span class="pill">Κατάσταση: <span id="statusDot" class="ok">online</span></span>
-        <button class="btn secondary" id="adminBtn" title="Διαχειριστικό">🔐 Διαχειριστής</button>
-      </div>
-    </header>
-
-    <div class="grid">
-      <section class="card">
-        <h2>Κάνε Κράτηση</h2>
-        <form id="bookingForm" name="reservation" data-netlify="true">
-          <input type="hidden" name="form-name" value="reservation" />
-
-          <div class="row">
-            <div>
-              <label for="date">Ημερομηνία</label>
-              <input type="date" id="date" name="date" required />
-            </div>
-            <div>
-              <label for="time">Ώρα</label>
-              <select id="time" name="time" required></select>
-            </div>
-          </div>
-
-          <div class="row">
-            <div>
-              <label for="guests">Άτομα</label>
-              <select id="guests" name="guests" required>
-                <option value="">Επιλογή</option>
-              </select>
-            </div>
-            <div>
-              <label for="name">Ονοματεπώνυμο</label>
-              <input type="text" id="name" name="name" placeholder="Π.χ. Γιάννης Παπαδόπουλος" required />
-            </div>
-          </div>
-
-          <div class="row">
-            <div>
-              <label for="phone">Τηλέφωνο</label>
-              <input type="tel" id="phone" name="phone" placeholder="69XXXXXXXX" pattern="^(\+\d{1,3}\s?)?\d{10}$" required />
-            </div>
-            <div>
-              <label for="email">Email (προαιρετικό)</label>
-              <input type="email" id="email" name="email" placeholder="you@example.com" />
-            </div>
-          </div>
-
-          <div>
-            <label for="notes">Σχόλια</label>
-            <textarea id="notes" name="notes" placeholder="Αλλεργίες, παιδικό καρεκλάκι, ειδική περίσταση…"></textarea>
-          </div>
-
-          <div class="inline" style="margin-top:12px">
-            <button class="btn" type="submit">🗓️ Καταχώρηση Κράτησης</button>
-            <span class="hint">Με την υποβολή, η κράτηση αποθηκεύεται τοπικά και (προαιρετικά) στη Supabase/Netlify Forms.</span>
-          </div>
-        </form>
-
-        <div class="inline" style="margin-top:14px">
-          <span class="pill">Ώρες λειτουργίας: <span id="hoursLabel" class="mono"></span></span>
-          <span class="pill">Διαθέσιμες θέσεις/ώρα: <span id="capacityLabel" class="mono"></span></span>
-        </div>
-
-        <div style="margin-top:18px">
-          <label>Γρήγορη επιλογή ώρας</label>
-          <div class="slots" id="quickSlots"></div>
-        </div>
-      </section>
-
-      <aside class="card welcome">
-        <h2>Καλώς ήρθατε!</h2>
-        <p>
-          Στον «Κήπο της Πανδρόσου» γιορτάζουμε την αθηναϊκή φιλοξενία μέσα σε έναν καταπράσινο χώρο, λίγα βήματα από την καρδιά της Πλάκας. 
-          Από μια μικρή αυλή γειτονιάς εξελιχθήκαμε σε στέκι για φίλους, οικογένειες και ταξιδιώτες που αναζητούν απλές, καθαρές 
-          γεύσεις με άρωμα Μεσογείου. Οι συνταγές μας τιμούν τα εποχικά υλικά και τον σεβασμό στην πρώτη ύλη. Καθίστε αναπαυτικά· 
-          ο κήπος θα φροντίσει τα υπόλοιπα.
-        </p>
-        <h2 style="margin-top:14px">Welcome to Pandrosou Garden</h2>
-        <p>
-          A hidden green courtyard in the heart of Plaka, Athens. What started as a tiny neighborhood yard became a home for friends, 
-          families and travelers seeking honest Mediterranean flavors. Our menu follows the seasons and celebrates fresh local produce. 
-          Relax and enjoy—let the garden do the magic.
-        </p>
-      </aside>
+   <header>
+  <div class="brand">
+    <div class="logo"></div>
+    <div>
+      <h1 data-lang="title">Σύστημα Κρατήσεων</h1>
+      <div class="sub" data-lang="subtitle">Ο Κήπος της Πανδρόσου · Pandrosou Garden</div>
     </div>
+  </div>
+
+  <div class="inline">
+    <span class="pill">
+      <span data-lang="status">Κατάσταση</span>: 
+      <span id="statusDot" class="ok">online</span>
+    </span>
+
+    <button class="btn secondary" id="adminBtn" title="Διαχειριστικό">
+      🔐 <span data-lang="admin">Διαχειριστής</span>
+    </button>
+
+    <select id="langSwitcher" class="btn secondary" style="margin-left:12px">
+      <option value="el">🇬🇷 Ελληνικά</option>
+      <option value="en">🇬🇧 English</option>
+    </select>
+  </div>
+</header>
+
+<script>
+const translations = {
+  el: {
+    title: "Σύστημα Κρατήσεων",
+    subtitle: "Ο Κήπος της Πανδρόσου · Pandrosou Garden",
+    status: "Κατάσταση",
+    admin: "Διαχειριστής",
+    bookTable: "Κάνε Κράτηση",
+    date: "Ημερομηνία",
+    time: "Ώρα",
+    guests: "Άτομα",
+    name: "Ονοματεπώνυμο",
+    namePlaceholder: "Π.χ. Γιάννης Παπαδόπουλος",
+    phone: "Τηλέφωνο",
+    email: "Email (προαιρετικό)",
+    notes: "Σχόλια",
+    notesPlaceholder: "Αλλεργίες, παιδικό καρεκλάκι, ειδική περίσταση…",
+    selectOption: "Επιλογή",
+    submit: "🗓️ Καταχώρηση Κράτησης",
+    submitHint: "Με την υποβολή, η κράτηση αποθηκεύεται τοπικά και (προαιρετικά) στη Supabase/Netlify Forms.",
+    hours: "Ώρες λειτουργίας",
+    capacity: "Διαθέσιμες θέσεις/ώρα",
+    quick: "Γρήγορη επιλογή ώρας",
+    welcome: "Καλώς ήρθατε!",
+    welcomeText: "Σας καλωσορίζουμε σε έναν καταπράσινο κήπο, μια όαση ηρεμίας στην καρδιά της Πλάκας. Εδώ, γιορτάζουμε την αθηναϊκή φιλοξενία και σας προσφέρουμε απλές, αυθεντικές γεύσεις με άρωμα Μεσογείου. Οι συνταγές μας είναι μια ωδή στα εποχικά υλικά και τον σεβασμό στην πρώτη ύλη. Ελάτε να χαλαρώσετε - ο κήπος θα φροντίσει τα υπόλοιπα.",
+    welcomeEnTitle: "Welcome to Pandrosou Garden",
+    welcomeTextEn: "Welcome to our lush garden, a tranquil oasis nestled in the heart of Plaka, Athens. We celebrate Athenian hospitality by offering simple, authentic Mediterranean flavors. Our recipes are an ode to seasonal ingredients and a deep respect for quality. Come and relax; the garden will take care of the rest.",
+    adminPanel: "Πίνακας Διαχείρισης",
+    close: "✖ Κλείσιμο",
+    selectDate: "Επιλογή Ημερομηνίας:",
+    totalReservations: "Σύνολο κρατήσεων",
+    totalGuests: "Σύνολο ατόμων",
+    exportCsv: "📤 Εξαγωγή CSV",
+    deleteAll: "🗑️ Διαγραφή Όλων",
+    noReservations: "Δεν υπάρχουν καταχωρημένες κρατήσεις."
+  },
+  en: {
+    title: "Reservation System",
+    subtitle: "Pandrosou Garden",
+    status: "Status",
+    admin: "Admin",
+    bookTable: "Book a Table",
+    date: "Date",
+    time: "Time",
+    guests: "Guests",
+    name: "Full Name",
+    namePlaceholder: "e.g. John Smith",
+    phone: "Phone",
+    email: "Email (optional)",
+    notes: "Notes",
+    notesPlaceholder: "Allergies, high chair, special occasion…",
+    selectOption: "Select",
+    submit: "🗓️ Submit Reservation",
+    submitHint: "Your reservation will be stored locally and (optionally) in Supabase/Netlify Forms.",
+    hours: "Opening Hours",
+    capacity: "Available seats/hour",
+    quick: "Quick time selection",
+    welcome: "Welcome!",
+    welcomeText: "Welcome to our lush garden, a tranquil oasis nestled in the heart of Plaka, Athens. We celebrate Athenian hospitality by offering simple, authentic Mediterranean flavors. Our recipes are an ode to seasonal ingredients and a deep respect for quality. Come and relax; the garden will take care of the rest.",
+    welcomeEnTitle: "Welcome to Pandrosou Garden",
+    welcomeTextEn: "Welcome to our lush garden, a tranquil oasis nestled in the heart of Plaka, Athens. We celebrate Athenian hospitality by offering simple, authentic Mediterranean flavors. Our recipes are an ode to seasonal ingredients and a deep respect for quality. Come and relax; the garden will take care of the rest.",
+    adminPanel: "Admin Panel",
+    close: "✖ Close",
+    selectDate: "Select Date:",
+    totalReservations: "Total reservations",
+    totalGuests: "Total guests",
+    exportCsv: "📤 Export CSV",
+    deleteAll: "🗑️ Delete All",
+    noReservations: "No reservations found."
+  }
+};
+
+document.getElementById("langSwitcher").addEventListener("change", (e) => {
+  const lang = e.target.value;
+  document.querySelectorAll("[data-lang]").forEach(el => {
+    const key = el.getAttribute("data-lang");
+    el.textContent = translations[lang][key];
+  });
+  // Νέα λειτουργία για να αλλάζει το placeholder
+  const notesElement = document.getElementById("notes");
+  if (notesElement) {
+    notesElement.placeholder = translations[lang].notesPlaceholder;
+  }
+  const nameElement = document.getElementById("name");
+  if (nameElement) {
+    nameElement.placeholder = translations[lang].namePlaceholder;
+  }
+});
+
+// προεπιλογή Ελληνικά
+document.getElementById("langSwitcher").value = "el";
+</script>
+
+<div class="grid">
+  <section class="card">
+    <h2 data-lang="bookTable">Κάνε Κράτηση</h2>
+    <form id="bookingForm" name="reservation" data-netlify="true">
+      <input type="hidden" name="form-name" value="reservation" />
+
+      <div class="row">
+        <div>
+          <label for="date" data-lang="date">Ημερομηνία</label>
+          <input type="date" id="date" name="date" required />
+        </div>
+        <div>
+          <label for="time" data-lang="time">Ώρα</label>
+          <select id="time" name="time" required>
+            <option value="" data-lang="selectOption">Επιλογή</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label for="guests" data-lang="guests">Άτομα</label>
+          <select id="guests" name="guests" required>
+            <option value="" data-lang="selectOption">Επιλογή</option>
+          </select>
+        </div>
+        <div>
+          <label for="name" data-lang="name">Ονοματεπώνυμο</label>
+          <input type="text" id="name" name="name" placeholder="Π.χ. Γιάννης Παπαδόπουλος" required />
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label for="phone" data-lang="phone">Τηλέφωνο</label>
+          <input type="tel" id="phone" name="phone" placeholder="69XXXXXXXX" pattern="^(\+\d{1,3}\s?)?\d{10}$" required />
+        </div>
+        <div>
+          <label for="email" data-lang="email">Email (προαιρετικό)</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" />
+        </div>
+      </div>
+
+      <div>
+        <label for="notes" data-lang="notes">Σχόλια</label>
+        <textarea id="notes" name="notes" placeholder="Αλλεργίες, παιδικό καρεκλάκι, ειδική περίσταση…"></textarea>
+      </div>
+
+      <div class="inline" style="margin-top:12px">
+        <button class="btn" type="submit" data-lang="submit">🗓️ Καταχώρηση Κράτησης</button>
+        <span class="hint" data-lang="submitHint">
+          Με την υποβολή, η κράτηση αποθηκεύεται τοπικά και (προαιρετικά) στη Supabase/Netlify Forms.
+        </span>
+      </div>
+    </form>
+
+    <div class="inline" style="margin-top:14px">
+      <span class="pill">
+        <span data-lang="hours">Ώρες λειτουργίας</span>:
+        <span id="hoursLabel" class="mono"></span>
+      </span>
+      <span class="pill">
+        <span data-lang="capacity">Διαθέσιμες θέσεις/ώρα</span>:
+        <span id="capacityLabel" class="mono"></span>
+      </span>
+    </div>
+
+    <div style="margin-top:18px">
+      <label data-lang="quick">Γρήγορη επιλογή ώρας</label>
+      <div class="slots" id="quickSlots"></div>
+    </div>
+  </section>
+
+  <aside class="card welcome">
+    <h2 data-lang="welcome">Καλώς ήρθατε!</h2>
+    <p data-lang="welcomeText">
+      Σας καλωσορίζουμε σε έναν καταπράσινο κήπο, μια όαση ηρεμίας στην καρδιά της Πλάκας. Εδώ, γιορτάζουμε την αθηναϊκή φιλοξενία και σας προσφέρουμε απλές, αυθεντικές γεύσεις με άρωμα Μεσογείου. Οι συνταγές μας είναι μια ωδή στα εποχικά υλικά και τον σεβασμό στην πρώτη ύλη. Ελάτε να χαλαρώσετε - ο κήπος θα φροντίσει τα υπόλοιπα.
+    </p>
+    
+  </aside>
+</div>
+
 
     <dialog id="adminModal" style="border:none; border-radius: 14px; background: var(--card); color: var(--text); width:min(720px, 96vw);">
       <form method="dialog" style="padding: 18px 18px 0">
@@ -338,7 +454,7 @@
       date.min = today.toISOString().split('T')[0];
 
       const timeSel = $('#time');
-      timeSel.innerHTML = '<option value="">Επιλογή</option>';
+      timeSel.innerHTML = '<option value="" data-lang="selectOption">Επιλογή</option>';
       const slots = [];
       for (const t of timeRange(SETTINGS.openingHour, SETTINGS.closingHour, SETTINGS.slotMinutes)) {
         slots.push(t);
@@ -516,7 +632,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (err) {
       console.error('Reservation error:', err);
       alert('Προέκυψε σφάλμα κατά την καταχώρηση.');
-    }
+      }
   });
 });
 </script>
@@ -524,4 +640,3 @@ document.addEventListener('DOMContentLoaded', () => {
   
 </body>
 </html>
-
