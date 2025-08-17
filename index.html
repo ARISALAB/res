@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-   :root {
+  :root {
   --bg:#0b0f16;
   --card:#111827;
   --muted:#9ca3af;
@@ -65,6 +65,23 @@ header .inline > *{
   display:flex;
   align-items:center;
   justify-content:center;
+}
+
+/* Στυλ για language switcher ώστε να ευθυγραμμίζεται */
+#langSwitcher {
+  border:1px dashed rgba(255,255,255,.25);
+  background:rgba(255,255,255,.02);
+  color:var(--text);
+  font-weight:600;
+  border-radius:999px;
+  padding:0 14px;
+  height:42px;
+  cursor:pointer;
+  appearance:none;
+  text-align:center;
+}
+#langSwitcher option {
+  color:#000;
 }
 
 /* κάρτες */
@@ -153,10 +170,37 @@ footer{margin:26px 0;text-align:center;color:var(--muted);font-size:12px}
 .welcome p{margin:.6em 0;color:#d1d5db}
 
 /* responsive header */
-@media (max-width: 640px) {
-  header{flex-direction:column;align-items:stretch;gap:16px}
-  header .inline{flex-direction:column;align-items:stretch;gap:10px;width:100%}
-  header .inline > *{width:100%}
+@media (max-width: 900px) {
+  header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+  header .inline {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
+  }
+  header .inline > * {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* submit button κάτω από hint */
+.form-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 14px;
+}
+.form-actions .btn {
+  align-self: flex-start; /* κουμπί μόνο του αριστερά */
+}
+.form-actions .hint {
+  font-size: 12px;
+  color: var(--muted);
 }
 
   </style>
@@ -182,10 +226,10 @@ footer{margin:26px 0;text-align:center;color:var(--muted);font-size:12px}
       🔐 <span data-lang="admin">Διαχειριστής</span>
     </button>
 
-    <select id="langSwitcher" class="btn secondary" style="margin-left:12px">
-      <option value="el">🇬🇷 Ελληνικά</option>
-      <option value="en">🇬🇧 English</option>
-    </select>
+   <select id="langSwitcher" class="btn secondary">
+      <option value="el">🇬🇷 Ελληνικά</option>
+      <option value="en">🇬🇧 English</option>
+    </select>
   </div>
 </header>
 
@@ -223,7 +267,9 @@ const translations = {
     totalGuests: "Σύνολο ατόμων",
     exportCsv: "📤 Εξαγωγή CSV",
     deleteAll: "🗑️ Διαγραφή Όλων",
-    noReservations: "Δεν υπάρχουν καταχωρημένες κρατήσεις."
+    noReservations: "Δεν υπάρχουν καταχωρημένες κρατήσεις.",
+      footerLine1: "Ο Κήπος της Πανδρόσου",
+    footerLine2: "Εστιατοριο, since 1981"
   },
   en: {
     title: "Reservation System",
@@ -257,7 +303,9 @@ const translations = {
     totalGuests: "Total guests",
     exportCsv: "📤 Export CSV",
     deleteAll: "🗑️ Delete All",
-    noReservations: "No reservations found."
+    noReservations: "No reservations found.",
+      footerLine1: "Pandrosou Garden Restaurant",
+    footerLine2: "since 1981"
   }
 };
 
@@ -330,12 +378,15 @@ document.getElementById("langSwitcher").value = "el";
         <textarea id="notes" name="notes" placeholder="Αλλεργίες, παιδικό καρεκλάκι, ειδική περίσταση…"></textarea>
       </div>
 
-      <div class="inline" style="margin-top:12px">
-        <button class="btn" type="submit" data-lang="submit">🗓️ Καταχώρηση Κράτησης</button>
-        <span class="hint" data-lang="submitHint">
-          Με την υποβολή, η κράτηση αποθηκεύεται τοπικά και (προαιρετικά) στη Supabase/Netlify Forms.
-        </span>
-      </div>
+     <div class="form-actions">
+  <button class="btn" type="submit" data-lang="submit">
+    🗓️ Καταχώρηση Κράτησης
+  </button>
+  <span class="hint" data-lang="submitHint">
+    Με την υποβολή, η κράτηση αποθηκεύεται τοπικά και (προαιρετικά) στη Supabase/Netlify Forms.
+  </span>
+</div>
+
     </form>
 
     <div class="inline" style="margin-top:14px">
@@ -403,8 +454,9 @@ document.getElementById("langSwitcher").value = "el";
     </dialog>
 
     <footer>
-      <div>Tip: Άνοιγμα Διαχειριστικού με <span class="kbd">Shift</span> + <span class="kbd">A</span>.</div>
-    </footer>
+    <div data-lang="footerLine1">Κήπος της Πανδρόσου</div>
+    <div data-lang="footerLine2">since 1981</div>
+</footer>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
