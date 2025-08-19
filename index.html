@@ -774,10 +774,45 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
+<script>
+document.getElementById("bookingForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  const formData = {
+    date: document.getElementById("date").value,
+    time: document.getElementById("time").value,
+    guests: document.getElementById("guests").value,
+    name: document.getElementById("name").value,
+    phone: document.getElementById("phone").value,
+    email: document.getElementById("email").value,
+    notes: document.getElementById("notes").value
+  };
+
+  try {
+    const res = await fetch("/.netlify/functions/add-reservation", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData)
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      alert("✅ Η κράτηση καταχωρήθηκε και στάλθηκε ειδοποίηση email!");
+      document.getElementById("bookingForm").reset();
+    } else {
+      alert("❌ Σφάλμα: " + data.message);
+    }
+  } catch (err) {
+    console.error("Error:", err);
+    alert("❌ Πρόβλημα σύνδεσης με τον server.");
+  }
+});
+</script>
 
   
 </body>
 </html>
+
 
 
 
