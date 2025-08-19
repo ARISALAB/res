@@ -1,39 +1,16 @@
-const { createClient } = require('@supabase/supabase-js');
-const nodemailer = require('nodemailer');
-
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_KEY
-);
-
-exports.handler = async (event) => {
-  if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: JSON.stringify({ message: 'Method Not Allowed' }) };
-  }
-
-  try {
-    const data = JSON.parse(event.body);
-
-    // Αποθήκευση στη Supabase
-    const { error } = await supabase
-      .from('reservations')
-      .insert([{
-        name: data.name,
-        date: data.date,
-        time: data.time,
-        guests: data.guests,
-        phone: data.phone,
-        email: data.email,
-        notes: data.notes
-      }]);
-
-    if (error) {
-      console.error('Supabase insert error:', error);
-      return { statusCode: 500, body: JSON.stringify({ message: 'Database insert error' }) };
-    }
-
-    // Στείλε Email
-    let transporter = nodemailer.createTransport({
+fetch("/.netlify/functions/add-reservation", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(formData)
+})
+.then(res => res.json())
+.then(data => {
+  alert("✅ Η κράτηση καταχωρήθηκε με επιτυχία!");
+})
+.catch(err => {
+  console.error("Σφάλμα:", err);
+  alert("❌ Υπήρξε πρόβλημα με την κράτηση");
+});
       service: 'gmail',
       auth: {
         user: 'pandrosougarden@gmail.com',
