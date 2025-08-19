@@ -1,13 +1,22 @@
 {
-  "name": "pandrosou-garden",
+  "name": "pandrosou-garden-reservation",
   "version": "1.0.0",
-  "description": "Pandrosou Garden Reservations",
+  "description": "Reservation system for Pandrosou Garden (Netlify + Supabase + Email notifications)",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "dev": "netlify dev",
+    "build": "netlify build",
+    "start": "netlify dev"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.39.7",
-    "nodemailer": "^6.9.11"
-  }
+    "nodemailer": "^6.9.14"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.22.1"
+  },
+  "engines": {
+    "node": ">=18.x"
+  },
+  "license": "MIT"
 }
