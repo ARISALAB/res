@@ -8,8 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-          <link rel="icon" type="image/x-icon" href="/favicon.png">
-
+<link rel="icon" type="image/png" href="favicon.ico.png">
   <style>
   :root {
   --bg:#0b0f16;
@@ -204,20 +203,35 @@ footer{margin:26px 0;text-align:center;color:var(--muted);font-size:12px}
   font-size: 12px;
   color: var(--muted);
 }
+.header-logo {
+  height: 50px; /* Προσαρμόστε το ύψος όπως θέλετε */
+  width: 50px;  /* Ορίζουμε και το πλάτος ίδιο με το ύψος για τέλειο κύκλο */
+  border-radius: 50%; /* Αυτό κάνει την εικόνα στρογγυλή */
+  object-fit: cover; /* Διασφαλίζει ότι η εικόνα καλύπτει πλήρως τον κύκλο χωρίς να παραμορφώνεται */
+  margin-right: 12px; /* Για να υπάρχει χώρος ανάμεσα στο λογότυπο και το κείμενο */
+  display: block; /* Βοηθά στην ευθυγράμμιση */
+}
+
+/* Αν η εικόνα είναι πολύ μεγάλη σε μικρές οθόνες, μπορείς να προσθέσεις media query */
+@media (max-width: 768px) {
+  .header-logo {
+    height: 40px; /* Μικρότερο ύψος για κινητά */
+    width: 40px; /* Μικρότερο πλάτος για κινητά */
+  }
+}
 
   </style>
 </head>
 <body>
   <div class="container">
    <header>
-  <div class="brand">
-    <div class="logo"></div>
-    <div>
-      <h1 data-lang="title">Σύστημα Κρατήσεων</h1>
-      <div class="sub" data-lang="subtitle">Ο Κήπος της Πανδρόσου · Pandrosou Garden</div>
-    </div>
+ <div class="brand">
+  <img src="favicon.ico.png" alt="Λογότυπο Ο Κήπος της Πανδρόσου" class="header-logo">
+  <div>
+    <h1 data-lang="title">Σύστημα Κρατήσεων</h1>
+    <div class="sub" data-lang="subtitle">Ο Κήπος της Πανδρόσου · Pandrosou Garden</div>
   </div>
-
+</div>
   <div class="inline">
     <span class="pill">
       <span data-lang="status">Κατάσταση</span>: 
@@ -778,6 +792,9 @@ document.addEventListener('DOMContentLoaded', () => {
   
 </body>
 </html>
+
+
+
 
 
 
