@@ -219,7 +219,66 @@ footer{margin:26px 0;text-align:center;color:var(--muted);font-size:12px}
     width: 40px; /* Μικρότερο πλάτος για κινητά */
   }
 }
+/* Στυλ για το Καρουζέλ */
+.carousel-container {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto 16px;
+  border-radius: 12px;
+  overflow: hidden; /* Κρύβει τις εικόνες που είναι εκτός οθόνης */
+  box-shadow: var(--shadow);
+}
 
+.carousel-inner {
+  display: flex;
+  transition: transform 0.5s ease-in-out; /* Εφέ ομαλής μετάβασης */
+}
+
+.carousel-img {
+  width: 100%;
+  flex-shrink: 0;
+  border-radius: 12px;
+  object-fit: cover;
+  height: 250px; /* Ρυθμίστε το ύψος όπως θέλετε */
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.carousel-btn:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.carousel-btn.prev {
+  left: 10px;
+}
+
+.carousel-btn.next {
+  right: 10px;
+}
+
+/* Εμφανίζει τα κουμπιά όταν το ποντίκι είναι πάνω στο κοντέινερ */
+.carousel-container:hover .carousel-btn {
+  opacity: 1;
+}
   </style>
 </head>
 <body>
@@ -422,13 +481,25 @@ document.getElementById("langSwitcher").value = "el";
     </div>
   </section>
 
-  <aside class="card welcome">
-    <h2 data-lang="welcome">Καλώς ήρθατε!</h2>
-    <p data-lang="welcomeText">
-      Σας καλωσορίζουμε σε έναν καταπράσινο κήπο, μια όαση ηρεμίας στην καρδιά της Πλάκας. Εδώ, γιορτάζουμε την αθηναϊκή φιλοξενία και σας προσφέρουμε αυθεντικές γεύσεις με άρωμα Μεσογείου. Οι συνταγές μας είναι μια ωδή στα εποχικά υλικά και τον σεβασμό στην πρώτη ύλη. Ελάτε να χαλαρώσετε - ο κήπος θα φροντίσει τα υπόλοιπα.
-    </p>
-    <img src="PANDROSOU.webp" alt="Pandrosou Garden" style="width: 100%; max-width: 300px; height: auto; border-radius: 12px; margin-bottom: 16px; margin: 0 auto; display: block;">
-  </aside>
+ <aside class="card welcome">
+  <div class="carousel-container">
+    <div class="carousel-inner">
+      <img src="PANDROSOU.webp" alt="Pandrosou Garden 1" class="carousel-img active">
+      <img src="1.jpg" alt="Pandrosou Garden 2" class="carousel-img">
+      <img src="2.jpg" alt="Pandrosou Garden 3" class="carousel-img">
+<img src="4.jpg" alt="Pandrosou Garden 4" class="carousel-img">
+<img src="5.jpg" alt="Pandrosou Garden 5" class="carousel-img">
+<img src="6.jpg" alt="Pandrosou Garden 6" class="carousel-img">
+    </div>      
+
+    <button class="carousel-btn prev">&#10094;</button>
+    <button class="carousel-btn next">&#10095;</button>
+  </div>
+  <h2 data-lang="welcome">Καλώς ήρθατε!</h2>
+  <p data-lang="welcomeText">
+    Σας καλωσορίζουμε σε έναν καταπράσινο κήπο, μια όαση ηρεμίας στην καρδιά της Πλάκας. Εδώ, γιορτάζουμε την αθηναϊκή φιλοξενία και σας προσφέρουμε αυθεντικές γεύσεις με άρωμα Μεσογείου. Οι συνταγές μας είναι μια ωδή στα εποχικά υλικά και τον σεβασμό στην πρώτη ύλη. Ελάτε να χαλαρώσετε - ο κήπος θα φροντίσει τα υπόλοιπα.
+  </p>
+</aside>
 </div>
 
 
@@ -787,20 +858,39 @@ document.addEventListener('DOMContentLoaded', () => {
       }
   });
 });
-</script>
 
+
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const inner = document.querySelector('.carousel-inner');
+    const images = document.querySelectorAll('.carousel-img');
+    const prevBtn = document.querySelector('.carousel-btn.prev');
+    const nextBtn = document.querySelector('.carousel-btn.next');
+    let currentIndex = 0;
+    
+    // Εμφανίζει την εικόνα με εφέ slide
+    function showImage(index) {
+      inner.style.transform = `translateX(${-index * 100}%)`;
+    }
+
+    function nextImage() {
+      currentIndex = (currentIndex + 1) % images.length;
+      showImage(currentIndex);
+    }
+
+    function prevImage() {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      showImage(currentIndex);
+    }
+
+    nextBtn.addEventListener('click', nextImage);
+    prevBtn.addEventListener('click', prevImage);
+
+    // Αυτόματη αλλαγή κάθε 5 δευτερόλεπτα
+    setInterval(nextImage, 5000);
+  });
+</script>
   
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
