@@ -3,246 +3,338 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Κρατήσεις – Ο Κήπος της Πανδρόσου</title>
-  <meta name="description" content="Single‑file εφαρμογή κρατήσεων για τον Κήπο της Πανδρόσου (Pandrosou Garden). Έτοιμη για GitHub & Netlify, με Admin PIN και (προαιρετικά) Supabase."/>
+  <title data-lang-el="Ο Κήπος της Πανδρόσου – Εστιατόριο στην Πλάκα" data-lang-en="Pandrosou Garden – Restaurant in Plaka">Ο Κήπος της Πανδρόσου – Εστιατόριο στην Πλάκα</title>
+  <meta name="description" data-lang-el="Ο Κήπος της Πανδρόσου. Όαση ηρεμίας στην καρδιά της Πλάκας με αυθεντικές μεσογειακές γεύσεις." data-lang-en="Pandrosou Garden. An oasis of peace in the heart of Plaka with authentic Mediterranean flavors."/>
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" href="favicon.ico.png">
+  <link rel="icon" type="image/png" href="favicon.ico.png">
+  
   <style>
-  :root {
-  --bg:#0b0f16;
-  --card:#111827;
-  --muted:#9ca3af;
-  --text:#e5e7eb;
-  --brand:#22d3ee;
-  --brand-2:#7c3aed;
-  --ok:#10b981;
-  --warn:#f59e0b;
-  --err:#ef4444;
-  --shadow:0 8px 24px rgba(0,0,0,.35);
-  --radius-xl:20px;
-}
+    /* 1. Μεταβλητές (Variables) */
+    :root {
+      --bg: #0b0f16;
+      --card: #111827;
+      --muted: #9ca3af;
+      --text: #e5e7eb;
+      --brand: #22d3ee; /* Aqua */
+      --brand-dark: #00b3cc;
+      --ok: #10b981;
+      --err: #ef4444;
+      --shadow: 0 8px 24px rgba(0,0,0,.35);
+      --radius-sm: 8px;
+      --radius-xl: 20px;
+    }
 
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
-  margin:0;color:var(--text);
-  background:
-    radial-gradient(1200px 600px at 80% -100px, rgba(124,58,237,.25), transparent 60%),
-    radial-gradient(900px 500px at -20% -120px, rgba(34,211,238,.20), transparent 60%),
-    var(--bg);
-  background-attachment:fixed;
-}
+    /* 2. Βασικά Στυλ & Επαναφορά (Base Styles & Reset) */
+    * { box-sizing: border-box; }
+    html, body { min-height: 100%; scroll-behavior: smooth; }
+    body {
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse 1200px 600px at 80% 0, rgba(124, 58, 237, 0.25), transparent 60%),
+        radial-gradient(ellipse 900px 500px at 0 0, rgba(34, 211, 238, 0.2), transparent 60%),
+        var(--bg);
+      background-attachment: fixed;
+    }
 
-.container{max-width:1180px;margin:0 auto;padding:24px}
-a{color:var(--brand)}
+    .container { max-width: 1180px; margin: 0 auto; padding: 24px; }
+    a { color: var(--brand); text-decoration: none; }
+    h2 { font-size: clamp(28px, 4vw, 36px); color: var(--text); margin-top: 0; }
+    .section { padding: 20px 0; }
+    
+    /* Global Button Styles */
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 16px;
+        height: 40px;
+        border-radius: var(--radius-sm);
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+        text-transform: uppercase;
+        font-size: 14px;
+        white-space: nowrap;
+        border: 1px solid transparent;
+    }
+    .btn, .btn:visited {
+        color: var(--bg);
+        background-color: var(--brand);
+    }
+    .btn:hover {
+        background-color: var(--brand-dark);
+        box-shadow: 0 4px 12px rgba(34, 211, 238, 0.4);
+    }
+    .btn.secondary {
+        background-color: transparent;
+        border: 1px solid var(--brand);
+        color: var(--brand);
+    }
+    .btn.secondary:hover {
+        background-color: rgba(34, 211, 238, 0.1);
+        box-shadow: none;
+        color: var(--text);
+    }
 
-header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:16px;
-  margin:10px 0 24px;
-}
+    /* Header & Navigation Styles */
+    header {
+      display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 10px 0 24px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .header-logo { height: 50px; width: 50px; border-radius: 50%; object-fit: cover; margin-right: 12px; display: block; }
+    h1 { font-size: clamp(22px, 3vw, 32px); margin: 0; }
+    .sub { color: var(--muted); margin-top: 4px; font-size: 14px; }
+    
+    header .inline {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+    #langSwitcher {
+        background: var(--card);
+        color: var(--text);
+        border: 1px solid rgba(255,255,255,.1);
+        padding: 8px 12px;
+        border-radius: var(--radius-sm);
+    }
+    .nav-menu a {
+        color: var(--text);
+        padding: 8px 12px;
+        transition: color 0.2s, background-color 0.2s;
+        border-radius: var(--radius-sm);
+    }
+    .nav-menu a:hover {
+        color: var(--brand);
+        background-color: var(--card);
+    }
 
-.brand{display:flex;align-items:center;gap:12px}
-.logo{
-  width:42px;height:42px;border-radius:12px;
-  background:linear-gradient(135deg,var(--brand),var(--brand-2));
-  box-shadow:var(--shadow);
-}
-h1{font-size:clamp(22px,3vw,32px);margin:0}
-.sub{color:var(--muted);margin-top:4px;font-size:14px}
+    /* Hero Section */
+    .hero {
+      background: rgba(255,255,255,.05);
+      border-radius: var(--radius-xl);
+      padding: 40px;
+      margin-bottom: 24px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+    .hero a.btn { height: 50px; font-size: 16px; }
 
-header .inline{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-header .inline > *{
-  height:42px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
+    /* --- Video/Carousel Styles --- */
+    .carousel-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+      /* ΤΕΛΙΚΟ ΥΨΟΣ ΓΙΑ DESKTOP: 350px */
+      height: 550px; 
+      background-color: var(--card); 
+    }
+    
+    /* Video Styles */
+    .hero-video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Καλύπτει πλήρως το container */
+        display: block;
+    }
+    
+    /* Menu Grid & Card Styles (Clickable) */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-top: 20px;
+    }
 
-/* Στυλ για language switcher ώστε να ευθυγραμμίζεται */
-#langSwitcher {
-  border:1px dashed rgba(255,255,255,.25);
-  background:rgba(255,255,255,.02);
-  color:var(--text);
-  font-weight:600;
-  border-radius:999px;
-  padding:0 14px;
-  height:42px;
-  cursor:pointer;
-  appearance:none;
-  text-align:center;
-}
-#langSwitcher option {
-  color:#000;
-}
+    .menu-card {
+      padding: 20px;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius-xl);
+      background: var(--card);
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      min-height: 250px;
+      position: relative;
+    }
 
-/* κάρτες */
-.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:24px}
-@media (max-width:900px){
-  .grid{grid-template-columns:1fr;display:flex;flex-direction:column-reverse}
-}
+    .menu-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(34, 211, 238, 0.15);
+    }
 
-.card{
-  background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:var(--radius-xl);
-  padding:20px;
-  box-shadow:var(--shadow);
-  backdrop-filter:blur(6px);
-}
-.card h2{margin:0 0 14px;font-size:20px}
+    .menu-card h4 {
+      color: var(--brand);
+      border-bottom: 1px solid rgba(255,255,255,.1);
+      padding-bottom: 8px;
+      margin-top: 0;
+      font-size: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .menu-card h4::after {
+        content: '➜';
+        font-size: 14px;
+        color: var(--text);
+        opacity: 0.8;
+    }
 
-form .row{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-@media (max-width:640px){form .row{grid-template-columns:1fr}}
+    .menu-item {
+      margin-bottom: 12px;
+      padding-top: 4px;
+      font-size: 15px;
+      border-bottom: 1px dotted rgba(255,255,255,0.05);
+    }
 
-label{display:block;font-size:12px;color:var(--muted);margin:8px 0 6px}
-input,select,textarea{
-  width:100%;border:1px solid rgba(255,255,255,.12);
-  background:rgba(255,255,255,.02);color:var(--text);
-  padding:12px;border-radius:12px;outline:none;
-  transition:border-color .2s, background .2s;
-}
-input:focus,select:focus,textarea:focus{
-  border-color:var(--brand);background:rgba(255,255,255,.05);
-}
-option{color:#000;background-color:rgba(255,255,255,.95)}
-textarea{min-height:92px;resize:vertical}
+    .menu-item strong {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      font-weight: 700;
+      margin-bottom: 2px;
+      color: var(--text);
+    }
+    
+    .price {
+      color: var(--ok);
+      font-weight: 700;
+      font-size: 16px;
+      flex-shrink: 0;
+      margin-left: 10px;
+    }
 
-.btn{
-  display:inline-flex;align-items:center;gap:10px;
-  padding:0 18px;height:42px;
-  border-radius:999px;
-  background:linear-gradient(135deg,var(--brand),var(--brand-2));
-  border:none;color:white;font-weight:700;cursor:pointer;
-  box-shadow:var(--shadow);transition:transform .2s,opacity .2s;
-}
-.btn:hover{transform:translateY(-2px)}
-.btn.secondary{
-  background:none;border:1px dashed rgba(255,255,255,.25);
-  color:var(--text);font-weight:600;
-}
-.btn:disabled{opacity:.6;cursor:not-allowed}
+    /* Info Grid Styles */
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 24px;
+        margin-top: 24px;
+    }
+    .info-item {
+        padding: 20px;
+        border-radius: var(--radius-xl);
+        background: var(--card);
+        border: 1px solid rgba(255,255,255,.08);
+    }
+    .info-item h4 {
+        color: var(--brand);
+        border-bottom: 1px solid rgba(255,255,255,.1);
+        padding-bottom: 8px;
+        margin-top: 0;
+        font-size: 18px;
+    }
+    .info-item address, .info-item p {
+        margin: 8px 0;
+        font-style: normal;
+        line-height: 1.6;
+    }
 
-.pill{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:0 14px;height:42px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.12);
-  font-size:13px;color:var(--muted);
-  background:rgba(255,255,255,.02);
+    /* Modal Styling */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      backdrop-filter: blur(5px);
+    }
+    .modal-content {
+      background: var(--bg);
+      padding: 30px;
+      border-radius: var(--radius-xl);
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow);
+      position: relative;
+      border: 1px solid var(--brand);
+    }
+    .modal-content h3 {
+      color: var(--brand);
+      margin-top: 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255,255,255,.1);
+      font-size: 24px;
+    }
+    .modal-content .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 24px;
+      cursor: pointer;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+    .modal-content .close-btn:hover {
+        color: var(--err);
+    }
+
+    /* General Styles */
+    hr { border: none; border-top: 1px dashed rgba(255,255,255,0.1); margin: 30px 0; }
+    footer { margin: 26px 0; text-align: center; color: var(--muted); font-size: 12px; }
+
+    /* 4. Media Queries (Responsive) */
+    @media (max-width: 768px) {
+      /* ΤΕΛΙΚΟ ΥΨΟΣ ΓΙΑ MOBILE: 200px */
+      .carousel-container { height: 250px; } 
+      .modal-content { max-width: 90%; margin: 20px; padding: 20px; }
+      header { flex-direction: column; align-items: stretch; gap: 16px; }
+      header .inline { flex-direction: column; align-items: stretch; gap: 10px; width: 100%; }
+      header .inline > * { width: 100%; justify-content: center; }
+      .nav-menu { display: none !important; }
+      #mobile-reserve-btn { display: flex !important; }
+      #langSwitcher { width: 100%; }
+      .hero { padding: 30px 20px; }
+    }
+    @media (min-width: 769px) {
+      #mobile-reserve-btn { display: none !important; }
+    }
+
+/* Review Section Styles - ΝΕΑ ΔΟΜΗ ΓΙΑ ΚΑΡΟΥΖΕΛ (Διορθωμένο) */
+.reviews-section {
+  padding: 40px 0;
+  text-align: center;
 }
-
-.slots{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px}
-@media (max-width:640px){.slots{grid-template-columns:repeat(2,1fr)}}
-.slot{
-  padding:10px;text-align:center;border-radius:10px;
-  border:1px solid rgba(255,255,255,.12);
-  background:rgba(255,255,255,.02);
-  cursor:pointer;user-select:none;
-  transition:all .2s;
-}
-.slot:hover{background:rgba(255,255,255,.05)}
-.slot.disabled{opacity:.35;cursor:not-allowed;text-decoration:line-through}
-.slot.active{outline:2px solid var(--brand);background:rgba(34,211,238,.12)}
-
-.flex{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.hint{font-size:12px;color:var(--muted)}
-
-table{width:100%;border-collapse:collapse}
-th,td{text-align:left;padding:10px;border-bottom:1px solid rgba(255,255,255,.08)}
-tr:hover td{background:rgba(255,255,255,.02)}
-
-.empty{text-align:center;padding:24px;color:var(--muted)}
-.ok{color:var(--ok)}.warn{color:var(--warn)}.err{color:var(--err)}
-.mono{font-family:ui-monospace,Menlo,Consolas,monospace}
-
-footer{margin:26px 0;text-align:center;color:var(--muted);font-size:12px}
-.kbd{font-size:12px;padding:2px 6px;border-radius:6px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12)}
-
-.welcome p{margin:.6em 0;color:#d1d5db}
-
-/* responsive header */
-@media (max-width: 900px) {
-  header {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 16px;
-  }
-  header .inline {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-    width: 100%;
-  }
-  header .inline > * {
-    width: 100%;
-    justify-content: center;
-  }
-}
-
-/* submit button κάτω από hint */
-.form-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 14px;
-}
-.form-actions .btn {
-  align-self: flex-start; /* κουμπί μόνο του αριστερά */
-}
-.form-actions .hint {
-  font-size: 12px;
-  color: var(--muted);
-}
-.header-logo {
-  height: 50px; /* Προσαρμόστε το ύψος όπως θέλετε */
-  width: 50px;  /* Ορίζουμε και το πλάτος ίδιο με το ύψος για τέλειο κύκλο */
-  border-radius: 50%; /* Αυτό κάνει την εικόνα στρογγυλή */
-  object-fit: cover; /* Διασφαλίζει ότι η εικόνα καλύπτει πλήρως τον κύκλο χωρίς να παραμορφώνεται */
-  margin-right: 12px; /* Για να υπάρχει χώρος ανάμεσα στο λογότυπο και το κείμενο */
-  display: block; /* Βοηθά στην ευθυγράμμιση */
-}
-
-/* Αν η εικόνα είναι πολύ μεγάλη σε μικρές οθόνες, μπορείς να προσθέσεις media query */
-@media (max-width: 768px) {
-  .header-logo {
-    height: 40px; /* Μικρότερο ύψος για κινητά */
-    width: 40px; /* Μικρότερο πλάτος για κινητά */
-  }
-}
-/* Στυλ για το Καρουζέλ */
-.carousel-container {
+.carousel-wrapper {
+  max-width: 1100px; /* Αυξάνω το max-width για καλύτερη εμφάνιση σε desktop */
+  margin: 0 auto;
+  overflow: hidden; 
   position: relative;
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto 16px;
-  border-radius: 12px;
-  overflow: hidden; /* Κρύβει τις εικόνες που είναι εκτός οθόνης */
-  box-shadow: var(--shadow);
 }
-
-.carousel-inner {
+.reviews-carousel {
   display: flex;
-  transition: transform 0.5s ease-in-out; /* Εφέ ομαλής μετάβασης */
+  transition: transform 0.5s ease-in-out;
+  gap: 24px; /* Χρησιμοποιούμε gap για τα κενά */
+}
+.review-card {
+  padding: 20px;
+  border-radius: var(--radius-xl);
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,.08);
+  text-align: left;
+  box-shadow: 0 4px 12px rgba(0,0,0,.2);
+  
+  /* Υπολογισμός πλάτους για 3 κάρτες (100% - 2 κενά) / 3 */
+  flex: 0 0 calc((100% - 48px) / 3); 
+  box-sizing: border-box;
 }
 
-.carousel-img {
-  width: 100%;
-  flex-shrink: 0;
-  border-radius: 12px;
-  object-fit: cover;
-  height: 250px; /* Ρυθμίστε το ύψος όπως θέλετε */
-}
-
+/* Στυλ για τα κουμπιά πλοήγησης */
 .carousel-btn {
   position: absolute;
   top: 50%;
@@ -259,638 +351,664 @@ footer{margin:26px 0;text-align:center;color:var(--muted);font-size:12px}
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
+  opacity: 0.8;
+  transition: opacity 0.3s;
 }
-
 .carousel-btn:hover {
-  background-color: rgba(0, 0, 0, 0.8);
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.9);
 }
-
 .carousel-btn.prev {
   left: 10px;
 }
-
 .carousel-btn.next {
   right: 10px;
 }
 
-/* Εμφανίζει τα κουμπιά όταν το ποντίκι είναι πάνω στο κοντέινερ */
-.carousel-container:hover .carousel-btn {
-  opacity: 1;
+/* Στυλ για avatar και header */
+.review-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.review-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: var(--muted);
+  border: 2px solid var(--brand);
+  flex-shrink: 0;
+}
+.review-card .rating {
+  color: var(--ok);
+  font-size: 1.2em;
+  margin-top: 4px; 
+}
+.review-card .author {
+  display: block;
+  font-weight: 700;
+  margin: 0;
+  color: var(--text); 
+}
+.review-card .date {
+  font-size: 12px;
+  color: var(--muted);
+}
+.review-card .text {
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.5;
+  margin-top: 0;
+}
+
+/* MEDIA QUERY: Για Κινητά (Διορθωμένο) */
+@media (max-width: 900px) {
+  .reviews-carousel {
+     gap: 0; /* Μηδενίζουμε το κενό */
+  }
+  .review-card {
+    flex: 0 0 100%; /* 1 κάρτα ανά γραμμή */
+    padding: 18px; 
+  }
 }
   </style>
 </head>
-<body>
+
+<body class="lang-el">
+  <a href="#main-content" style="position: absolute; left: -9999px; background: #fff; color: #000; padding: 8px; z-index: 9999;">Skip to main content</a>
+  
   <div class="container">
-   <header>
- <div class="brand">
-  <img src="favicon.ico.png" alt="Λογότυπο Ο Κήπος της Πανδρόσου" class="header-logo">
-  <div>
-    <h1 data-lang="title">Σύστημα Κρατήσεων</h1>
-    <div class="sub" data-lang="subtitle">Ο Κήπος της Πανδρόσου · Pandrosou Garden</div>
-  </div>
-</div>
-  <div class="inline">
-    <span class="pill">
-      <span data-lang="status">Κατάσταση</span>: 
-      <span id="statusDot" class="ok">online</span>
-    </span>
-
-    <button class="btn secondary" id="adminBtn" title="Διαχειριστικό">
-      🔐 <span data-lang="admin">Διαχειριστής</span>
-    </button>
-
-   <select id="langSwitcher" class="btn secondary">
-      <option value="el">🇬🇷 Ελληνικά</option>
-      <option value="en">🇬🇧 English</option>
-    </select>
-  </div>
-</header>
-
-<script>
-const translations = {
-  el: {
-    title: "Σύστημα Κρατήσεων",
-    subtitle: "Ο Κήπος της Πανδρόσου · Pandrosou Garden",
-    status: "Κατάσταση",
-    admin: "Διαχειριστής",
-    bookTable: "Κάνε Κράτηση",
-    date: "Ημερομηνία",
-    time: "Ώρα",
-    guests: "Άτομα",
-    name: "Ονοματεπώνυμο",
-    namePlaceholder: "Π.χ. Γιάννης Παπαδόπουλος",
-    phone: "Τηλέφωνο",
-    email: "Email (προαιρετικό)",
-    notes: "Σχόλια",
-    notesPlaceholder: "Αλλεργίες, παιδικό καρεκλάκι, ειδική περίσταση…",
-    selectOption: "Επιλογή",
-    submit: "🗓️ Καταχώρηση Κράτησης",
-    submitHint: "Με την υποβολή, η κράτηση αποθηκεύεται τοπικά και (προαιρετικά) στη Supabase/Netlify Forms.",
-    hours: "Ώρες λειτουργίας",
-    capacity: "Διαθέσιμες θέσεις/ώρα",
-    quick: "Γρήγορη επιλογή ώρας",
-    welcome: "Καλώς ήρθατε!",
-    welcomeText: "Σας καλωσορίζουμε σε έναν καταπράσινο κήπο, μια όαση ηρεμίας στην καρδιά της Πλάκας. Εδώ, γιορτάζουμε την αθηναϊκή φιλοξενία και σας προσφέρουμε αυθεντικές γεύσεις με άρωμα Μεσογείου. Οι συνταγές μας είναι μια ωδή στα εποχικά υλικά και τον σεβασμό στην πρώτη ύλη. Ελάτε να χαλαρώσετε - ο κήπος θα φροντίσει τα υπόλοιπα.",
-    welcomeEnTitle: "Welcome to Pandrosou Garden",
-    welcomeTextEn: "Welcome to our lush garden, a tranquil oasis nestled in the heart of Plaka, Athens. We celebrate Athenian hospitality by offering simple, authentic Mediterranean flavors. Our recipes are an ode to seasonal ingredients and a deep respect for quality. Come and relax; the garden will take care of the rest.",
-    adminPanel: "Πίνακας Διαχείρισης",
-    close: "✖ Κλείσιμο",
-    selectDate: "Επιλογή Ημερομηνίας:",
-    totalReservations: "Σύνολο κρατήσεων",
-    totalGuests: "Σύνολο ατόμων",
-    exportCsv: "📤 Εξαγωγή CSV",
-    deleteAll: "🗑️ Διαγραφή Όλων",
-    noReservations: "Δεν υπάρχουν καταχωρημένες κρατήσεις.",
-      footerLine1: "Ο Κήπος της Πανδρόσου",
-    footerLine2: "Εστιατοριο, since 1981"
-  },
-  en: {
-    title: "Reservation service ",
-    subtitle: "Pandrosou Garden",
-    status: "Status",
-    admin: "Admin",
-    bookTable: "Book a Table",
-    date: "Date",
-    time: "Time",
-    guests: "Guests",
-    name: "Full Name",
-    namePlaceholder: "e.g. John Smith",
-    phone: "Phone",
-    email: "Email (optional)",
-    notes: "Notes",
-    notesPlaceholder: "Allergies, high chair, special occasion…",
-    selectOption: "Select",
-    submit: "🗓️ Submit Reservation",
-    submitHint: "Your reservation will be stored locally and (optionally) in Supabase/Netlify Forms.",
-    hours: "Opening Hours",
-    capacity: "Available seats/hour",
-    quick: "Quick time selection",
-    welcome: "Welcome!",
-    welcomeText: "Welcome to our lush garden, a tranquil oasis nestled in the heart of Plaka, Athens. We celebrate Athenian hospitality by offering authentic Mediterranean flavors. Our recipes are an ode to seasonal ingredients and a with great respect to quality. We invite you to our garden to relax and we will take care of the rest.",
-    welcomeEnTitle: "Welcome to Pandrosou Garden",
-    welcomeTextEn: "Welcome to our lush garden, a tranquil oasis nestled in the heart of Plaka, Athens. We celebrate Athenian hospitality by offering authentic Mediterranean flavors. Our recipes are an ode to seasonal ingredients and a deep respect for quality. Come and relax; the garden will take care of the rest.",
-    adminPanel: "Admin Panel",
-    close: "✖ Close",
-    selectDate: "Select Date:",
-    totalReservations: "Total reservations",
-    totalGuests: "Total guests",
-    exportCsv: "📤 Export CSV",
-    deleteAll: "🗑️ Delete All",
-    noReservations: "No reservations found.",
-      footerLine1: "Pandrosou Garden Restaurant",
-    footerLine2: "since 1981"
-  }
-};
-
-document.getElementById("langSwitcher").addEventListener("change", (e) => {
-  const lang = e.target.value;
-  document.querySelectorAll("[data-lang]").forEach(el => {
-    const key = el.getAttribute("data-lang");
-    el.textContent = translations[lang][key];
-  });
-  // Νέα λειτουργία για να αλλάζει το placeholder
-  const notesElement = document.getElementById("notes");
-  if (notesElement) {
-    notesElement.placeholder = translations[lang].notesPlaceholder;
-  }
-  const nameElement = document.getElementById("name");
-  if (nameElement) {
-    nameElement.placeholder = translations[lang].namePlaceholder;
-  }
-});
-
-// προεπιλογή Ελληνικά
-document.getElementById("langSwitcher").value = "el";
-</script>
-
-<div class="grid">
-  <section class="card">
-    <h2 data-lang="bookTable">Κάνε Κράτηση</h2>
-    <form id="bookingForm" name="reservation" data-netlify="true">
-      <input type="hidden" name="form-name" value="reservation" />
-
-      <div class="row">
-        <div>
-          <label for="date" data-lang="date">Ημερομηνία</label>
-          <input type="date" id="date" name="date" required />
+    <header>
+     <a href="index.html" class="brand"> 
+    <img src="favicon.ico.png" alt="Λογότυπο Ο Κήπος της Πανδρόσου" class="header-logo">
+    <div>
+        <h1 data-lang-el="Ο Κήπος της Πανδρόσου" data-lang-en="Pandrosou Garden">Ο Κήπος της Πανδρόσου</h1>
+        
+        <div class="sub" data-lang-el="Εστιατόριο · Πλάκα, Αθήνα" data-lang-en="Restaurant · Plaka, Athens">
+            Εστιατόριο · Πλάκα, Αθήνα
         </div>
-        <div>
-          <label for="time" data-lang="time">Ώρα</label>
-          <select id="time" name="time" required>
-            <option value="" data-lang="selectOption">Επιλογή</option>
-          </select>
-        </div>
+    </div>
+</a>
+
+      <div class="inline">
+        <select id="langSwitcher" aria-label="Language Selector">
+          <option value="el">🇬🇷 Ελληνικά</option>
+          <option value="en">🇺🇸 English</option>
+        </select>
+        
+        <nav class="nav-menu">
+          <a href="#menu" data-lang-el="Μενού" data-lang-en="Menu">Μενού</a>
+          <a href="#info" data-lang-el="Πληροφορίες" data-lang-en="Information">Πληροφορίες</a>
+          <a href="reservations.html" class="btn secondary" data-lang-el="Κράτηση" data-lang-en="Reservation">Κράτηση</a>
+        </nav>
+
+        <a id="mobile-reserve-btn" href="reservations.html" class="btn" style="display: none;">
+          <span data-lang-el="🗓️ Κράτηση" data-lang-en="🗓️ Reservation">🗓️ Κράτηση</span>
+        </a>
       </div>
+    </header>
 
-      <div class="row">
-        <div>
-          <label for="guests" data-lang="guests">Άτομα</label>
-          <select id="guests" name="guests" required>
-            <option value="" data-lang="selectOption">Επιλογή</option>
-          </select>
-        </div>
-        <div>
-          <label for="name" data-lang="name">Ονοματεπώνυμο</label>
-          <input type="text" id="name" name="name" placeholder="Π.χ. Γιάννης Παπαδόπουλος" required />
-        </div>
+    <main id="main-content">
+      <div class="video-hero-container carousel-container" role="region" aria-label="Video of Pandrosou Garden">
+          <video class="hero-video" autoplay muted loop playsinline>
+              <source src="garden.mp4" type="video/mp4">
+              <span data-lang-el="Ο περιβάλλοντας χώρος του εστιατορίου" data-lang-en="The ambiance of the restaurant">Ο περιβάλλοντας χώρος του εστιατορίου</span>
+          </video>
       </div>
+      <section class="hero">
+        <h2 data-lang-el="Όαση γεύσεων στην καρδιά της Πλάκας" data-lang-en="An oasis of flavors in the heart of Plaka.">Όαση γεύσεων στην καρδιά της Πλάκας.</h2>
+        <p data-lang-el='Σας καλωσορίζουμε στον Κήπο της Πανδρόσου. Ένα καταφύγιο δροσιάς και γαλήνης, όπου η αθηναϊκή φιλοξενία συναντά τις αυθεντικές, εποχικές γεύσεις της Μεσογείου' data-lang-en='We welcome you to Pandrosou Garden. A haven of coolness and serenity, where Athenian hospitality meets authentic, seasonal Mediterranean flavors.'>
+          Σας καλωσορίζουμε στον Κήπο της Πανδρόσου. Ένα καταφύγιο δροσιάς και γαλήνης, όπου η αθηναϊκή φιλοξενία συναντά τις αυθεντικές, εποχικές γεύσεις της Μεσογείου
+        </p>
+        <a href="reservations.html" class="btn">
+          <span data-lang-el="🍽️ Κάνε την κράτησή σου τώρα" data-lang-en="🍽️ Book your table now">🍽️ Κάνε την κράτησή σου τώρα</span>
+        </a>
+      </section>
 
-      <div class="row">
-        <div>
-          <label for="phone" data-lang="phone">Τηλέφωνο</label>
-          <input type="tel" id="phone" name="phone" placeholder="69XXXXXXXX" pattern="^(\+\d{1,3}\s?)?\d{10}$" required />
+      <hr>
+
+      <section id="menu" class="section">
+        <h2 data-lang-el="Το Μενού μας" data-lang-en="Our Menu">Το Μενού μας</h2>
+        <p data-lang-el="Κάντε κλικ σε μια κατηγορία για να δείτε όλα τα πιάτα και τις τιμές." data-lang-en="Click on a category to see all dishes and prices.">
+          Κάντε κλικ σε μια κατηγορία για να δείτε όλα τα πιάτα και τις τιμές.
+        </p>
+        
+        <div id="menu-grid" class="menu-grid">
+          </div>
+      </section>
+
+      <hr>
+      <hr>
+
+<section id="reviews" class="section reviews-section">
+    <h2 data-lang-el="Τι λένε οι επισκέπτες μας" data-lang-en="What our guests say">Τι λένε οι επισκέπτες μας</h2>
+    
+    <div class="carousel-wrapper">
+        <div class="reviews-carousel" id="reviewsCarousel">
+            
+            <div class="review-card">
+                <div class="review-header">
+                    <img src="https://i.pravatar.cc/150?img=1" alt="Profile Avatar" class="review-avatar">
+                    <div>
+                        <strong class="author">Ελένη Π.</strong>
+                        <div class="rating">★★★★★</div>
+                    </div>
+                </div>
+                <p class="text" data-lang-el="Μια υπέροχη γευστική εμπειρία! Ο κήπος είναι μαγικός, ακριβώς αυτό που ψάχναμε στην Πλάκα. Ό,τι δοκιμάσαμε ήταν φρέσκο και πεντανόστιμο." 
+                                    data-lang-en="A wonderful gastronomic experience! The garden is magical, exactly what we were looking for in Plaka. Everything we tried was fresh and delicious.">
+                    Μια υπέροχη γευστική εμπειρία! Ο κήπος είναι μαγικός, ακριβώς αυτό που ψάχναμε στην Πλάκα. Ό,τι δοκιμάσαμε ήταν φρέσκο και πεντανόστιμο.
+                </p>
+                <span class="date" data-lang-el="Πριν από 2 εβδομάδες" data-lang-en="2 weeks ago">Πριν από 2 εβδομάδες</span>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <img src="https://i.pravatar.cc/150?img=68" alt="Profile Avatar" class="review-avatar">
+                    <div>
+                        <strong class="author">Thomas R.</strong>
+                        <div class="rating">★★★★★</div>
+                    </div>
+                </div>
+                <p class="text" data-lang-el="Το προσωπικό είναι απίστευτα φιλικό και εξυπηρετικό. Φάβα, μουσακάς, και αρνί στο φούρνο - όλα τέλεια. 5/5, σίγουρα θα ξαναέρθουμε."
+                                    data-lang-en="The staff is incredibly friendly and helpful. Fava, moussaka, and oven-baked lamb - everything perfect. 5/5, we will definitely come back.">
+                    Το προσωπικό είναι απίστευτα φιλικό και εξυπηρετικό. Φάβα, μουσακάς, και αρνί στο φούρνο - όλα τέλεια. 5/5, σίγουρα θα ξαναέρθουμε.
+                </p>
+                <span class="date" data-lang-el="Πριν από 1 μήνα" data-lang-en="1 month ago">Πριν από 1 μήνα</span>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <img src="https://i.pravatar.cc/150?img=33" alt="Profile Avatar" class="review-avatar">
+                    <div>
+                        <strong class="author">Sarah D. (Tourist)</strong>
+                        <div class="rating">★★★★★</div>
+                    </div>
+                </div>
+                <p class="text" data-lang-el="Η καλύτερη επιλογή για δείπνο στην καρδιά της Αθήνας. Νιώθεις ότι βρίσκεσαι σε μια όαση. Η χωριάτικη ήταν πραγματικά εξαιρετική."
+                                    data-lang-en="The best choice for dinner in the heart of Athens. You feel like you are in an oasis. The Greek salad was truly exceptional.">
+                    Η καλύτερη επιλογή για δείπνο στην καρδιά της Αθήνας. Νιώθεις ότι βρίσκεσαι σε μια όαση. Η χωριάτικη ήταν πραγματικά εξαιρετική.
+                </p>
+                <span class="date" data-lang-el="Πριν από 3 ημέρες" data-lang-en="3 days ago">Πριν από 3 ημέρες</span>
+            </div>
+            
+            <div class="review-card">
+                <div class="review-header">
+                    <img src="https://i.pravatar.cc/150?img=17" alt="Profile Avatar" class="review-avatar">
+                    <div>
+                        <strong class="author">Alex P.</strong>
+                        <div class="rating">★★★★★</div>
+                    </div>
+                </div>
+                <p class="text" data-lang-el="Επισκέφθηκα τον κήπο με την οικογένειά μου. Όλοι μείναμε έκπληκτοι από την ηρεμία και την ποιότητα των πιάτων. Το προσωπικό ήταν πολύ εξυπηρετικό με τα παιδιά."
+                                    data-lang-en="I visited the garden with my family. We were all surprised by the tranquility and the quality of the dishes. The staff was very helpful with the children.">
+                    Επισκέφθηκα τον κήπο με την οικογένειά μου. Όλοι μείναμε έκπληκτοι από την ηρεμία και την ποιότητα των πιάτων. Το προσωπικό ήταν πολύ εξυπηρετικό με τα παιδιά.
+                </p>
+                <span class="date" data-lang-el="Πριν από 4 εβδομάδες" data-lang-en="4 weeks ago">Πριν από 4 εβδομάδες</span>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <img src="https://i.pravatar.cc/150?img=49" alt="Profile Avatar" class="review-avatar">
+                    <div>
+                        <strong class="author">Maria T.</strong>
+                        <div class="rating">★★★★★</div>
+                    </div>
+                </div>
+                <p class="text" data-lang-el="Σταθερή αξία στην Πλάκα. Ο γύρος κοτόπουλο είναι εξαιρετικός και οι σαλάτες δροσερές. Το περιβάλλον είναι μοναδικό, σε ξεχνάει από την καθημερινότητα."
+                                    data-lang-en="A consistent classic in Plaka. The chicken gyros are excellent and the salads are fresh. The environment is unique; it makes you forget about daily life.">
+                    Σταθερή αξία στην Πλάκα. Ο γύρος κοτόπουλο είναι εξαιρετικός και οι σαλάτες δροσερές. Το περιβάλλον είναι μοναδικό, σε ξεχνάει από την καθημερινότητα.
+                </p>
+                <span class="date" data-lang-el="Πριν από 12 ημέρες" data-lang-en="12 days ago">Πριν από 12 ημέρες</span>
+            </div>
+
         </div>
-        <div>
-          <label for="email" data-lang="email">Email (προαιρετικό)</label>
-          <input type="email" id="email" name="email" placeholder="you@example.com" />
-        </div>
-      </div>
-
-      <div>
-        <label for="notes" data-lang="notes">Σχόλια</label>
-        <textarea id="notes" name="notes" placeholder="Αλλεργίες, παιδικό καρεκλάκι, ειδική περίσταση…"></textarea>
-      </div>
-
-     <div class="form-actions">
-  <button class="btn" type="submit" data-lang="submit">
-    🗓️ Καταχώρηση Κράτησης
-  </button>
-  <span class="hint" data-lang="submitHint">
-    Με την υποβολή, η κράτηση αποθηκεύεται τοπικά και (προαιρετικά) στη Supabase/Netlify Forms.
-  </span>
-</div>
-
-    </form>
-
-    <div class="inline" style="margin-top:14px">
-      <span class="pill">
-        <span data-lang="hours">Ώρες λειτουργίας</span>:
-        <span id="hoursLabel" class="mono"></span>
-      </span>
-      <span class="pill">
-        <span data-lang="capacity">Διαθέσιμες θέσεις/ώρα</span>:
-        <span id="capacityLabel" class="mono"></span>
-      </span>
+        
+        <button class="carousel-btn prev" id="reviewPrevBtn">&#10094;</button>
+        <button class="carousel-btn next" id="reviewNextBtn">&#10095;</button>
     </div>
 
-    <div style="margin-top:18px">
-      <label data-lang="quick">Γρήγορη επιλογή ώρας</label>
-      <div class="slots" id="quickSlots"></div>
+    <a href="https://www.google.com/search?sca_esv=552fb68e3d08662a&sxsrf=AE3TifOlMRPLEAb_-7SoCKIYNrYUN3Q13g:1760513950765&q=pandrosou+garden&si=AMgyJEtREmoPL4P1I5IDCfuA8gybfVI2d5Uj7QMwYCZHKDZ-E-gHM28m7KjtMXqkotAg8tt67KYsci461UxOS9mJzaLiKtrH9hvFcCU8RN9Ry-7adPbE-SQ%3D&uds=AOm0WdFRPqUD_qV0CCvuvWYUkCS3NW53CZ90Xeco9Rm0FeqlNlErFBmMhErW8OgrzIdMGwdu7oC5bydhgokYMr0YyRb6HTZpn_oCLg6twiO8V0iJUzLl02M&sa=X&ved=2ahUKEwjHhaHF2aWQAxUN-AIHHZsTAHkQ3PALegQILxAF&biw=1280&bih=593&dpr=1.5" target="_blank" class="btn secondary" style="margin-top: 30px;">
+        <span data-lang-el="Δείτε όλες τις κριτικές στο Google" data-lang-en="View all reviews on Google">Δείτε όλες τις κριτικές στο Google</span>
+    </a>
+
+</section>
+
+<section id="menu" class="section">
+
+<section id="info" class="section">
+    <h2 data-lang-el="Πληροφορίες & Επικοινωνία" data-lang-en="Information & Contact">Πληροφορίες & Επικοινωνία</h2>
+    <p data-lang-el="Βρισκόμαστε στην καρδιά της παλιάς Αθήνας και ανυπομονούμε να σας φιλοξενήσουμε." 
+       data-lang-en="We are located in the heart of old Athens and look forward to hosting you.">
+        Βρισκόμαστε στην καρδιά της παλιάς Αθήνας και ανυπομονούμε να σας φιλοξενήσουμε.
+    </p>
+    <div class="info-grid">
+        <div class="info-item">
+            <h4 data-lang-el="📍 Διεύθυνση" data-lang-en="📍 Address">📍 Διεύθυνση</h4>
+            <address>
+                <span data-lang-el="Οδός Πανδρόσου 15," data-lang-en="15 Pandrosou Street,">Οδός Πανδρόσου 15,</span><br>
+                <span data-lang-el="Πλάκα, Αθήνα, 10556" data-lang-en="Plaka, Athens, 10556">Πλάκα, Αθήνα, 10556</span>
+            </address>
+        </div>
+        <div class="info-item">
+            <h4 data-lang-el="📞 Επικοινωνία" data-lang-en="📞 Contact">📞 Επικοινωνία</h4>
+            <p>
+                <span data-lang-el="Τηλέφωνο:" data-lang-en="Phone:">Τηλέφωνο:</span> 
+                <a href="tel:+302103247148"><strong>+30 210 32 47 148</strong></a>
+            </p>
+            <p>Email: <a href="mailto:info@okipostispandrosou.gr">info@okipostispandrosou.gr</a></p>
+        </div>
+        <div class="info-item">
+            <h4 data-lang-el="⏰ Ωράριο" data-lang-en="⏰ Opening Hours">⏰ Ωράριο</h4>
+            <p>
+                <span data-lang-el="Καθημερινά:" data-lang-en="Daily:">Καθημερινά:</span> 
+                <time datetime="12:00-23:00"><strong>12:00 – 23:00</strong></time>
+            </p>
+            <p>
+                <span data-lang-el="Για κρατήσεις:" data-lang-en="For reservations:">Για κρατήσεις:</span> 
+                <a href="reservations.html"><span data-lang-el="online εδώ" data-lang-en="book online">online εδώ</span></a>
+            </p>
+        </div>
     </div>
-  </section>
-
- <aside class="card welcome">
-  <div class="carousel-container">
-    <div class="carousel-inner">
-      <img src="PANDROSOU.webp" alt="Pandrosou Garden 1" class="carousel-img active">
-      <img src="1.jpg" alt="Pandrosou Garden 2" class="carousel-img">
-      <img src="2.jpg" alt="Pandrosou Garden 3" class="carousel-img">
-<img src="4.jpg" alt="Pandrosou Garden 4" class="carousel-img">
-<img src="5.jpg" alt="Pandrosou Garden 5" class="carousel-img">
-<img src="6.jpg" alt="Pandrosou Garden 6" class="carousel-img">
-    </div>      
-
-    <button class="carousel-btn prev">&#10094;</button>
-    <button class="carousel-btn next">&#10095;</button>
-  </div>
-  <h2 data-lang="welcome">Καλώς ήρθατε!</h2>
-  <p data-lang="welcomeText">
-    Σας καλωσορίζουμε σε έναν καταπράσινο κήπο, μια όαση ηρεμίας στην καρδιά της Πλάκας. Εδώ, γιορτάζουμε την αθηναϊκή φιλοξενία και σας προσφέρουμε αυθεντικές γεύσεις με άρωμα Μεσογείου. Οι συνταγές μας είναι μια ωδή στα εποχικά υλικά και τον σεβασμό στην πρώτη ύλη. Ελάτε να χαλαρώσετε - ο κήπος θα φροντίσει τα υπόλοιπα.
-  </p>
-</aside>
-</div>
-
-
-    <dialog id="adminModal" style="border:none; border-radius: 14px; background: var(--card); color: var(--text); width:min(720px, 96vw);">
-      <form method="dialog" style="padding: 18px 18px 0">
-        <div class="flex">
-          <h3 style="margin: 0">Πίνακας Διαχείρισης</h3>
-          <button class="btn secondary">✖ Κλείσιμο</button>
-        </div>
-      </form>
-      <div style="padding: 0 18px 18px">
-        <div class="inline" style="justify-content:space-between; align-items: flex-end;">
-          <div class="inline">
-            <label for="adminDate" style="margin:0;">Επιλογή Ημερομηνίας:</label>
-            <input type="date" id="adminDate" style="width:160px; height: 42px;">
-          </div>
-          <div class="inline">
-            <span class="pill">Σύνολο κρατήσεων: <span id="totalCount" class="mono"></span></span>
-            <span class="pill">Σύνολο ατόμων: <span id="totalGuests" class="mono"></span></span>
-          </div>
-          <div class="inline">
-            <button class="btn secondary" id="exportCsvBtn" title="Εξαγωγή κρατήσεων σε CSV">📤 Εξαγωγή CSV</button>
-            <button id="resetAllBtn" class="btn secondary">🗑️ Διαγραφή Όλων</button>
-          </div>
-        </div>
-
-        <div style="margin-top: 12px; max-height: 50vh; overflow:auto">
-          <table id="adminTable">
-            <thead>
-              <tr>
-                <th>Ημερομηνία</th><th>Ώρα</th><th>Όνομα</th><th>Άτομα</th><th>Τηλέφωνο</th><th>Email</th><th>Σχόλια</th><th></th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-          <div id="adminEmpty" class="empty">Δεν υπάρχουν καταχωρημένες κρατήσεις.</div>
-        </div>
-      </div>
-    </dialog>
-
+</section>
+    </main>
+    
     <footer>
-    <div data-lang="footerLine1">Κήπος της Πανδρόσου</div>
-    <div data-lang="footerLine2">since 1981</div>
-</footer>
+      <p>
+        © 2025 <span data-lang-el="Ο Κήπος της Πανδρόσου" data-lang-en="Pandrosou Garden">Ο Κήπος της Πανδρόσου</span> · est. 1981
+      </p>
+    
+    </footer>
   </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <div id="menuModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-content">
+      <button class="close-btn" aria-label="Close Menu">&times;</button>
+      <h3 id="modalTitle"></h3>
+      <div id="modalContent">
+        </div>
+    </div>
+  </div>
 
   <script>
-    // ---- ΡΥΘΜΙΣΕΙΣ ----
-    const SETTINGS = {
-      openingHour: 12, closingHour: 23, slotMinutes: 30,
-      capacityPerSlot: 40, maxGuestsPerReservation: 12,
-      adminPin: "2468"
+    const menuData = {
+        // Τα δεδομένα του μενού παραμένουν ίδια
+        'cold-appetizers': {
+            el: { title: "Αρχίζοντας με...", items: [
+                { name: "Χωριάτικο ψωμί με ελιές καλαμών & σάλτσα ντομάτας", desc: null, price: "2.00" },
+                { name: "Τζατζίκι παραδοσιακό", desc: null, price: "6.50" },
+                { name: "Τυροκαυτερή", desc: null, price: "7.00" },
+                { name: "Παραδοσιακή Ταραμοσαλότα", desc: null, price: "7.00" },
+                { name: "Φάβα ''Παντρεμένη'' Σχοινούσας με καραμελωμένο κρεμμύδι", desc: null, price: "8.00" }
+            ]},
+            en: { title: "To start with...", items: [
+                { name: "Village Bread with Kalamata olives & tomato sauce", desc: null, price: "2.00" },
+                { name: "Traditional Tzatziki", desc: null, price: "6.50" },
+                { name: "Tirokafteri (Spicy Feta Cheese Dip)", desc: null, price: "7.00" },
+                { name: "Traditional Taramasalata", desc: null, price: "7.00" },
+                { name: "''Married'' Schinoussa Fava with caramelized onion", desc: null, price: "8.00" }
+            ]}
+        },
+        'hot-appetizers': {
+            el: { title: "Ζεστά Ορεκτικά", items: [
+                { name: "Σαγανάκι κεφαλοτύρι", desc: null, price: "10.50" },
+                { name: "Κολοκυθοανθοι γεμιστοί", desc: null, price: "12.00" },
+                { name: "Ντολμαδάκια γιαλαντζι", desc: "γεμιστά αμπελόφυλλα με ρύζι", price: "12.00" },
+                { name: "Σπανακόπιτα με τυρί χειροποίητη", desc: null, price: "9.00" },
+                { name: "Κολοκυθάκια τηγανητά με τζατζικι", desc: null, price: "11.00" },
+                { name: "Παραδοσιακά κεφτεδάκια με πατάτες", desc: null, price: "12.00" },
+                { name: "Τηγανιά – μπουκές χοιρινές σιγανομαγειρεμένες", desc: "σε λάδι, κρασί, με πατάτες", price: "14.00" },
+                { name: "Λουκάνικα σχάρας χοιρινά γεμιστά", desc: "με φέτα, λιαστή ντομάτα και πατάτες τσιπς", price: "13.00" },
+                { name: "Καλαμάρι τηγανητό*", desc: null, price: "14.00" },
+                { name: "Μύδια αχνιστά* με φρέσκα αρωματικά", price: "15.00" },
+                { name: "Χταπόδι* σχάρας με πουρέ-φάβα", desc: null, price: "24.00" }
+            ]},
+            en: { title: "Hot Appetizers", items: [
+                { name: "Saganaki Kefalotiri", desc: null, price: "10.50" },
+                { name: "Zucchini flowers stuffed with rice", desc: null, price: "12.00" },
+                { name: "''Dolmades'' stuffed vine leaves with rice", desc: null, price: "12.00" },
+                { name: "Homemade Spinach Pie with cheese", desc: null, price: "9.00" },
+                { name: "Fried Zucchini with Tzatziki dip", desc: null, price: "11.00" },
+                { name: "Fried Meatballs with fried potatoes", desc: null, price: "12.00" },
+                { name: "Tigania - Pork bites slowly cooked", desc: "in oil, wine, lemon thyme, and mild spices with potatoes", price: "14.00" },
+                { name: "Grilled Pork Sausages stuffed", desc: "with feta cheese, sun-dried tomato and potato chips", price: "13.00" },
+                { name: "Fried Calamari*", desc: null, price: "14.00" },
+                { name: "Steamed Mussels* with fresh herbs", desc: null, price: "15.00" },
+                { name: "Grilled Octopus* with fava bean", desc: null, price: "24.00" }
+            ]}
+        },
+        'salads': {
+            el: { title: "Σαλάτες", items: [
+                { name: "Caprese Greca Σαλάτα", desc: "Ντοματίνια, μελιτζάνες, ήπια φέτα, ντρέσινγκ βασιλικού.", price: "11.00" },
+                { name: "Παντζαροσαλάτα με καρύδια", desc: "Γαλομυζήθρα, αγγουράκι τουρσί, αρωματικά βότανα.", price: "11.00" },
+                { name: "Χωριάτικη Σαλάτα Ελληνική παραδοσιακή", desc: null, price: "11.00" },
+                { name: "Ντάκος Κρητικός", desc: "Με κρίθινο κρητικό, φρέσκια ντομάτα και κρητικό τυρί.", price: "12.00" },
+                { name: "Χόρτα & Κολοκυθάκια αχνιστά", desc: "με Τυρί Φέτα σχάρας, ψητή Ντομάτα και ντρέσινγκ δυόσμου", price: "11.00" }
+            ]},
+            en: { title: "Salads", items: [
+                { name: "Greek Caprese Salad", desc: "Cherry tomatoes, eggplant, mild feta cheese, basil dressing.", price: "11.00" },
+                { name: "Beetroot Salad with walnut", desc: "Galomyzithra cheese, pickled cucumber, aromatic herbs.", price: "11.00" },
+                { name: "Traditional Greek Salad", desc: null, price: "11.00" },
+                { name: "Cretan Dakos", desc: "With Cretan barley rusk, fresh tomato and Cretan cheese.", price: "12.00" },
+                { name: "Steamed Greens & Zucchini", desc: "with grilled Feta cheese, roasted Tomato, and mint dressing", price: "11.00" }
+            ]}
+        },
+        'main-dishes': {
+            el: { title: "Μαγειρευτά Παραδοσιακά", items: [
+                { name: "Παραδοσιακός Μουσακάς", desc: "Μελιτζάνα, πατάτα, κιμάς, κρέμα μπεσαμέλ.", price: "14.00" },
+                { name: "Παστίτσιο", desc: "Ζυμαρικά φούρνου με κιμά και κρέμα μπεσαμέλ.", price: "13.00" },
+                { name: "Γεμιστά παραδοσιακά", desc: "Ντομάτα & πιπεριά γεμιστή με ρύζι", price: "11.00" },
+                { name: "Γιουβέτσι μοσχαράκι με κεφαλοραβιέρα", desc: null, price: "18.00" },
+                { name: "Αρνάκι στο φούρνο με πατατες", desc: null, price: "22.00" }
+            ]},
+            en: { title: "Traditional Cooked Dishes", items: [
+                { name: "Moussaka", desc: "Layer of eggplant, potato, minced meat, bechamel cream.", price: "14.00" },
+                { name: "Pasticcio", desc: "Oven pasta with minced meat & bechamel cream.", price: "13.00" },
+                { name: "Stuffed tomato & bell pepper", desc: "with rice & aromatic herbs", price: "11.00" },
+                { name: "Giouvetsi Veal with kefalograviera cheese", desc: null, price: "18.00" },
+                { name: "Oven-Baked Lamb with Potatoes", desc: null, price: "22.00" }
+            ]}
+        },
+        'pasta': {
+            el: { title: "Ζυμαρικά", items: [
+                { name: "Λιγκουίνι Μπολωνέζ", desc: "Με κιμά, σπιτική σάλτσα ντομάτας και φρέσκα βότανα", price: "12.00" },
+                { name: "Λιγκουινι Νοπολιτεν", desc: "Με σπιτική σάλτσα ντομάτας", price: "10.00" },
+                { name: "Σκιουφιχτά παραδοσιακά ζυμαρικά ''Al limone''", desc: "με καπνιστό σύγλινο (αλλαντικό)", price: "11.50" },
+                { name: "Γιουβετσάδα* (κριθαρότο) θαλασσινών", desc: null, price: "21.00" },
+                { name: "Γαριδομακαρονάδα* με κόκκινη σάλτσα", desc: "και μπισκ γαρίδας", price: "22.00" }
+            ]},
+            en: { title: "Pasta", items: [
+                { name: "Linguini with minced meat", desc: "Homemade tomato sauce, and fresh herbs", price: "12.00" },
+                { name: "Linguini with homemade tomato sauce", desc: null, price: "10.00" },
+                { name: "Skioufichta Traditional Pasta ''Al limone''", desc: "with smoked syglino (cured pork)", price: "11.50" },
+                { name: "Seafood* Giouvetsada (Orzotto)", desc: null, price: "21.00" },
+                { name: "Shrimp* Spaghetti with homemade tomato sauce", desc: "and shrimp bisque", price: "22.00" }
+            ]}
+        },
+        'grill': {
+            el: { title: "Από την Σχάρα", items: [
+                { name: "Γύρος χοιρινός με πίτα, πατάτες, τζατζίκι", desc: "πίτα ψητή, πατάτες τηγανιτές, ντομάτα ψητή", price: "16.00" },
+                { name: "Σουβλάκι κοτόπουλο με πίτα, πατάτες, μουστάρδα ντιπ", desc: "πατάτες τηγανιτές", price: "15.00" },
+                { name: "Kεμπάπ με πίτα, μαριναρισμένο κρεμμύδι, τζατζίκι", desc: "και κέτσαπ ντιπ", price: "16.00" },
+                { name: "Φιλέτο μπούτι κοτόπουλο μαριναρισμένο στην σχάρα", desc: null, price: "16.00" },
+                { name: "Γύρος κοτόπουλο με πίτα, πατάτυες τηγανιτές, μουστάρδα ντιπ", desc: null, price: "16.00" },
+                { name: "T-bone Μοσχαρισια γάλακτος με πατάτες & BBQ sauce", desc: null, price: "33.00" },
+                { name: "Tomahawk με πατάτες & BBQ sauce", desc: null, price: "24.00" }
+            ]},
+            en: { title: "From our grill", items: [
+                { name: "Pork ''Gyros'' with pita bread, fries, tzatziki", desc: "pita bread, fries, roasted tomato, tzatziki", price: "16.00" },
+                { name: "Chicken Souvlaki with pita bread, fries, mustard dip", desc: "fries", price: "15.00" },
+                { name: "Kebab on the grill with pita bread, marinated onion, tzatziki", desc: "and ketchup", price: "16.00" },
+                { name: "Marinated Boneless Chicken Thigh Fillet grilled", desc: null, price: "16.00" },
+                { name: "Chicken ''Gyros'' with pita bread, fries, mustard dip", desc: null, price: "16.00" },
+                { name: "T-bone with potatoes & BBQ sauce", desc: null, price: "33.00" },
+                { name: "Tomahawk with potatoes & BBQ sauce", desc: null, price: "24.00" }
+            ]}
+        },
+        'seafood-desserts': {
+            el: { title: "Θαλασσινά & Γλυκός Επίλογος", items: [
+                { name: "Γαρίδες* σχάρας ψητές", desc: null, price: "22.00" },
+                { name: "Σαγανάκι θαλασσινών", desc: "γαρίδες*, μύδια* με σάλτσα ντομάτας και φέτα", price: "19.00" },
+                { name: "Τσιπούρα στην σχάρα με λαχανικά", desc: null, price: "23.00" },
+                { name: "Λαβράκι σχάρας με λαχανικά", desc: null, price: "24.00" },
+                { name: "Μπακλαβάς", desc: "(Γλυκός Επίλογος)", price: "9.00" },
+                { name: "Εκμέκ κανταΐφι παγωτό", desc: "(Γλυκός Επίλογος)", price: "12.00" },
+                { name: "Παγωτό καϊμάκι / βανίλια (1 μπάλα)", desc: "(Γλυκός Επίλογος)", price: "4.50" },
+                { name: "Παγωτό καϊμάκι / βανίλια (2 μπάλες)", desc: "(Γλυκός Επίλογος)", price: "8.00" }
+            ]},
+            en: { title: "Seafood & Sweet Endings", items: [
+                { name: "Grilled Shrimp*", desc: null, price: "22.00" },
+                { name: "Seafood Saganaki", desc: "shrimp*, mussels* with tomato sauce and feta", price: "19.00" },
+                { name: "Grilled Sea Bream with vegetables", desc: null, price: "23.00" },
+                { name: "Sea bass on the grill served with vegetables", desc: null, price: "24.00" },
+                { name: "Baklava", desc: "(Sweet Endings)", price: "9.00" },
+                { name: "Ekmek dessert with ice cream", desc: "(Sweet Endings)", price: "12.00" },
+                { name: "Ice cream kaimak / vanilla (1 scoop)", desc: "(Sweet Endings)", price: "4.50" },
+                { name: "Ice cream kaimak / vanilla (2 scoops)", desc: "(Sweet Endings)", price: "8.00" }
+            ]}
+        }
     };
 
-    // Συμπλήρωσε για Supabase & θέσε enabled:true όταν είσαι έτοιμος
-    const SUPABASE = {
-      enabled: true,
-      url: "https://ycbsivdjurcnzijdyhwi.supabase.co",
-      anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InljYnNpdmRqdXJjbnppamR5aHdpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUyMzcxOTQsImV4cCI6MjA3MDgxMzE5NH0.IDrqsdjWjOiwVem57k4q2-g3krpBMGUuF_7yVsE1ZmA"
-    };
 
-    // ---- SUPABASE INIT ----
-    const supa = (window.supabase && SUPABASE.enabled && SUPABASE.url && SUPABASE.anonKey)
-      ? window.supabase.createClient(SUPABASE.url, SUPABASE.anonKey)
-      : null;
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- DOM Elements ---
+        const langSwitcher = document.getElementById('langSwitcher');
+        const body = document.body;
+        const menuGrid = document.getElementById('menu-grid');
+        const modalOverlay = document.getElementById('menuModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalContent = document.getElementById('modalContent');
+        const closeModalBtn = document.querySelector('.modal-content .close-btn');
+        
+        // --- 1. Language & Menu Rendering Logic ---
+        let currentLang = localStorage.getItem('selectedLang') || 'el';
 
-    async function supaInsertReservation(rec){
-      if(!supa) return { ok:false, skipped:true };
-      try{
-        const { error } = await supa.from('reservations').insert({
-          id: rec.id,
-          date: rec.date,
-          time: rec.time,
-          guests: rec.guests,
-          name: rec.name,
-          phone: rec.phone,
-          email: rec.email,
-          notes: rec.notes,
-          created_at: rec.createdAt
-        });
-        if(error) throw error;
-        return { ok:true };
-      }catch(err){ console.error('Supabase insert error', err); return { ok:false, error:err } }
-    }
-    
-    async function supaFetchReservations(date = null){
-        if(!supa) return [];
-        try{
-            let query = supa.from('reservations').select('*');
-            if (date) {
-                query = query.eq('date', date);
+        function renderMenuPreviews(lang) {
+            menuGrid.innerHTML = '';
+            
+            for (const categoryId in menuData) {
+                const category = menuData[categoryId][lang];
+                const card = document.createElement('div');
+                card.classList.add('menu-card');
+                card.setAttribute('role', 'button');
+                card.setAttribute('tabindex', '0');
+                card.dataset.categoryId = categoryId;
+
+                let html = `<h4>${category.title}</h4>`;
+                html += '<div>';
+                
+                // Preview 4 dishes
+                const itemsToDisplay = category.items.slice(0, 4);
+
+                itemsToDisplay.forEach(item => {
+                    html += `
+                        <div class="menu-item">
+                            <strong>
+                                <span>${item.name}</span>
+                                <span class="price">€${item.price}</span>
+                            </strong>
+                            ${item.desc ? `<span class="muted">${item.desc}</span>` : ''}
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+                card.innerHTML = html;
+                
+                card.addEventListener('click', () => openModal(categoryId, lang));
+                card.addEventListener('keydown', (e) => { // Accessibility for keyboard users
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        openModal(categoryId, lang);
+                    }
+                });
+                
+                menuGrid.appendChild(card);
             }
-            const { data, error } = await query.order('time', {ascending: true});
-            if(error) throw error;
-            return data;
-        }catch(err){
-            console.error('Supabase fetch error', err);
-            return [];
         }
-    }
 
-    async function supaDeleteReservation(id) {
-      if (!supa) return { ok: false };
-      try {
-        const { error } = await supa.from('reservations').delete().eq('id', id);
-        if (error) throw error;
-        return { ok: true };
-      } catch (err) {
-        console.error('Supabase delete error', err);
-        return { ok: false, error: err };
-      }
-    }
+        function setLanguage(lang) {
+            currentLang = lang;
+            body.classList.remove('lang-el', 'lang-en');
+            body.classList.add(`lang-${lang}`);
+            document.documentElement.lang = lang;
+            localStorage.setItem('selectedLang', lang);
 
-    async function supaClearReservations() {
-      if (!supa) return { ok: false };
-      try {
-        const { error } = await supa.from('reservations').delete().not('id', 'is', null);
-        if (error) throw error;
-        return { ok: true };
-      } catch (err) {
-        console.error('Supabase clear error', err);
-        return { ok: false, error: err };
-      }
-    }
+            document.querySelectorAll('[data-lang-el], [data-lang-en]').forEach(element => {
+                const text = element.getAttribute(`data-lang-${lang}`);
+                if (element.tagName === 'TITLE') {
+                    document.title = text;
+                } else if (element.tagName === 'META' && element.name === 'description') {
+                    element.setAttribute('content', text);
+                } else if (text) {
+                    // This handles text content for most elements, including spans inside the video tag
+                    if(element.tagName !== 'SPAN' || element.parentNode.tagName !== 'VIDEO') {
+                        element.textContent = text;
+                    }
+                }
+            });
 
-    // ---- ΒΟΗΘΗΤΙΚΑ ----
-    const pad = n => String(n).padStart(2, '0');
-    function* timeRange(startHour, endHour, stepMinutes){
-      let d = new Date(); d.setHours(startHour,0,0,0);
-      const end = new Date(); end.setHours(endHour,0,0,0);
-      while(d <= end){ yield `${pad(d.getHours())}:${pad(d.getMinutes())}`; d.setMinutes(d.getMinutes()+stepMinutes); }
-    }
-    const $ = s => document.querySelector(s);
-    const $$ = s => Array.from(document.querySelectorAll(s));
-
-    function toast(msg, type = 'info'){
-      const div = document.createElement('div');
-      div.textContent = msg;
-      div.style.cssText = `position: fixed; inset: auto 16px 16px auto; background: ${type==='error'?'#ef4444':type==='warn'?'#f59e0b':'#10b981'}; color:white; padding:10px 14px; border-radius: 10px; box-shadow: var(--shadow); z-index:9999;`;
-      document.body.appendChild(div);
-      setTimeout(()=>div.remove(), 2200);
-    }
-
-    // ---- ΑΠΟΘΗΚΕΥΣΗ (LocalStorage) ----
-    const LS_KEY = 'restaurant_reservations_v1';
-    const db = {
-      all(){ return JSON.parse(localStorage.getItem(LS_KEY) || '[]'); },
-      save(list){ localStorage.setItem(LS_KEY, JSON.stringify(list)); },
-      add(rec){ const l = db.all(); l.push(rec); db.save(l); },
-      clear(){ localStorage.removeItem(LS_KEY); }
-    };
-
-    // ---- ΔΙΑΘΕΣΙΜΟΤΗΤΑ ----
-    async function getCapacityUsed(date, time){
-        const { data, error } = await supa.from('reservations').select('guests').eq('date', date).eq('time', time);
-        if (error) {
-            console.error("Error fetching capacity data:", error);
-            return 0;
+            // Specific handling for video fallback text (if needed, here we skip for simplicity)
+            
+            renderMenuPreviews(lang);
         }
-        return data.reduce((s, r) => s + Number(r.guests), 0);
-    }
 
-    async function isSlotAvailable(date, time, guests){
-      const used = await getCapacityUsed(date, time);
-      return used + Number(guests) <= SETTINGS.capacityPerSlot;
-    }
+        // --- 2. Modal (Pop-up) Logic ---
+        function openModal(categoryId, lang) {
+            const category = menuData[categoryId][lang];
+            modalTitle.textContent = category.title;
+            modalContent.innerHTML = '';
 
-    // ---- UI INIT ----
-    function initForm(){
-      const date = $('#date');
-      const today = new Date();
-      date.value = today.toISOString().split('T')[0];
-      date.min = today.toISOString().split('T')[0];
+            let html = '';
+            category.items.forEach(item => {
+                html += `
+                    <div class="menu-item">
+                        <strong>
+                            <span>${item.name}</span>
+                            <span class="price">€${item.price}</span>
+                        </strong>
+                        ${item.desc ? `<span class="muted">${item.desc}</span>` : ''}
+                    </div>
+                `;
+            });
 
-      const timeSel = $('#time');
-      timeSel.innerHTML = '<option value="" data-lang="selectOption">Επιλογή</option>';
-      const slots = [];
-      for (const t of timeRange(SETTINGS.openingHour, SETTINGS.closingHour, SETTINGS.slotMinutes)) {
-        slots.push(t);
-        const opt = document.createElement('option'); opt.value = t; opt.textContent = t; timeSel.appendChild(opt);
-      }
+            modalContent.innerHTML = html;
+            modalOverlay.style.display = 'flex';
+            body.style.overflow = 'hidden';
+            closeModalBtn.focus(); // Focus on close button for a11y
+        }
 
-      const quick = $('#quickSlots');
-      quick.innerHTML = '';
-      slots.forEach(t => {
-        const b = document.createElement('div'); b.className = 'slot'; b.textContent = t;
-        b.addEventListener('click', ()=>{
-          if(b.classList.contains('disabled')) return;
-          $('#time').value = t; $$('.slot').forEach(x=>x.classList.remove('active')); b.classList.add('active');
+        function closeModal() {
+            modalOverlay.style.display = 'none';
+            body.style.overflow = '';
+        }
+
+        // Event Listeners for Modal
+        closeModalBtn.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                closeModal();
+            }
         });
-        quick.appendChild(b);
-      });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modalOverlay.style.display === 'flex') {
+                closeModal();
+            }
+        });
 
-      const g = $('#guests');
-      for(let i=1;i<=SETTINGS.maxGuestsPerReservation;i++){
-        const opt = document.createElement('option'); opt.value = String(i); opt.textContent = String(i); g.appendChild(opt);
-      }
 
-      $('#hoursLabel').textContent = `${pad(SETTINGS.openingHour)}:00 – ${pad(SETTINGS.closingHour)}:00 / ${SETTINGS.slotMinutes}'`;
-      $('#capacityLabel').textContent = SETTINGS.capacityPerSlot;
+        // --- 3. Initialization and Listeners ---
+        langSwitcher.value = currentLang;
+        setLanguage(currentLang);
 
-      updateSlotStates();
-    }
+        langSwitcher.addEventListener('change', (event) => {
+            setLanguage(event.target.value);
+        });
 
-    async function updateSlotStates(){
-      const date = $('#date').value; const guests = Number($('#guests').value || 1);
-      for (const el of $$('#quickSlots .slot')) {
-          const t = el.textContent;
-          el.classList.remove('disabled');
-          if (!await isSlotAvailable(date, t, guests)) {
-              el.classList.add('disabled');
-          }
-      }
-    }
-
-    // ---- ΥΠΟΒΟΛΗ ΦΟΡΜΑΣ ----
-    $('#bookingForm').addEventListener('submit', async (e)=>{
-      e.preventDefault();
-      const form = e.currentTarget;
-      const data = Object.fromEntries(new FormData(form).entries());
-
-      if(!data.date || !data.time || !data.guests || !data.name || !data.phone){ toast('Συμπλήρωσε όλα τα υποχρεωτικά πεδία', 'error'); return; }
-      if(!await isSlotAvailable(data.date, data.time, data.guests)){ toast('Το συγκεκριμένο slot δεν έχει διαθεσιμότητα', 'error'); return; }
-
-      const rec = {
-        id: crypto.randomUUID(), date: data.date, time: data.time, guests: Number(data.guests),
-        name: data.name.trim(), phone: data.phone.trim(), email: (data.email||'').trim(),
-        notes: (data.notes||'').trim(), createdAt: new Date().toISOString()
-      };
-
-      db.add(rec);
-
-      const supaRes = await supaInsertReservation(rec);
-      if(supaRes?.ok){ toast('Αποθηκεύτηκε στη Supabase ✔'); }
-
-      try{ await fetch('/', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: new URLSearchParams({ 'form-name':'reservation', ...data }).toString() }); }catch{}
-
-      form.reset(); initForm(); toast('Η κράτηση καταχωρήθηκε ✔');
-    });
-
-    // ---- Admin ----
-    $('#adminBtn').addEventListener('click', ()=>{ const pin = prompt('PIN Διαχειριστή'); if(pin === SETTINGS.adminPin){ openAdmin(); } else if(pin){ toast('Λάθος PIN', 'error'); } });
-
-    async function openAdmin(){
-      const modal = $('#adminModal');
-      const tbody = $('#adminTable tbody');
-      const adminDateInput = $('#adminDate');
-      
-      if (!adminDateInput.value) {
-        adminDateInput.value = new Date().toISOString().split('T')[0];
-      }
-      
-      const selectedDate = adminDateInput.value;
-      const list = await supaFetchReservations(selectedDate);
-      
-      const totalGuests = list.reduce((s,r)=> s+Number(r.guests), 0);
-      $('#totalCount').textContent = list.length;
-      $('#totalGuests').textContent = totalGuests;
-
-      tbody.innerHTML = '';
-      if(!list.length){
-        $('#adminEmpty').style.display = 'block';
-      } else {
-        $('#adminEmpty').style.display = 'none';
-      }
-
-      list.forEach(rec =>{
-        const tr = document.createElement('tr');
-        tr.innerHTML = `<td class="mono">${rec.date}</td><td class="mono">${rec.time}</td><td>${rec.name}</td><td>${rec.guests}</td><td class="mono">${rec.phone}</td><td class="mono">${rec.email||'-'}</td><td>${rec.notes||''}</td><td><button class="btn secondary" data-remove="${rec.id}">Διαγραφή</button></td>`;
-        tbody.appendChild(tr);
-      });
-
-      tbody.querySelectorAll('[data-remove]').forEach(btn=> btn.addEventListener('click', async ()=>{
-        const id = btn.getAttribute('data-remove');
-        const res = await supaDeleteReservation(id);
-        if(res.ok){
-            toast('Διαγράφηκε από Supabase ✔');
-            openAdmin();
-        } else {
-            toast('Σφάλμα διαγραφής', 'error');
+        // Responsive Header Logic (Ensures correct display on resize)
+        const navMenu = document.querySelector('.nav-menu');
+        const mobileReserveBtn = document.getElementById('mobile-reserve-btn');
+        function updateHeaderLayout() {
+           if (window.innerWidth <= 768) {
+             navMenu.style.display = 'none';
+             mobileReserveBtn.style.display = 'flex';
+           } else {
+             navMenu.style.display = 'flex';
+             mobileReserveBtn.style.display = 'none';
+           }
         }
-      }));
-
-      $('#resetAllBtn').onclick = async () => { 
-        if(confirm('Οριστική διαγραφή όλων των κρατήσεων;')){ 
-          const res = await supaClearReservations();
-          if(res.ok){
-            toast('Μηδενίστηκαν όλα από Supabase ✔');
-            openAdmin();
-          } else {
-            toast('Σφάλμα διαγραφής', 'error');
-          }
-        } 
-      };
-      
-      if(!modal.open) {
-          modal.showModal();
-      }
-    }
-
-    $('#adminDate').addEventListener('change', () => {
-      openAdmin();
+        updateHeaderLayout();
+        window.addEventListener('resize', updateHeaderLayout);
     });
-
-    $('#exportCsvBtn').addEventListener('click', async ()=>{
-      const list = await supaFetchReservations();
-      if(!list.length){ toast('Δεν υπάρχουν κρατήσεις για εξαγωγή', 'warn'); return; }
-      const headers = ['id','date','time','guests','name','phone','email','notes','createdAt'];
-      const rows = [headers.join(',')].concat(list.map(o=> headers.map(h=>`"${String(o[h]??'').replaceAll('"','\"')}"`).join(',')));
-      const blob = new Blob(["\uFEFF" + rows.join('\n')], {type:'text/csv;charset=utf-8;'});
-      const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `reservations_${new Date().toISOString().slice(0,10)}.csv`; a.click(); URL.revokeObjectURL(url);
-    });
-
-    document.addEventListener('keydown', (e)=>{ if(e.shiftKey && (e.key === 'A' || e.key === 'α' || e.key === 'Α')){ $('#adminBtn').click(); } });
-
-    ['change','input'].forEach(evt=>{ $('#date').addEventListener(evt, ()=>{ updateSlotStates(); }); $('#guests').addEventListener(evt, ()=>{ updateSlotStates(); }); });
-
-    initForm(); updateSlotStates();
   </script>
-
-<script>
+  <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('reservation-form');
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const reservation = {
-      name: document.getElementById('name').value.trim(),
-      date: document.getElementById('date').value,
-      time: document.getElementById('time').value,
-      guests: document.getElementById('guests').value,
-      notes: document.getElementById('notes').value.trim()
-    };
-
-    try {
-      const response = await fetch('/.netlify/functions/add-reservation', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(reservation)
-      });
-
-      const result = await response.json();
-
-      if (response.ok) {
-        alert('Η κράτησή σας καταχωρήθηκε με επιτυχία! Σας ευχαριστούμε.');
-        form.reset();
-      } else {
-        alert('Προέκυψε πρόβλημα: ' + result.message);
-      }
-    } catch (err) {
-      console.error('Reservation error:', err);
-      alert('Προέκυψε σφάλμα κατά την καταχώρηση.');
-      }
-  });
-});
-
-
-</script>
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const inner = document.querySelector('.carousel-inner');
-    const images = document.querySelectorAll('.carousel-img');
-    const prevBtn = document.querySelector('.carousel-btn.prev');
-    const nextBtn = document.querySelector('.carousel-btn.next');
+    const carousel = document.getElementById('reviewsCarousel');
+    const prevBtn = document.getElementById('reviewPrevBtn');
+    const nextBtn = document.getElementById('reviewNextBtn');
+    const cards = carousel.querySelectorAll('.review-card');
     let currentIndex = 0;
+    let autoSlideInterval;
+
+    const GAP = 24; // Κενό που ορίστηκε στο CSS (gap: 24px)
+
+    // Επιστρέφει πόσες κάρτες εμφανίζονται σε κάθε slide (1 για mobile, 3 για desktop)
+    function getItemsPerSlide() {
+        // Ελέγχει το πλάτος του viewport
+        return window.innerWidth <= 900 ? 1 : 3; 
+    }
+
+    // Υπολογίζει πόσο πρέπει να μετακινηθεί το carousel (Πλάτος Κάρτας + Κενό)
+    function getCardMoveOffset() {
+        if (cards.length === 0) return 0;
+
+        const cardWidth = cards[0].offsetWidth;
+        const itemsPerSlide = getItemsPerSlide();
+        
+        // Σε mobile, το κενό είναι 0. Σε desktop, είναι 24px.
+        return itemsPerSlide === 1 ? cardWidth : cardWidth + GAP;
+    }
+
+    // Ενημερώνει τη θέση του carousel και την κατάσταση των κουμπιών
+    function updateCarousel() {
+        const moveOffset = getCardMoveOffset();
+        const slideTransform = moveOffset * currentIndex;
+
+        carousel.style.transform = `translateX(-${slideTransform}px)`;
+
+        const totalItems = cards.length;
+        const itemsPerSlide = getItemsPerSlide();
+        
+        // Ο μέγιστος δείκτης που μπορεί να φτάσει το carousel πριν φανεί η τελευταία κάρτα
+        const maxIndex = totalItems - itemsPerSlide;
+
+        nextBtn.disabled = currentIndex >= maxIndex;
+        prevBtn.disabled = currentIndex <= 0;
+    }
+
+    function nextSlide() {
+        const itemsPerSlide = getItemsPerSlide();
+        const maxIndex = cards.length - itemsPerSlide;
+        
+        currentIndex++;
+        if (currentIndex > maxIndex) {
+            currentIndex = 0; // Επαναφορά στην αρχή (Looping)
+        }
+        updateCarousel();
+    }
     
-    // Εμφανίζει την εικόνα με εφέ slide
-    function showImage(index) {
-      inner.style.transform = `translateX(${-index * 100}%)`;
+    // Έναρξη αυτόματης ολίσθησης
+    function startAutoSlide() {
+        clearInterval(autoSlideInterval);
+        autoSlideInterval = setInterval(nextSlide, 5000); 
     }
 
-    function nextImage() {
-      currentIndex = (currentIndex + 1) % images.length;
-      showImage(currentIndex);
-    }
+    // Χειροκίνητη πλοήγηση (διακόπτει και επανεκκινεί την αυτόματη)
+    prevBtn.addEventListener('click', () => {
+        clearInterval(autoSlideInterval);
+        currentIndex = Math.max(0, currentIndex - 1);
+        updateCarousel();
+        startAutoSlide();
+    });
 
-    function prevImage() {
-      currentIndex = (currentIndex - 1 + images.length) % images.length;
-      showImage(currentIndex);
-    }
+    nextBtn.addEventListener('click', () => {
+        clearInterval(autoSlideInterval);
+        nextSlide(); // Χρησιμοποιούμε την nextSlide για τη λογική looping
+        startAutoSlide();
+    });
 
-    nextBtn.addEventListener('click', nextImage);
-    prevBtn.addEventListener('click', prevImage);
+    // Χειρισμός αλλαγής μεγέθους οθόνης
+    window.addEventListener('resize', () => {
+        currentIndex = 0; // Επαναφορά στην αρχή για αποφυγή προβλημάτων εμφάνισης
+        updateCarousel();
+        startAutoSlide(); 
+    });
 
-    // Αυτόματη αλλαγή κάθε 5 δευτερόλεπτα
-    setInterval(nextImage, 5000);
-  });
+    // Αρχική φόρτωση
+    startAutoSlide();
+    updateCarousel(); 
+});
 </script>
-  
 </body>
 </html>
