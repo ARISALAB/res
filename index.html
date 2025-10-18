@@ -124,26 +124,29 @@
     }
     .hero a.btn { height: 50px; font-size: 16px; }
 
-    /* --- Video/Carousel Styles --- */
-    .carousel-container {
-      position: relative;
-      overflow: hidden;
-      border-radius: var(--radius-xl);
-      box-shadow: var(--shadow);
-      margin-bottom: 24px;
-      /* ΤΕΛΙΚΟ ΥΨΟΣ ΓΙΑ DESKTOP: 350px */
-      height: 550px; 
-      background-color: var(--card); 
-    }
-    
-    /* Video Styles */
-    .hero-video {
-        width: 100%;
-        height: 100%;
-        object-fit: cover; /* Καλύπτει πλήρως το container */
-        display: block;
-    }
-    
+    /* --- Video/Carousel Styles (ΔΙΟΡΘΩΣΗ: Χρήση Aspect Ratio για πλήρη εμφάνιση σε όλα τα μεγέθη) --- */
+.carousel-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow);
+  margin-bottom: 24px;
+  /* Ορίζουμε Aspect Ratio 16:9 (9 / 16 * 100 = 56.25%) */
+  height: 0; /* Μηδενίζουμε το ύψος */
+  padding-bottom: 56.25%; /* Αυτό δίνει το ύψος με βάση το πλάτος */
+  background-color: var(--card); 
+}
+
+/* Video Styles */
+.hero-video {
+    position: absolute; /* Τοποθετούμε το βίντεο απόλυτα στο container */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Default: Καλύπτει πλήρως το container (για cinematic look σε desktop) */
+    display: block;
+}
     /* Menu Grid & Card Styles (Clickable) */
     .menu-grid {
       display: grid;
@@ -288,22 +291,27 @@
     hr { border: none; border-top: 1px dashed rgba(255,255,255,0.1); margin: 30px 0; }
     footer { margin: 26px 0; text-align: center; color: var(--muted); font-size: 12px; }
 
-    /* 4. Media Queries (Responsive) */
-    @media (max-width: 768px) {
-      /* ΤΕΛΙΚΟ ΥΨΟΣ ΓΙΑ MOBILE: 200px */
-      .carousel-container { height: 250px; } 
-      .modal-content { max-width: 90%; margin: 20px; padding: 20px; }
-      header { flex-direction: column; align-items: stretch; gap: 16px; }
-      header .inline { flex-direction: column; align-items: stretch; gap: 10px; width: 100%; }
-      header .inline > * { width: 100%; justify-content: center; }
-      .nav-menu { display: none !important; }
-      #mobile-reserve-btn { display: flex !important; }
-      #langSwitcher { width: 100%; }
-      .hero { padding: 30px 20px; }
-    }
-    @media (min-width: 769px) {
-      #mobile-reserve-btn { display: none !important; }
-    }
+  /* 4. Media Queries (Responsive) */
+@media (max-width: 768px) {
+  /* ΣΕ MOBILE: Κάνουμε το container ελαφρώς ψηλότερο */
+  .carousel-container { 
+      padding-bottom: 65%; /* Πιο ψηλή αναλογία για καλύτερη θέαση σε κινητά */
+  } 
+  
+  /* ΝΕΑ & ΟΡΙΣΤΙΚΗ ΔΙΟΡΘΩΣΗ: Χρησιμοποιούμε CONTAIN για να εμφανίζεται ΟΛΟΚΛΗΡΟ το βίντεο (χωρίς να κόβεται) */
+  .hero-video {
+      object-fit: contain;
+  }
+  
+  .modal-content { max-width: 90%; margin: 20px; padding: 20px; }
+  header { flex-direction: column; align-items: stretch; gap: 16px; }
+  header .inline { flex-direction: column; align-items: stretch; gap: 10px; width: 100%; }
+  header .inline > * { width: 100%; justify-content: center; }
+  .nav-menu { display: none !important; }
+  #mobile-reserve-btn { display: flex !important; }
+  #langSwitcher { width: 100%; }
+  .hero { padding: 30px 20px; }
+}
 
 /* Review Section Styles - ΝΕΑ ΔΟΜΗ ΓΙΑ ΚΑΡΟΥΖΕΛ (Διορθωμένο) */
 .reviews-section {
