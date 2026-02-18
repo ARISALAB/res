@@ -514,7 +514,45 @@
 
 
 
+.lang-switcher-flags {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
 
+.lang-flag-btn {
+  background: none;
+  border: 2px solid transparent;
+  padding: 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  opacity: 0.5; /* Μη επιλεγμένο */
+  filter: grayscale(40%);
+}
+
+.lang-flag-btn img {
+  width: 28px;
+  height: auto;
+  border-radius: 2px;
+  display: block;
+}
+
+/* Το στυλ για την επιλεγμένη γλώσσα */
+.lang-flag-btn.active {
+  opacity: 1;
+  filter: grayscale(0%);
+  border-color: var(--brand);
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(34, 211, 238, 0.3);
+}
+
+.lang-flag-btn:hover {
+  opacity: 1;
+  filter: grayscale(0%);
+}
 
   </style>
 </head>
@@ -543,11 +581,14 @@
     </div>
 </a>
 
-      <div class="inline">
-        <select id="langSwitcher" aria-label="Language Selector">
-          <option value="el">🇬🇷 Ελληνικά</option>
-          <option value="en">🇺🇸 English</option>
-        </select>
+    <div class="lang-switcher-flags">
+  <button class="lang-flag-btn" data-lang-val="en" title="English">
+    <img src="https://flagcdn.com/w40/gb.png" alt="English">
+  </button>
+  <button class="lang-flag-btn" data-lang-val="el" title="Ελληνικά">
+    <img src="https://flagcdn.com/w40/gr.png" alt="Ελληνικά">
+  </button>
+</div>
         
         <nav class="nav-menu">
           <a href="#menu" data-lang-el="Μενού" data-lang-en="Menu">Μενού</a>
@@ -928,43 +969,107 @@ window.addEventListener('load', () => {
         }
     };
 
-
-  document.addEventListener('DOMContentLoaded', () => {
-    const langSwitcher = document.getElementById('langSwitcher');
+document.addEventListener('DOMContentLoaded', () => {
+    const flagButtons = document.querySelectorAll('.lang-flag-btn');
+    const body = document.body;
+    const menuGrid = document.getElementById('menu-grid');
+    const modalOverlay = document.getElementById('menuModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalContent = document.getElementById('modalContent');
+    const closeModalBtn = document.querySelector('.modal-content .close-btn');
     
-    // 1. Έλεγχος αν υπάρχει αποθηκευμένη γλώσσα, αλλιώς "en" (Αγγλικά) για πρώτη φορά
-    const savedLang = localStorage.getItem('preferredLang') || 'en';
-    
-    // 2. Εφαρμογή της γλώσσας κατά το φόρτωμα
-    setLanguage(savedLang);
-    langSwitcher.value = savedLang;
+    // 1. Αρχική Γλώσσα: Αγγλικά αν είναι η πρώτη φορά
+    let currentLang = localStorage.getItem('preferredLang') || 'en';
 
-    // 3. Listener για όταν ο χρήστης αλλάζει χειροκίνητα τη γλώσσα
-    langSwitcher.addEventListener('change', (e) => {
-        const newLang = e.target.value;
-        setLanguage(newLang);
-        localStorage.setItem('preferredLang', newLang); // Αποθήκευση επιλογής
-    });
-
-    function setLanguage(lang) {
-        document.body.className = 'lang-' + lang;
+    // Συνάρτηση εμφάνισης μενού
+    function renderMenuPreviews(lang) {
+        if (!menuGrid) return;
+        menuGrid.innerHTML = '';
         
-        // Ενημέρωση όλων των στοιχείων που έχουν data-lang attributes
-        const elements = document.querySelectorAll('[data-lang-el]');
-        elements.forEach(el => {
-            if (lang === 'el') {
-                el.textContent = el.getAttribute('data-lang-el');
-            } else {
-                el.textContent = el.getAttribute('data-lang-en');
-            }
-        });
+        for (const categoryId in menuData) {
+            const category = menuData[categoryId][lang];
+            const card = document.createElement('div');
+            card.classList.add('menu-card');
+            card.setAttribute('role', 'button');
+            card.setAttribute('tabindex', '0');
+            card.dataset.categoryId = categoryId;
 
-        // Ενημέρωση και του Page Title
-        const titleEl = document.querySelector('title');
-        if (titleEl) {
-            titleEl.textContent = titleEl.getAttribute('data-lang-' + lang);
+            let html = `<h4>${category.title}</h4><div>`;
+            const itemsToDisplay = category.items.slice(0, 4);
+
+            itemsToDisplay.forEach(item => {
+                html += `
+                    <div class="menu-item">
+                        <strong>
+                            <span>${item.name}</span>
+                            <span class="price">€${item.price}</span>
+                        </strong>
+                        ${item.desc ? `<span class="muted">${item.desc}</span>` : ''}
+                    </div>`;
+            });
+            
+            html += '</div>';
+            card.innerHTML = html;
+            card.addEventListener('click', () => openModal(categoryId, lang));
+            menuGrid.appendChild(card);
         }
     }
+
+    // Συνάρτηση εφαρμογής γλώσσας
+    function setLanguage(lang) {
+        currentLang = lang;
+        body.className = 'lang-' + lang;
+        localStorage.setItem('preferredLang', lang);
+
+        // Ενημέρωση κειμένων data-lang
+        document.querySelectorAll('[data-lang-el], [data-lang-en]').forEach(el => {
+            const text = el.getAttribute(`data-lang-${lang}`);
+            if (el.tagName === 'TITLE') document.title = text;
+            else if (text) el.textContent = text;
+        });
+
+        // Ενημέρωση κουμπιών σημαίας
+        flagButtons.forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-lang-val') === lang);
+        });
+
+        renderMenuPreviews(lang);
+    }
+
+    // Event Listeners για σημαίες
+    flagButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            setLanguage(btn.getAttribute('data-lang-val'));
+        });
+    });
+
+    // Modal Logic
+    function openModal(categoryId, lang) {
+        const category = menuData[categoryId][lang];
+        modalTitle.textContent = category.title;
+        let html = '';
+        category.items.forEach(item => {
+            html += `
+                <div class="menu-item">
+                    <strong><span>${item.name}</span><span class="price">€${item.price}</span></strong>
+                    ${item.desc ? `<span class="muted">${item.desc}</span>` : ''}
+                </div>`;
+        });
+        modalContent.innerHTML = html;
+        modalOverlay.style.display = 'flex';
+        body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        modalOverlay.style.display = 'none';
+        body.style.overflow = '';
+    }
+
+    closeModalBtn.addEventListener('click', closeModal);
+    modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
+
+    // Εκκίνηση
+    setLanguage(currentLang);
 });
   </script>
   <script>
