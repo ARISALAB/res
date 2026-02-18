@@ -520,12 +520,12 @@
 </head>
 
 <body class="lang-el">
-   <div id="splash-screen">
+  <div id="splash-screen">
     <div class="splash-bg"></div>
     <div class="splash-content">
         <img src="favicon.ico.png" id="moving-logo" alt="Logo">
-        <h1 style="color:white; margin-top:20px;">Welcome to Pandrsou Garden Restaurant</h1>
-        <p style="color:var(--brand); letter-spacing:2px;">EST 1981</p>
+        <h1 id="splash-h1" data-lang-el="Καλωσορίσατε στον Κήπο της Πανδρόσου" data-lang-en="Welcome to Pandrosou Garden">Welcome to Pandrosou Garden</h1>
+        <p id="splash-p" data-lang-el="Εστιατόριο • Est. 1981" data-lang-en="Restaurant • Est. 1981">Restaurant • Est. 1981</p>
     </div>
 </div>
   <a href="#main-content" style="position: absolute; left: -9999px; background: #fff; color: #000; padding: 8px; z-index: 9999;">Skip to main content</a>
@@ -929,156 +929,43 @@ window.addEventListener('load', () => {
     };
 
 
-    document.addEventListener('DOMContentLoaded', () => {
-        // --- DOM Elements ---
-        const langSwitcher = document.getElementById('langSwitcher');
-        const body = document.body;
-        const menuGrid = document.getElementById('menu-grid');
-        const modalOverlay = document.getElementById('menuModal');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalContent = document.getElementById('modalContent');
-        const closeModalBtn = document.querySelector('.modal-content .close-btn');
-        
-        // --- 1. Language & Menu Rendering Logic ---
-        let currentLang = localStorage.getItem('selectedLang') || 'el';
+  document.addEventListener('DOMContentLoaded', () => {
+    const langSwitcher = document.getElementById('langSwitcher');
+    
+    // 1. Έλεγχος αν υπάρχει αποθηκευμένη γλώσσα, αλλιώς "en" (Αγγλικά) για πρώτη φορά
+    const savedLang = localStorage.getItem('preferredLang') || 'en';
+    
+    // 2. Εφαρμογή της γλώσσας κατά το φόρτωμα
+    setLanguage(savedLang);
+    langSwitcher.value = savedLang;
 
-        function renderMenuPreviews(lang) {
-            menuGrid.innerHTML = '';
-            
-            for (const categoryId in menuData) {
-                const category = menuData[categoryId][lang];
-                const card = document.createElement('div');
-                card.classList.add('menu-card');
-                card.setAttribute('role', 'button');
-                card.setAttribute('tabindex', '0');
-                card.dataset.categoryId = categoryId;
-
-                let html = `<h4>${category.title}</h4>`;
-                html += '<div>';
-                
-                // Preview 4 dishes
-                const itemsToDisplay = category.items.slice(0, 4);
-
-                itemsToDisplay.forEach(item => {
-                    html += `
-                        <div class="menu-item">
-                            <strong>
-                                <span>${item.name}</span>
-                                <span class="price">€${item.price}</span>
-                            </strong>
-                            ${item.desc ? `<span class="muted">${item.desc}</span>` : ''}
-                        </div>
-                    `;
-                });
-                
-                html += '</div>';
-                card.innerHTML = html;
-                
-                card.addEventListener('click', () => openModal(categoryId, lang));
-                card.addEventListener('keydown', (e) => { // Accessibility for keyboard users
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        openModal(categoryId, lang);
-                    }
-                });
-                
-                menuGrid.appendChild(card);
-            }
-        }
-
-        function setLanguage(lang) {
-            currentLang = lang;
-            body.classList.remove('lang-el', 'lang-en');
-            body.classList.add(`lang-${lang}`);
-            document.documentElement.lang = lang;
-            localStorage.setItem('selectedLang', lang);
-
-            document.querySelectorAll('[data-lang-el], [data-lang-en]').forEach(element => {
-                const text = element.getAttribute(`data-lang-${lang}`);
-                if (element.tagName === 'TITLE') {
-                    document.title = text;
-                } else if (element.tagName === 'META' && element.name === 'description') {
-                    element.setAttribute('content', text);
-                } else if (text) {
-                    // This handles text content for most elements, including spans inside the video tag
-                    if(element.tagName !== 'SPAN' || element.parentNode.tagName !== 'VIDEO') {
-                        element.textContent = text;
-                    }
-                }
-            });
-
-            // Specific handling for video fallback text (if needed, here we skip for simplicity)
-            
-            renderMenuPreviews(lang);
-        }
-
-        // --- 2. Modal (Pop-up) Logic ---
-        function openModal(categoryId, lang) {
-            const category = menuData[categoryId][lang];
-            modalTitle.textContent = category.title;
-            modalContent.innerHTML = '';
-
-            let html = '';
-            category.items.forEach(item => {
-                html += `
-                    <div class="menu-item">
-                        <strong>
-                            <span>${item.name}</span>
-                            <span class="price">€${item.price}</span>
-                        </strong>
-                        ${item.desc ? `<span class="muted">${item.desc}</span>` : ''}
-                    </div>
-                `;
-            });
-
-            modalContent.innerHTML = html;
-            modalOverlay.style.display = 'flex';
-            body.style.overflow = 'hidden';
-            closeModalBtn.focus(); // Focus on close button for a11y
-        }
-
-        function closeModal() {
-            modalOverlay.style.display = 'none';
-            body.style.overflow = '';
-        }
-
-        // Event Listeners for Modal
-        closeModalBtn.addEventListener('click', closeModal);
-        modalOverlay.addEventListener('click', (e) => {
-            if (e.target === modalOverlay) {
-                closeModal();
-            }
-        });
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modalOverlay.style.display === 'flex') {
-                closeModal();
-            }
-        });
-
-
-        // --- 3. Initialization and Listeners ---
-        langSwitcher.value = currentLang;
-        setLanguage(currentLang);
-
-        langSwitcher.addEventListener('change', (event) => {
-            setLanguage(event.target.value);
-        });
-
-        // Responsive Header Logic (Ensures correct display on resize)
-        const navMenu = document.querySelector('.nav-menu');
-        const mobileReserveBtn = document.getElementById('mobile-reserve-btn');
-        function updateHeaderLayout() {
-           if (window.innerWidth <= 768) {
-             navMenu.style.display = 'none';
-             mobileReserveBtn.style.display = 'flex';
-           } else {
-             navMenu.style.display = 'flex';
-             mobileReserveBtn.style.display = 'none';
-           }
-        }
-        updateHeaderLayout();
-        window.addEventListener('resize', updateHeaderLayout);
+    // 3. Listener για όταν ο χρήστης αλλάζει χειροκίνητα τη γλώσσα
+    langSwitcher.addEventListener('change', (e) => {
+        const newLang = e.target.value;
+        setLanguage(newLang);
+        localStorage.setItem('preferredLang', newLang); // Αποθήκευση επιλογής
     });
+
+    function setLanguage(lang) {
+        document.body.className = 'lang-' + lang;
+        
+        // Ενημέρωση όλων των στοιχείων που έχουν data-lang attributes
+        const elements = document.querySelectorAll('[data-lang-el]');
+        elements.forEach(el => {
+            if (lang === 'el') {
+                el.textContent = el.getAttribute('data-lang-el');
+            } else {
+                el.textContent = el.getAttribute('data-lang-en');
+            }
+        });
+
+        // Ενημέρωση και του Page Title
+        const titleEl = document.querySelector('title');
+        if (titleEl) {
+            titleEl.textContent = titleEl.getAttribute('data-lang-' + lang);
+        }
+    }
+});
   </script>
   <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -1170,4 +1057,3 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
-
