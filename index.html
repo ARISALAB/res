@@ -421,10 +421,113 @@
     padding: 18px; 
   }
 }
+
+
+
+
+/* Το Λογότυπο στο Splash Screen */
+/* Splash Screen Styles */
+#splash-screen {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    overflow: hidden;
+    background: #000; /* Προσωρινό μέχρι να φορτώσει η εικόνα */
+}
+
+.splash-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                url('garden-bg.jpg') no-repeat center center;
+    background-size: cover;
+    animation: kenBurns 6s ease-out forwards;
+    z-index: -1;
+}
+
+@keyframes kenBurns {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
+}
+
+/* Το λογότυπο που θα κινηθεί */
+#moving-logo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 2px solid var(--brand);
+    z-index: 10001;
+    transition: all 1.8s cubic-bezier(0.4, 0, 0.2, 1); /* Αυξημένος χρόνος για ομαλότητα */
+}
+
+.splash-content {
+    text-align: center;
+    transition: opacity 0.8s ease;
+}
+
+.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.splash-hidden {
+    opacity: 0;
+    visibility: hidden;
+    transition: all 1s ease-in-out;
+}
+#splash-screen h1 {
+  color: #fff;
+  font-size: clamp(24px, 5vw, 42px);
+  margin: 20px 0 5px;
+  text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+}
+
+#splash-screen p {
+  color: var(--brand);
+  letter-spacing: 3px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Κλάση που ενεργοποιείται μέσω JS για τη μετακίνηση του λογότυπου */
+.logo-fly-to-header {
+  position: fixed !important;
+  z-index: 10001;
+  width: 50px !important;   /* Το μέγεθος που έχει στο header */
+  height: 50px !important;
+  /* Υπολογίζουμε τη θέση της εικόνας στο header (πάνω αριστερά) */
+  top: 34px !important; 
+  left: calc(50% - 560px) !important; /* Προσαρμογή ανάλογα με το container σου */
+  transform: translate(0, 0) !important;
+}
+
+/* Σε κινητά η θέση του λογότυπου αλλάζει */
+@media (max-width: 768px) {
+  .logo-fly-to-header {
+    top: 20px !important;
+    left: 24px !important;
+  }
+}
+
+
+
+
+
   </style>
 </head>
 
 <body class="lang-el">
+   <div id="splash-screen">
+    <div class="splash-bg"></div>
+    <div class="splash-content">
+        <img src="favicon.ico.png" id="moving-logo" alt="Logo">
+        <h1 style="color:white; margin-top:20px;">Καλωσορίσατε στον Κήπο της Πανδρόσου</h1>
+        <p style="color:var(--brand); letter-spacing:2px;">EST 1981</p>
+    </div>
+</div>
   <a href="#main-content" style="position: absolute; left: -9999px; background: #fff; color: #000; padding: 8px; z-index: 9999;">Skip to main content</a>
   
   <div class="container">
@@ -639,7 +742,54 @@
     </div>
   </div>
 
+<script>
+window.addEventListener('load', () => {
+    const movingLogo = document.getElementById('moving-logo');
+    const splashScreen = document.getElementById('splash-screen');
+    
+    // Προσπαθούμε να βρούμε το λογότυπο με 2 τρόπους για ασφάλεια
+    const targetLogo = document.querySelector('.logo-img') || document.querySelector('.header-logo'); 
+
+    if (!targetLogo || !movingLogo) {
+        console.warn("Logo elements not found, skipping splash animation.");
+        if(splashScreen) splashScreen.classList.add('splash-hidden');
+        return;
+    }
+
+    // Κρύβουμε το λογότυπο του header αρχικά
+    targetLogo.style.opacity = '0'; 
+
+    setTimeout(() => {
+        const startRect = movingLogo.getBoundingClientRect();
+        const endRect = targetLogo.getBoundingClientRect();
+
+        // Υπολογισμός διαφοράς (FLIP animation)
+        const deltaX = endRect.left - startRect.left;
+        const deltaY = endRect.top - startRect.top;
+        const scale = endRect.width / startRect.width;
+
+        // Σβήνουμε τα κείμενα
+        document.querySelectorAll('.splash-content h1, .splash-content p').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transition = 'opacity 0.5s';
+        });
+
+        // ΟΜΑΛΗ ΚΙΝΗΣΗ
+        movingLogo.style.transformOrigin = 'top left';
+        movingLogo.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${scale})`;
+        
+        setTimeout(() => {
+            targetLogo.style.opacity = '1';
+            movingLogo.style.opacity = '0';
+            splashScreen.style.opacity = '0';
+            splashScreen.style.visibility = 'hidden';
+        }, 1800); 
+
+    }, 2500); 
+});
+</script>
   <script>
+    
     const menuData = {
         // Τα δεδομένα του μενού παραμένουν ίδια
         'cold-appetizers': {
