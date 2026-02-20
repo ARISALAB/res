@@ -10,554 +10,108 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="favicon.ico.png">
+  <link rel="stylesheet" href="style.css">
   
-  <style>
-    /* 1. Μεταβλητές (Variables) */
-    :root {
-      --bg: #0b0f16;
-      --card: #111827;
-      --muted: #9ca3af;
-      --text: #e5e7eb;
-      --brand: #22d3ee; /* Aqua */
-      --brand-dark: #00b3cc;
-      --ok: #10b981;
-      --err: #ef4444;
-      --shadow: 0 8px 24px rgba(0,0,0,.35);
-      --radius-sm: 8px;
-      --radius-xl: 20px;
-    }
-
-    /* 2. Βασικά Στυλ & Επαναφορά (Base Styles & Reset) */
-    * { box-sizing: border-box; }
-    html, body { min-height: 100%; scroll-behavior: smooth; }
-    body {
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
-      margin: 0;
-      color: var(--text);
-      background:
-        radial-gradient(ellipse 1200px 600px at 80% 0, rgba(124, 58, 237, 0.25), transparent 60%),
-        radial-gradient(ellipse 900px 500px at 0 0, rgba(34, 211, 238, 0.2), transparent 60%),
-        var(--bg);
-      background-attachment: fixed;
-    }
-
-    .container { max-width: 1180px; margin: 0 auto; padding: 24px; }
-    a { color: var(--brand); text-decoration: none; }
-    h2 { font-size: clamp(28px, 4vw, 36px); color: var(--text); margin-top: 0; }
-    .section { padding: 20px 0; }
-    
-    /* Global Button Styles */
-    .btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 8px 16px;
-        height: 40px;
-        border-radius: var(--radius-sm);
-        font-weight: 600;
-        cursor: pointer;
-        transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
-        text-transform: uppercase;
-        font-size: 14px;
-        white-space: nowrap;
-        border: 1px solid transparent;
-    }
-    .btn, .btn:visited {
-        color: var(--bg);
-        background-color: var(--brand);
-    }
-    .btn:hover {
-        background-color: var(--brand-dark);
-        box-shadow: 0 4px 12px rgba(34, 211, 238, 0.4);
-    }
-    .btn.secondary {
-        background-color: transparent;
-        border: 1px solid var(--brand);
-        color: var(--brand);
-    }
-    .btn.secondary:hover {
-        background-color: rgba(34, 211, 238, 0.1);
-        box-shadow: none;
-        color: var(--text);
-    }
-
-    /* Header & Navigation Styles */
-    header {
-      display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 10px 0 24px;
-    }
-    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-    .header-logo { height: 50px; width: 50px; border-radius: 50%; object-fit: cover; margin-right: 12px; display: block; }
-    h1 { font-size: clamp(22px, 3vw, 32px); margin: 0; }
-    .sub { color: var(--muted); margin-top: 4px; font-size: 14px; }
-    
-    header .inline {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-    }
-    #langSwitcher {
-        background: var(--card);
-        color: var(--text);
-        border: 1px solid rgba(255,255,255,.1);
-        padding: 8px 12px;
-        border-radius: var(--radius-sm);
-    }
-    .nav-menu a {
-        color: var(--text);
-        padding: 8px 12px;
-        transition: color 0.2s, background-color 0.2s;
-        border-radius: var(--radius-sm);
-    }
-    .nav-menu a:hover {
-        color: var(--brand);
-        background-color: var(--card);
-    }
-
-    /* Hero Section */
-    .hero {
-      background: rgba(255,255,255,.05);
-      border-radius: var(--radius-xl);
-      padding: 40px;
-      margin-bottom: 24px;
-      text-align: center;
-      box-shadow: var(--shadow);
-    }
-    .hero a.btn { height: 50px; font-size: 16px; }
-
-    /* --- Video/Carousel Styles (ΔΙΟΡΘΩΣΗ: Χρήση Aspect Ratio για πλήρη εμφάνιση σε όλα τα μεγέθη) --- */
-.carousel-container {
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow);
-  margin-bottom: 24px;
-  /* Ορίζουμε Aspect Ratio 16:9 (9 / 16 * 100 = 56.25%) */
-  height: 0; /* Μηδενίζουμε το ύψος */
-  padding-bottom: 56.25%; /* Αυτό δίνει το ύψος με βάση το πλάτος */
-  background-color: var(--card); 
+</head>
+<style>
+/* Hero Carousel Styling */
+.hero-carousel-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 30px 0;
+    width: 100%;
 }
 
-/* Video Styles */
-.hero-video {
-    position: absolute; /* Τοποθετούμε το βίντεο απόλυτα στο container */
-    top: 0;
-    left: 0;
+.hero-carousel-container {
     width: 100%;
-    height: 100%;
-    object-fit: cover; /* Default: Καλύπτει πλήρως το container (για cinematic look σε desktop) */
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.hero-carousel-track {
+    display: flex;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    gap: 15px;
+}
+
+.hero-img-item {
+    flex: 0 0 calc(33.333% - 10px);
+    min-width: calc(33.333% - 10px);
+}
+
+.hero-img-item img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
     display: block;
 }
-    /* Menu Grid & Card Styles (Clickable) */
-    .menu-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
-      margin-top: 20px;
-    }
 
-    .menu-card {
-      padding: 20px;
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: var(--radius-xl);
-      background: var(--card);
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-      min-height: 250px;
-      position: relative;
-    }
-
-    .menu-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 30px rgba(34, 211, 238, 0.15);
-    }
-
-    .menu-card h4 {
-      color: var(--brand);
-      border-bottom: 1px solid rgba(255,255,255,.1);
-      padding-bottom: 8px;
-      margin-top: 0;
-      font-size: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    
-    .menu-card h4::after {
-        content: '➜';
-        font-size: 14px;
-        color: var(--text);
-        opacity: 0.8;
-    }
-
-    .menu-item {
-      margin-bottom: 12px;
-      padding-top: 4px;
-      font-size: 15px;
-      border-bottom: 1px dotted rgba(255,255,255,0.05);
-    }
-
-    .menu-item strong {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      font-weight: 700;
-      margin-bottom: 2px;
-      color: var(--text);
-    }
-    
-    .price {
-      color: var(--ok);
-      font-weight: 700;
-      font-size: 16px;
-      flex-shrink: 0;
-      margin-left: 10px;
-    }
-
-    /* Info Grid Styles */
-    .info-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 24px;
-        margin-top: 24px;
-    }
-    .info-item {
-        padding: 20px;
-        border-radius: var(--radius-xl);
-        background: var(--card);
-        border: 1px solid rgba(255,255,255,.08);
-    }
-    .info-item h4 {
-        color: var(--brand);
-        border-bottom: 1px solid rgba(255,255,255,.1);
-        padding-bottom: 8px;
-        margin-top: 0;
-        font-size: 18px;
-    }
-    .info-item address, .info-item p {
-        margin: 8px 0;
-        font-style: normal;
-        line-height: 1.6;
-    }
-
-    /* Modal Styling */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-      backdrop-filter: blur(5px);
-    }
-    .modal-content {
-      background: var(--bg);
-      padding: 30px;
-      border-radius: var(--radius-xl);
-      max-width: 600px;
-      max-height: 90vh;
-      overflow-y: auto;
-      box-shadow: var(--shadow);
-      position: relative;
-      border: 1px solid var(--brand);
-    }
-    .modal-content h3 {
-      color: var(--brand);
-      margin-top: 0;
-      padding-bottom: 10px;
-      border-bottom: 1px solid rgba(255,255,255,.1);
-      font-size: 24px;
-    }
-    .modal-content .close-btn {
-      position: absolute;
-      top: 15px;
-      right: 20px;
-      background: none;
-      border: none;
-      color: var(--muted);
-      font-size: 24px;
-      cursor: pointer;
-      line-height: 1;
-      transition: color 0.2s;
-    }
-    .modal-content .close-btn:hover {
-        color: var(--err);
-    }
-
-    /* General Styles */
-    hr { border: none; border-top: 1px dashed rgba(255,255,255,0.1); margin: 30px 0; }
-    footer { margin: 26px 0; text-align: center; color: var(--muted); font-size: 12px; }
-
-  /* 4. Media Queries (Responsive) */
-@media (max-width: 768px) {
-  /* ΣΕ MOBILE: Κάνουμε το container ελαφρώς ψηλότερο */
-  .carousel-container { 
-      padding-bottom: 65%; /* Πιο ψηλή αναλογία για καλύτερη θέαση σε κινητά */
-  } 
-  
-  /* ΝΕΑ & ΟΡΙΣΤΙΚΗ ΔΙΟΡΘΩΣΗ: Χρησιμοποιούμε CONTAIN για να εμφανίζεται ΟΛΟΚΛΗΡΟ το βίντεο (χωρίς να κόβεται) */
-  .hero-video {
-      object-fit: contain;
-  }
-  
-  .modal-content { max-width: 90%; margin: 20px; padding: 20px; }
-  header { flex-direction: column; align-items: stretch; gap: 16px; }
-  header .inline { flex-direction: column; align-items: stretch; gap: 10px; width: 100%; }
-  header .inline > * { width: 100%; justify-content: center; }
-  .nav-menu { display: none !important; }
-  #mobile-reserve-btn { display: flex !important; }
-  #langSwitcher { width: 100%; }
-  .hero { padding: 30px 20px; }
-}
-
-/* Review Section Styles - ΝΕΑ ΔΟΜΗ ΓΙΑ ΚΑΡΟΥΖΕΛ (Διορθωμένο) */
-.reviews-section {
-  padding: 40px 0;
-  text-align: center;
-}
-.carousel-wrapper {
-  max-width: 1100px; /* Αυξάνω το max-width για καλύτερη εμφάνιση σε desktop */
-  margin: 0 auto;
-  overflow: hidden; 
-  position: relative;
-}
-.reviews-carousel {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-  gap: 24px; /* Χρησιμοποιούμε gap για τα κενά */
-}
-.review-card {
-  padding: 20px;
-  border-radius: var(--radius-xl);
-  background: var(--card);
-  border: 1px solid rgba(255,255,255,.08);
-  text-align: left;
-  box-shadow: 0 4px 12px rgba(0,0,0,.2);
-  
-  /* Υπολογισμός πλάτους για 3 κάρτες (100% - 2 κενά) / 3 */
-  flex: 0 0 calc((100% - 48px) / 3); 
-  box-sizing: border-box;
-}
-
-/* Στυλ για τα κουμπιά πλοήγησης */
-.carousel-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
-  z-index: 10;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0.8;
-  transition: opacity 0.3s;
-}
-.carousel-btn:hover {
-  opacity: 1;
-  background-color: rgba(0, 0, 0, 0.9);
-}
-.carousel-btn.prev {
-  left: 10px;
-}
-.carousel-btn.next {
-  right: 10px;
-}
-
-/* Στυλ για avatar και header */
-.review-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-.review-avatar {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  object-fit: cover;
-  background-color: var(--muted);
-  border: 2px solid var(--brand);
-  flex-shrink: 0;
-}
-.review-card .rating {
-  color: var(--ok);
-  font-size: 1.2em;
-  margin-top: 4px; 
-}
-.review-card .author {
-  display: block;
-  font-weight: 700;
-  margin: 0;
-  color: var(--text); 
-}
-.review-card .date {
-  font-size: 12px;
-  color: var(--muted);
-}
-.review-card .text {
-  font-size: 15px;
-  color: var(--text);
-  line-height: 1.5;
-  margin-top: 0;
-}
-
-/* MEDIA QUERY: Για Κινητά (Διορθωμένο) */
-@media (max-width: 900px) {
-  .reviews-carousel {
-     gap: 0; /* Μηδενίζουμε το κενό */
-  }
-  .review-card {
-    flex: 0 0 100%; /* 1 κάρτα ανά γραμμή */
-    padding: 18px; 
-  }
-}
-
-
-
-
-/* Το Λογότυπο στο Splash Screen */
-/* Splash Screen Styles */
-#splash-screen {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-    overflow: hidden;
-    background: #000; /* Προσωρινό μέχρι να φορτώσει η εικόνα */
-}
-
-.splash-bg {
+/* Βελάκια με εφέ Hover */
+.hero-nav-btn {
     position: absolute;
-    inset: 0;
-    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-                url('garden-bg.jpg') no-repeat center center;
-    background-size: cover;
-    animation: kenBurns 6s ease-out forwards;
-    z-index: -1;
-}
-
-@keyframes kenBurns {
-    from { transform: scale(1); }
-    to { transform: scale(1.1); }
-}
-
-/* Το λογότυπο που θα κινηθεί */
-#moving-logo {
-    width: 150px;
-    height: 150px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
-    border: 2px solid var(--brand);
-    z-index: 10001;
-    transition: all 1.8s cubic-bezier(0.4, 0, 0.2, 1); /* Αυξημένος χρόνος για ομαλότητα */
+    cursor: pointer;
+    z-index: 10;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    opacity: 0; /* Κρυφά από προεπιλογή */
+    transition: opacity 0.3s ease, background 0.2s;
 }
 
-.splash-content {
-    text-align: center;
-    transition: opacity 0.8s ease;
+/* Εμφάνιση βελών όταν το ποντίκι είναι πάνω στο wrapper */
+.hero-carousel-wrapper:hover .hero-nav-btn {
+    opacity: 1;
 }
 
-.fade-out {
-    opacity: 0;
-    pointer-events: none;
-}
+.hero-nav-btn.prev { left: 10px; }
+.hero-nav-btn.next { right: 10px; }
 
-.splash-hidden {
-    opacity: 0;
-    visibility: hidden;
-    transition: all 1s ease-in-out;
-}
-#splash-screen h1 {
-  color: #fff;
-  font-size: clamp(24px, 5vw, 42px);
-  margin: 20px 0 5px;
-  text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
-}
-
-#splash-screen p {
-  color: var(--brand);
-  letter-spacing: 3px;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
-/* Κλάση που ενεργοποιείται μέσω JS για τη μετακίνηση του λογότυπου */
-.logo-fly-to-header {
-  position: fixed !important;
-  z-index: 10001;
-  width: 50px !important;   /* Το μέγεθος που έχει στο header */
-  height: 50px !important;
-  /* Υπολογίζουμε τη θέση της εικόνας στο header (πάνω αριστερά) */
-  top: 34px !important; 
-  left: calc(50% - 560px) !important; /* Προσαρμογή ανάλογα με το container σου */
-  transform: translate(0, 0) !important;
-}
-
-/* Σε κινητά η θέση του λογότυπου αλλάζει */
+/* Mobile προσαρμογή */
 @media (max-width: 768px) {
-  .logo-fly-to-header {
-    top: 20px !important;
-    left: 24px !important;
-  }
+    .hero-img-item {
+        flex: 0 0 100%;
+        min-width: 100%;
+    }
+    .hero-carousel-track { gap: 0; }
+    .hero-nav-btn { opacity: 0.7; width: 35px; height: 35px; } /* Πιο διακριτικά στα κινητά */
 }
-
-
-
-.lang-switcher-flags {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-
-.lang-flag-btn {
-  background: none;
-  border: 2px solid transparent;
-  padding: 2px;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  opacity: 0.5; /* Μη επιλεγμένο */
-  filter: grayscale(40%);
-}
-
-.lang-flag-btn img {
-  width: 28px;
-  height: auto;
-  border-radius: 2px;
-  display: block;
-}
-
-/* Το στυλ για την επιλεγμένη γλώσσα */
-.lang-flag-btn.active {
-  opacity: 1;
-  filter: grayscale(0%);
-  border-color: var(--brand);
-  transform: scale(1.1);
-  box-shadow: 0 0 10px rgba(34, 211, 238, 0.3);
-}
-
-.lang-flag-btn:hover {
-  opacity: 1;
-  filter: grayscale(0%);
-}
-
-  </style>
-</head>
-
+</style>
 <body class="lang-el">
+    <div id="historyModal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-content" style="max-width: 700px;">
+        <button class="close-history" style="position: absolute; top: 15px; right: 20px; background: none; border: none; color: var(--muted); font-size: 24px; cursor: pointer;">&times;</button>
+        <h3 data-lang-el="Η Ιστορία μας" data-lang-en="Our History">Η Ιστορία μας</h3>
+        <div style="line-height: 1.6; text-align: left; font-size: 15px;">
+            <p data-lang-el="Η οδός Πανδρόσου δεν είναι ένας τυχαίος δρόμος· από τον 19ο αιώνα υπήρξε το κέντρο του εμπορίου της πόλης, φιλοξενώντας τα περίφημα «αμπατζίδικα» (εργαστήρια υφασμάτων) και αργότερα τους καλύτερους τεχνίτες δερμάτινων ειδών και λαϊκής τέχνης." 
+               data-lang-en="Pandrosou Street is no ordinary street; since the 19th century, it has been the city's commercial center, housing the famous 'abatzidika' (fabric workshops) and later the finest leather goods and folk art craftsmen."></p>
+            
+            <p data-lang-el="Μέσα σε αυτό το ιστορικό πλαίσιο, το εστιατόριό μας δημιουργήθηκε με σκοπό να προσφέρει στον επισκέπτη μια αυθεντική εμπειρία ελληνικής γαστρονομίας, μακριά από τον θόρυβο της πόλης, αλλά ακριβώς στο κέντρο της."
+               data-lang-en="Within this historical context, our restaurant was created to offer visitors an authentic Greek gastronomy experience, away from the city noise, yet right in its heart."></p>
+            
+            <h4 style="color: var(--brand); margin-top: 20px;" data-lang-el="Η Φιλοσοφία μας" data-lang-en="Our Philosophy">Η Φιλοσοφία μας</h4>
+            <p data-lang-el="Το όνομά μας, 'Garden', δεν είναι τυχαίο. Στόχος μας ήταν να δημιουργήσουμε έναν χώρο που να θυμίζει τις παλιές αθηναϊκές αυλές, όπου η μυρωδιά του φρεσκοψημένου φαγητού και η δροσιά του «κήπου» μας προσφέρουν στιγμές χαλάρωσης κάτω από το αττικό φως."
+               data-lang-en="Our name, 'Garden', is no accident. Our goal was to create a space reminiscent of old Athenian courtyards, where the aroma of freshly cooked food and the coolness of our 'garden' offer moments of relaxation under the Attic light."></p>
+            
+            <p data-lang-el="Με σεβασμό στην παράδοση και μεράκι για την ποιότητα, επιλέγουμε αγνά τοπικά υλικά για να αναδείξουμε τις κλασικές ελληνικές συνταγές. Από το παραδοσιακό μουσακά μέχρι τις φρέσκες σαλάτες και τα εκλεκτά κρεατικά μας, κάθε πιάτο είναι ένα ταξίδι στις γεύσεις της πατρίδας μας."
+               data-lang-en="With respect for tradition and a passion for quality, we select pure local ingredients to showcase classic Greek recipes. From traditional moussaka to fresh salads and fine meats, every dish is a journey through the flavors of our homeland."></p>
+            
+            <h4 style="color: var(--brand); margin-top: 20px;" data-lang-el="Σήμερα" data-lang-en="Today">Σήμερα</h4>
+            <p data-lang-el="Μετά από χρόνια λειτουργίας, το Pandrosou Garden συνεχίζει να υποδέχεται επισκέπτες από όλο τον κόσμο, προσφέροντας όχι μόνο φαγητό, αλλά και ένα κομμάτι της αθηναϊκής κληρονομιάς. Σας περιμένουμε στον «κήπο» μας για να γράψουμε μαζί τις επόμενες σελίδες της ιστορίας μας, με θέα τη διαχρονική γοητεία της Πλάκας."
+               data-lang-en="After years of operation, Pandrosou Garden continues to welcome visitors from all over the world, offering not just food, but a piece of Athenian heritage. We wait for you in our 'garden' to write the next pages of our history together, overlooking the timeless charm of Plaka."></p>
+        </div>
+    </div>
+</div>
   <div id="splash-screen">
     <div class="splash-bg"></div>
     <div class="splash-content">
@@ -569,38 +123,52 @@
   <a href="#main-content" style="position: absolute; left: -9999px; background: #fff; color: #000; padding: 8px; z-index: 9999;">Skip to main content</a>
   
   <div class="container">
-    <header>
-     <a href="index.html" class="brand"> 
-    <img src="favicon.ico.png" alt="Λογότυπο Ο Κήπος της Πανδρόσου" class="header-logo">
-    <div>
-        <h1 data-lang-el="Ο Κήπος της Πανδρόσου" data-lang-en="Pandrosou Garden">Ο Κήπος της Πανδρόσου</h1>
-        
-        <div class="sub" data-lang-el="Εστιατόριο · Πλάκα, Αθήνα" data-lang-en="Restaurant · Plaka, Athens">
-            Εστιατόριο · Πλάκα, Αθήνα
+   <header>
+    <a href="index.html" class="brand"> 
+        <img src="favicon.ico.png" alt="Λογότυπο" class="header-logo">
+        <div>
+            <h1 data-lang-el="Ο Κήπος της Πανδρόσου" data-lang-en="Pandrosou Garden">Ο Κήπος της Πανδρόσου</h1>
+            <div class="sub" data-lang-el="Εστιατόριο · Πλάκα, Αθήνα" data-lang-en="Restaurant · Plaka, Athens">Εστιατόριο · Πλάκα, Αθήνα</div>
+        </div>
+    </a>
+
+    <nav class="nav-menu desktop-only">
+        <a href="index.html#menu" data-lang-el="Μενού" data-lang-en="Menu">Μενού</a>
+        <a href="history.html" data-lang-el="Ιστορία" data-lang-en="History">Ιστορία</a>
+        <a href="index.html#info" data-lang-el="Πληροφορίες" data-lang-en="Information">Πληροφορίες</a>
+        <a href="reservations.html" class="btn secondary" data-lang-el="Κράτηση" data-lang-en="Reservation">Κράτηση</a>
+        <div class="lang-switcher-flags">
+            <button class="lang-flag-btn" data-lang-val="en"><img src="https://flagcdn.com/w40/gb.png" alt="EN"></button>
+            <button class="lang-flag-btn" data-lang-val="el"><img src="https://flagcdn.com/w40/gr.png" alt="EL"></button>
+        </div>
+    </nav>
+
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+</header>
+
+<div id="mobileModal" class="mobile-nav-modal">
+    <div class="mobile-modal-content">
+        <button class="close-mobile-modal" id="closeMobileModal">&times;</button>
+        <nav class="mobile-links">
+            <a href="index.html#menu" data-lang-el="Μενού" data-lang-en="Menu">Μενού</a>
+            <a href="history.html" data-lang-el="Ιστορία" data-lang-en="History">Ιστορία</a>
+            <a href="index.html#info" data-lang-el="Πληροφορίες" data-lang-en="Information">Πληροφορίες</a>
+            <a href="reservations.html" data-lang-el="Κάντε Κράτηση" data-lang-en="Make a Reservation" style="color: var(--brand); font-weight: bold;">Κάντε Κράτηση</a>
+        </nav>
+        <hr>
+        <div class="mobile-lang-switcher">
+            <p data-lang-el="Επιλογή Γλώσσας:" data-lang-en="Select Language:">Επιλογή Γλώσσας:</p>
+            <div class="lang-flags">
+                <button class="lang-flag-btn" data-lang-val="en"><img src="https://flagcdn.com/w40/gb.png" alt="English"> EN</button>
+                <button class="lang-flag-btn" data-lang-val="el"><img src="https://flagcdn.com/w40/gr.png" alt="Ελληνικά"> EL</button>
+            </div>
         </div>
     </div>
-</a>
-
-    <div class="lang-switcher-flags">
-  <button class="lang-flag-btn" data-lang-val="en" title="English">
-    <img src="https://flagcdn.com/w40/gb.png" alt="English">
-  </button>
-  <button class="lang-flag-btn" data-lang-val="el" title="Ελληνικά">
-    <img src="https://flagcdn.com/w40/gr.png" alt="Ελληνικά">
-  </button>
 </div>
-        
-        <nav class="nav-menu">
-          <a href="#menu" data-lang-el="Μενού" data-lang-en="Menu">Μενού</a>
-          <a href="#info" data-lang-el="Πληροφορίες" data-lang-en="Information">Πληροφορίες</a>
-          <a href="reservations.html" class="btn secondary" data-lang-el="Κράτηση" data-lang-en="Reservation">Κράτηση</a>
-        </nav>
-
-        <a id="mobile-reserve-btn" href="reservations.html" class="btn" style="display: none;">
-          <span data-lang-el="🗓️ Κράτηση" data-lang-en="🗓️ Reservation">🗓️ Κράτηση</span>
-        </a>
-      </div>
-    </header>
 
     <main id="main-content">
       <div class="video-hero-container carousel-container" role="region" aria-label="Video of Pandrosou Garden">
@@ -609,16 +177,39 @@
               <span data-lang-el="Ο περιβάλλοντας χώρος του εστιατορίου" data-lang-en="The ambiance of the restaurant">Ο περιβάλλοντας χώρος του εστιατορίου</span>
           </video>
       </div>
-      <section class="hero">
-        <h2 data-lang-el="Όαση γεύσεων στην καρδιά της Πλάκας" data-lang-en="An oasis of flavors in the heart of Plaka.">Όαση γεύσεων στην καρδιά της Πλάκας.</h2>
-        <p data-lang-el='Σας καλωσορίζουμε στον Κήπο της Πανδρόσου. Ένα καταφύγιο δροσιάς και γαλήνης, όπου η αθηναϊκή φιλοξενία συναντά τις αυθεντικές, εποχικές γεύσεις της Μεσογείου' data-lang-en='We welcome you to Pandrosou Garden. A haven of coolness and serenity, where Athenian hospitality meets authentic, seasonal Mediterranean flavors.'>
-          Σας καλωσορίζουμε στον Κήπο της Πανδρόσου. Ένα καταφύγιο δροσιάς και γαλήνης, όπου η αθηναϊκή φιλοξενία συναντά τις αυθεντικές, εποχικές γεύσεις της Μεσογείου
-        </p>
-        <a href="reservations.html" class="btn">
-          <span data-lang-el="🍽️ Κάνε την κράτησή σου τώρα" data-lang-en="🍽️ Book your table now">🍽️ Κάνε την κράτησή σου τώρα</span>
-        </a>
-      </section>
 
+<section class="hero">
+  <h2 data-lang-el="Ένας «Κήπος» στην Καρδιά της Ιστορικής Αθήνας" data-lang-en="A 'Garden' in the Heart of Historic Athens">Ένας «Κήπος» στην Καρδιά της Ιστορικής Αθήνας</h2>
+  
+  <p>
+    <span data-lang-el="Στον θρυλικό πεζόδρομο της οδού Πανδρόσου, εκεί όπου ο παλμός της αρχαίας Αγοράς συναντά τη ζωντάνια της σύγχρονης Αθήνας, το Pandrosou Garden αποτελεί μια όαση γεύσης και φιλοξενίας." 
+          data-lang-en="On the legendary pedestrian street of Pandrosou, where the pulse of the ancient Agora meets the vitality of modern Athens, Pandrosou Garden is an oasis of taste and hospitality.">
+      Στον θρυλικό πεζόδρομο της οδού Πανδρόσου, εκεί όπου ο παλμός της αρχαίας Αγοράς συναντά τη ζωντάνια της σύγχρονης Αθήνας, το Pandrosou Garden αποτελεί μια όαση γεύσης και φιλοξενίας.
+    </span>
+  </p>
+
+  <div class="hero-carousel-wrapper">
+      <button class="hero-nav-btn prev" id="heroPrev" aria-label="Previous slide">&#10094;</button>
+      <div class="hero-carousel-container">
+        <div class="hero-carousel-track" id="heroTrack">
+    <div class="hero-img-item"><img src="garden-bg.jpg" alt="Garden 1"></div>
+    <div class="hero-img-item"><img src="101.jpg" alt="Garden 2"></div>
+    <div class="hero-img-item"><img src="102.jpg" alt="Garden 3"></div>
+    <div class="hero-img-item"><img src="104.jpg" alt="Garden 5"></div>
+    <div class="hero-img-item"><img src="105.jpg" alt="Garden 6"></div>
+    <div class="hero-img-item"><img src="106.jpg" alt="Garden 7"></div>
+    <div class="hero-img-item"><img src="107.jpg" alt="Garden 8"></div>
+    <div class="hero-img-item"><img src="108.jpg" alt="Garden 9"></div>
+    <div class="hero-img-item"><img src="109.jpg" alt="Garden 10"></div>
+</div>
+      </div>
+      <button class="hero-nav-btn next" id="heroNext" aria-label="Next slide">&#10095;</button>
+  </div>
+
+  <a href="history.html" class="btn">
+    <span data-lang-el="Περισσότερα" data-lang-en="Read More">Περισσότερα</span>
+  </a>
+</section>
       <hr>
 
       <section id="menu" class="section">
@@ -784,294 +375,59 @@
   </div>
 
 <script>
-window.addEventListener('load', () => {
-    const movingLogo = document.getElementById('moving-logo');
-    const splashScreen = document.getElementById('splash-screen');
-    
-    // Προσπαθούμε να βρούμε το λογότυπο με 2 τρόπους για ασφάλεια
-    const targetLogo = document.querySelector('.logo-img') || document.querySelector('.header-logo'); 
+(function() {
+    const splashShown = sessionStorage.getItem('splashShown');
+    const splash = document.getElementById('splash-screen');
+    const targetLogo = document.querySelector('.logo-img') || document.querySelector('.header-logo');
 
-    if (!targetLogo || !movingLogo) {
-        console.warn("Logo elements not found, skipping splash animation.");
-        if(splashScreen) splashScreen.classList.add('splash-hidden');
-        return;
+    // ΑΝ ΔΕΝ ΤΟ ΕΧΕΙ ΞΑΝΑΔΕΙ: Το εμφανίζουμε αμέσως
+    if (!splashShown) {
+        if (splash) splash.style.display = 'flex';
+        if (targetLogo) targetLogo.style.opacity = '0';
+    } else {
+        // ΑΝ ΤΟ ΕΧΕΙ ΞΑΝΑΔΕΙ: Το κρατάμε κρυμμένο και δείχνουμε το λογότυπο
+        if (targetLogo) targetLogo.style.opacity = '1';
+        return; // Τερματισμός, δεν τρέχει τίποτα άλλο
     }
 
-    // Κρύβουμε το λογότυπο του header αρχικά
-    targetLogo.style.opacity = '0'; 
-
-    setTimeout(() => {
-        const startRect = movingLogo.getBoundingClientRect();
-        const endRect = targetLogo.getBoundingClientRect();
-
-        // Υπολογισμός διαφοράς (FLIP animation)
-        const deltaX = endRect.left - startRect.left;
-        const deltaY = endRect.top - startRect.top;
-        const scale = endRect.width / startRect.width;
-
-        // Σβήνουμε τα κείμενα
-        document.querySelectorAll('.splash-content h1, .splash-content p').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transition = 'opacity 0.5s';
-        });
-
-        // ΟΜΑΛΗ ΚΙΝΗΣΗ
-        movingLogo.style.transformOrigin = 'top left';
-        movingLogo.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${scale})`;
+    // Το animation τρέχει μόνο αν φτάσουμε εδώ (δηλαδή αν δεν υπάρχει το splashShown)
+    window.addEventListener('load', () => {
+        const movingLogo = document.getElementById('moving-logo');
         
         setTimeout(() => {
-            targetLogo.style.opacity = '1';
-            movingLogo.style.opacity = '0';
-            splashScreen.style.opacity = '0';
-            splashScreen.style.visibility = 'hidden';
-        }, 1800); 
+            const startRect = movingLogo.getBoundingClientRect();
+            const endRect = targetLogo.getBoundingClientRect();
 
-    }, 2500); 
-});
-</script>
-  <script>
-    
-    const menuData = {
-        // Τα δεδομένα του μενού παραμένουν ίδια
-        'cold-appetizers': {
-            el: { title: "Αρχίζοντας με...", items: [
-                { name: "Χωριάτικο ψωμί με ελιές καλαμών & σάλτσα ντομάτας", desc: null, price: "2.00" },
-                { name: "Τζατζίκι παραδοσιακό", desc: null, price: "6.50" },
-                { name: "Τυροκαυτερή", desc: null, price: "7.00" },
-                { name: "Παραδοσιακή Ταραμοσαλότα", desc: null, price: "7.00" },
-                { name: "Φάβα ''Παντρεμένη'' Σχοινούσας με καραμελωμένο κρεμμύδι", desc: null, price: "8.00" }
-            ]},
-            en: { title: "To start with...", items: [
-                { name: "Village Bread with Kalamata olives & tomato sauce", desc: null, price: "2.00" },
-                { name: "Traditional Tzatziki", desc: null, price: "6.50" },
-                { name: "Tirokafteri (Spicy Feta Cheese Dip)", desc: null, price: "7.00" },
-                { name: "Traditional Taramasalata", desc: null, price: "7.00" },
-                { name: "''Married'' Schinoussa Fava with caramelized onion", desc: null, price: "8.00" }
-            ]}
-        },
-        'hot-appetizers': {
-            el: { title: "Ζεστά Ορεκτικά", items: [
-                { name: "Σαγανάκι κεφαλοτύρι", desc: null, price: "10.50" },
-                { name: "Κολοκυθοανθοι γεμιστοί", desc: null, price: "12.00" },
-                { name: "Ντολμαδάκια γιαλαντζι", desc: "γεμιστά αμπελόφυλλα με ρύζι", price: "12.00" },
-                { name: "Σπανακόπιτα με τυρί χειροποίητη", desc: null, price: "9.00" },
-                { name: "Κολοκυθάκια τηγανητά με τζατζικι", desc: null, price: "11.00" },
-                { name: "Παραδοσιακά κεφτεδάκια με πατάτες", desc: null, price: "12.00" },
-                { name: "Τηγανιά – μπουκές χοιρινές σιγανομαγειρεμένες", desc: "σε λάδι, κρασί, με πατάτες", price: "14.00" },
-                { name: "Λουκάνικα σχάρας χοιρινά γεμιστά", desc: "με φέτα, λιαστή ντομάτα και πατάτες τσιπς", price: "13.00" },
-                { name: "Καλαμάρι τηγανητό*", desc: null, price: "14.00" },
-                { name: "Μύδια αχνιστά* με φρέσκα αρωματικά", price: "15.00" },
-                { name: "Χταπόδι* σχάρας με πουρέ-φάβα", desc: null, price: "24.00" }
-            ]},
-            en: { title: "Hot Appetizers", items: [
-                { name: "Saganaki Kefalotiri", desc: null, price: "10.50" },
-                { name: "Zucchini flowers stuffed with rice", desc: null, price: "12.00" },
-                { name: "''Dolmades'' stuffed vine leaves with rice", desc: null, price: "12.00" },
-                { name: "Homemade Spinach Pie with cheese", desc: null, price: "9.00" },
-                { name: "Fried Zucchini with Tzatziki dip", desc: null, price: "11.00" },
-                { name: "Fried Meatballs with fried potatoes", desc: null, price: "12.00" },
-                { name: "Tigania - Pork bites slowly cooked", desc: "in oil, wine, lemon thyme, and mild spices with potatoes", price: "14.00" },
-                { name: "Grilled Pork Sausages stuffed", desc: "with feta cheese, sun-dried tomato and potato chips", price: "13.00" },
-                { name: "Fried Calamari*", desc: null, price: "14.00" },
-                { name: "Steamed Mussels* with fresh herbs", desc: null, price: "15.00" },
-                { name: "Grilled Octopus* with fava bean", desc: null, price: "24.00" }
-            ]}
-        },
-        'salads': {
-            el: { title: "Σαλάτες", items: [
-                { name: "Caprese Greca Σαλάτα", desc: "Ντοματίνια, μελιτζάνες, ήπια φέτα, ντρέσινγκ βασιλικού.", price: "12.00" },
-                { name: "Παντζαροσαλάτα με καρύδια", desc: "Γαλομυζήθρα, αγγουράκι τουρσί, αρωματικά βότανα.", price: "13.00" },
-                { name: "Χωριάτικη Σαλάτα Ελληνική παραδοσιακή", desc: null, price: "12.00" },
-                { name: "Ντάκος Κρητικός", desc: "Με κρίθινο κρητικό, φρέσκια ντομάτα και κρητικό τυρί.", price: "12.00" },
-                { name: "Χόρτα & Κολοκυθάκια αχνιστά", desc: "με Τυρί Φέτα σχάρας, ψητή Ντομάτα και ντρέσινγκ δυόσμου", price: "13.00" }
-            ]},
-            en: { title: "Salads", items: [
-                { name: "Greek Caprese Salad", desc: "Cherry tomatoes, eggplant, mild feta cheese, basil dressing.", price: "12.00" },
-                { name: "Beetroot Salad with walnut", desc: "Galomyzithra cheese, pickled cucumber, aromatic herbs.", price: "13.00" },
-                { name: "Traditional Greek Salad", desc: null, price: "12.00" },
-                { name: "Cretan Dakos", desc: "With Cretan barley rusk, fresh tomato and Cretan cheese.", price: "12.00" },
-                { name: "Steamed Greens & Zucchini", desc: "with grilled Feta cheese, roasted Tomato, and mint dressing", price: "13.00" }
-            ]}
-        },
-        'main-dishes': {
-            el: { title: "Μαγειρευτά Παραδοσιακά", items: [
-                { name: "Παραδοσιακός Μουσακάς", desc: "Μελιτζάνα, πατάτα, κιμάς, κρέμα μπεσαμέλ.", price: "14.00" },
-                { name: "Παστίτσιο", desc: "Ζυμαρικά φούρνου με κιμά και κρέμα μπεσαμέλ.", price: "13.00" },
-                { name: "Γεμιστά παραδοσιακά", desc: "Ντομάτα & πιπεριά γεμιστή με ρύζι", price: "12.00" },
-                { name: "Γιουβέτσι μοσχαράκι με κεφαλοραβιέρα", desc: null, price: "20.00" },
-                { name: "Αρνάκι στο φούρνο με πατατες", desc: null, price: "24.00" }
-            ]},
-            en: { title: "Traditional Cooked Dishes", items: [
-                { name: "Moussaka", desc: "Layer of eggplant, potato, minced meat, bechamel cream.", price: "14.00" },
-                { name: "Pasticcio", desc: "Oven pasta with minced meat & bechamel cream.", price: "13.00" },
-                { name: "Stuffed tomato & bell pepper", desc: "with rice & aromatic herbs", price: "12.00" },
-                { name: "Giouvetsi Veal with kefalograviera cheese", desc: null, price: "20.00" },
-                { name: "Oven-Baked Lamb with Potatoes", desc: null, price: "24.00" }
-            ]}
-        },
-        'pasta': {
-            el: { title: "Ζυμαρικά", items: [
-                { name: "Λιγκουίνι Μπολωνέζ", desc: "Με κιμά, σπιτική σάλτσα ντομάτας και φρέσκα βότανα", price: "12.00" },
-                { name: "Λιγκουινι Νοπολιτεν", desc: "Με σπιτική σάλτσα ντομάτας", price: "10.00" },
-                { name: "Σκιουφιχτά παραδοσιακά ζυμαρικά ''Al limone''", desc: "με καπνιστό σύγλινο (αλλαντικό)", price: "11.50" },
-                { name: "Γιουβετσάδα* (κριθαρότο) θαλασσινών", desc: null, price: "21.00" },
-                { name: "Γαριδομακαρονάδα* με κόκκινη σάλτσα", desc: "και μπισκ γαρίδας", price: "22.00" }
-            ]},
-            en: { title: "Pasta", items: [
-                { name: "Linguini with minced meat", desc: "Homemade tomato sauce, and fresh herbs", price: "12.00" },
-                { name: "Linguini with homemade tomato sauce", desc: null, price: "10.00" },
-                { name: "Skioufichta Traditional Pasta ''Al limone''", desc: "with smoked syglino (cured pork)", price: "11.50" },
-                { name: "Seafood* Giouvetsada (Orzotto)", desc: null, price: "21.00" },
-                { name: "Shrimp* Spaghetti with homemade tomato sauce", desc: "and shrimp bisque", price: "22.00" }
-            ]}
-        },
-        'grill': {
-            el: { title: "Από την Σχάρα", items: [
-                { name: "Γύρος χοιρινός με πίτα, πατάτες, τζατζίκι", desc: "πίτα ψητή, πατάτες τηγανιτές, ντομάτα ψητή", price: "16.00" },
-                { name: "Σουβλάκι κοτόπουλο με πίτα, πατάτες, μουστάρδα ντιπ", desc: "πατάτες τηγανιτές", price: "15.00" },
-                { name: "Kεμπάπ με πίτα, μαριναρισμένο κρεμμύδι, τζατζίκι", desc: "και κέτσαπ ντιπ", price: "16.00" },
-                { name: "Φιλέτο μπούτι κοτόπουλο μαριναρισμένο στην σχάρα", desc: null, price: "16.00" },
-                { name: "Γύρος κοτόπουλο με πίτα, πατάτυες τηγανιτές, μουστάρδα ντιπ", desc: null, price: "16.00" },
-                { name: "T-bone Μοσχαρισια γάλακτος με πατάτες & BBQ sauce", desc: null, price: "33.00" },
-                { name: "Tomahawk με πατάτες & BBQ sauce", desc: null, price: "24.00" }
-            ]},
-            en: { title: "From our grill", items: [
-                { name: "Pork ''Gyros'' with pita bread, fries, tzatziki", desc: "pita bread, fries, roasted tomato, tzatziki", price: "16.00" },
-                { name: "Chicken Souvlaki with pita bread, fries, mustard dip", desc: "fries", price: "15.00" },
-                { name: "Kebab on the grill with pita bread, marinated onion, tzatziki", desc: "and ketchup", price: "16.00" },
-                { name: "Marinated Boneless Chicken Thigh Fillet grilled", desc: null, price: "16.00" },
-                { name: "Chicken ''Gyros'' with pita bread, fries, mustard dip", desc: null, price: "16.00" },
-                { name: "T-bone with potatoes & BBQ sauce", desc: null, price: "33.00" },
-                { name: "Tomahawk with potatoes & BBQ sauce", desc: null, price: "24.00" }
-            ]}
-        },
-        'seafood-desserts': {
-            el: { title: "Θαλασσινά & Γλυκός Επίλογος", items: [
-                { name: "Γαρίδες* σχάρας ψητές", desc: null, price: "22.00" },
-                { name: "Σαγανάκι θαλασσινών", desc: "γαρίδες*, μύδια* με σάλτσα ντομάτας και φέτα", price: "19.00" },
-                { name: "Τσιπούρα στην σχάρα με λαχανικά", desc: null, price: "23.00" },
-                { name: "Λαβράκι σχάρας με λαχανικά", desc: null, price: "24.00" },
-                { name: "Μπακλαβάς", desc: "(Γλυκός Επίλογος)", price: "9.00" },
-                { name: "Εκμέκ κανταΐφι παγωτό", desc: "(Γλυκός Επίλογος)", price: "12.00" },
-                { name: "Παγωτό καϊμάκι / βανίλια (1 μπάλα)", desc: "(Γλυκός Επίλογος)", price: "4.50" },
-                { name: "Παγωτό καϊμάκι / βανίλια (2 μπάλες)", desc: "(Γλυκός Επίλογος)", price: "8.00" }
-            ]},
-            en: { title: "Seafood & Sweet Endings", items: [
-                { name: "Grilled Shrimp*", desc: null, price: "22.00" },
-                { name: "Seafood Saganaki", desc: "shrimp*, mussels* with tomato sauce and feta", price: "19.00" },
-                { name: "Grilled Sea Bream with vegetables", desc: null, price: "23.00" },
-                { name: "Sea bass on the grill served with vegetables", desc: null, price: "24.00" },
-                { name: "Baklava", desc: "(Sweet Endings)", price: "9.00" },
-                { name: "Ekmek dessert with ice cream", desc: "(Sweet Endings)", price: "12.00" },
-                { name: "Ice cream kaimak / vanilla (1 scoop)", desc: "(Sweet Endings)", price: "4.50" },
-                { name: "Ice cream kaimak / vanilla (2 scoops)", desc: "(Sweet Endings)", price: "8.00" }
-            ]}
-        }
-    };
+            const deltaX = endRect.left - startRect.left;
+            const deltaY = endRect.top - startRect.top;
+            const scale = endRect.width / startRect.width;
 
-document.addEventListener('DOMContentLoaded', () => {
-    const flagButtons = document.querySelectorAll('.lang-flag-btn');
-    const body = document.body;
-    const menuGrid = document.getElementById('menu-grid');
-    const modalOverlay = document.getElementById('menuModal');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalContent = document.getElementById('modalContent');
-    const closeModalBtn = document.querySelector('.modal-content .close-btn');
-    
-    // 1. Αρχική Γλώσσα: Αγγλικά αν είναι η πρώτη φορά
-    let currentLang = localStorage.getItem('preferredLang') || 'en';
-
-    // Συνάρτηση εμφάνισης μενού
-    function renderMenuPreviews(lang) {
-        if (!menuGrid) return;
-        menuGrid.innerHTML = '';
-        
-        for (const categoryId in menuData) {
-            const category = menuData[categoryId][lang];
-            const card = document.createElement('div');
-            card.classList.add('menu-card');
-            card.setAttribute('role', 'button');
-            card.setAttribute('tabindex', '0');
-            card.dataset.categoryId = categoryId;
-
-            let html = `<h4>${category.title}</h4><div>`;
-            const itemsToDisplay = category.items.slice(0, 4);
-
-            itemsToDisplay.forEach(item => {
-                html += `
-                    <div class="menu-item">
-                        <strong>
-                            <span>${item.name}</span>
-                            <span class="price">€${item.price}</span>
-                        </strong>
-                        ${item.desc ? `<span class="muted">${item.desc}</span>` : ''}
-                    </div>`;
+            document.querySelectorAll('.splash-content h1, .splash-content p').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transition = 'opacity 0.5s';
             });
+
+            movingLogo.style.transformOrigin = 'top left';
+            movingLogo.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${scale})`;
             
-            html += '</div>';
-            card.innerHTML = html;
-            card.addEventListener('click', () => openModal(categoryId, lang));
-            menuGrid.appendChild(card);
-        }
-    }
-
-    // Συνάρτηση εφαρμογής γλώσσας
-    function setLanguage(lang) {
-        currentLang = lang;
-        body.className = 'lang-' + lang;
-        localStorage.setItem('preferredLang', lang);
-
-        // Ενημέρωση κειμένων data-lang
-        document.querySelectorAll('[data-lang-el], [data-lang-en]').forEach(el => {
-            const text = el.getAttribute(`data-lang-${lang}`);
-            if (el.tagName === 'TITLE') document.title = text;
-            else if (text) el.textContent = text;
-        });
-
-        // Ενημέρωση κουμπιών σημαίας
-        flagButtons.forEach(btn => {
-            btn.classList.toggle('active', btn.getAttribute('data-lang-val') === lang);
-        });
-
-        renderMenuPreviews(lang);
-    }
-
-    // Event Listeners για σημαίες
-    flagButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            setLanguage(btn.getAttribute('data-lang-val'));
-        });
+            setTimeout(() => {
+                targetLogo.style.opacity = '1';
+                movingLogo.style.opacity = '0';
+                splash.style.opacity = '0';
+                splash.style.visibility = 'hidden';
+                
+                sessionStorage.setItem('splashShown', 'true');
+                
+                // Προαιρετικά το αφαιρούμε τελείως από το DOM μετά το animation
+                setTimeout(() => splash.style.display = 'none', 600);
+            }, 1800); 
+        }, 2500); 
     });
+})();
 
-    // Modal Logic
-    function openModal(categoryId, lang) {
-        const category = menuData[categoryId][lang];
-        modalTitle.textContent = category.title;
-        let html = '';
-        category.items.forEach(item => {
-            html += `
-                <div class="menu-item">
-                    <strong><span>${item.name}</span><span class="price">€${item.price}</span></strong>
-                    ${item.desc ? `<span class="muted">${item.desc}</span>` : ''}
-                </div>`;
-        });
-        modalContent.innerHTML = html;
-        modalOverlay.style.display = 'flex';
-        body.style.overflow = 'hidden';
-    }
 
-    function closeModal() {
-        modalOverlay.style.display = 'none';
-        body.style.overflow = '';
-    }
+</script>
 
-    closeModalBtn.addEventListener('click', closeModal);
-    modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
-
-    // Εκκίνηση
-    setLanguage(currentLang);
-});
-  </script>
   <script>
 document.addEventListener('DOMContentLoaded', () => {
     const carousel = document.getElementById('reviewsCarousel');
@@ -1158,6 +514,111 @@ document.addEventListener('DOMContentLoaded', () => {
     // Αρχική φόρτωση
     startAutoSlide();
     updateCarousel(); 
+});
+// Λογική για το Modal της Ιστορίας
+const historyModal = document.getElementById('historyModal');
+const readMoreBtn = document.getElementById('readMoreBtn');
+const closeHistoryBtn = document.querySelector('.close-history');
+
+readMoreBtn.addEventListener('click', () => {
+    historyModal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+});
+
+closeHistoryBtn.addEventListener('click', () => {
+    historyModal.style.display = 'none';
+    document.body.style.overflow = '';
+});
+
+historyModal.addEventListener('click', (e) => {
+    if (e.target === historyModal) {
+        historyModal.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const track = document.getElementById('heroTrack');
+    const prevBtn = document.getElementById('heroPrev');
+    const nextBtn = document.getElementById('heroNext');
+    const items = track.querySelectorAll('.hero-img-item');
+    let index = 0;
+    let autoPlayInterval;
+
+    function updateHeroPosition() {
+        const itemsVisible = window.innerWidth > 768 ? 3 : 1;
+        const maxIndex = items.length - itemsVisible;
+        
+        if (index > maxIndex) index = 0;
+        if (index < 0) index = maxIndex;
+
+        const gap = window.innerWidth > 768 ? 15 : 0;
+        const slideWidth = items[0].offsetWidth + gap;
+        track.style.transform = `translateX(-${index * slideWidth}px)`;
+    }
+
+    function startAutoPlay() {
+        stopAutoPlay();
+        autoPlayInterval = setInterval(() => {
+            index++;
+            updateHeroPosition();
+        }, 4000); // Αλλαγή κάθε 4 δευτερόλεπτα
+    }
+
+    function stopAutoPlay() {
+        clearInterval(autoPlayInterval);
+    }
+
+    nextBtn.addEventListener('click', () => {
+        index++;
+        updateHeroPosition();
+        startAutoPlay(); // Reset timer
+    });
+
+    prevBtn.addEventListener('click', () => {
+        index--;
+        updateHeroPosition();
+        startAutoPlay(); // Reset timer
+    });
+
+    // Παύση όταν το ποντίκι είναι πάνω, συνέχιση όταν βγαίνει
+    const wrapper = document.querySelector('.hero-carousel-wrapper');
+    wrapper.addEventListener('mouseenter', stopAutoPlay);
+    wrapper.addEventListener('mouseleave', startAutoPlay);
+
+    window.addEventListener('resize', updateHeroPosition);
+    
+    startAutoPlay();
+    updateHeroPosition();
+});
+</script>
+<script src="lang.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const mobileBtn = document.getElementById('mobileMenuBtn');
+    const closeBtn = document.getElementById('closeMobileModal');
+    const modal = document.getElementById('mobileModal');
+    const modalLinks = document.querySelectorAll('.mobile-links a');
+
+    // Άνοιγμα Modal
+    mobileBtn.addEventListener('click', () => {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden'; // Κλείδωμα scrolling
+    });
+
+    // Κλείσιμο Modal
+    function closeModal() {
+        modal.style.display = 'none';
+        document.body.style.overflow = ''; // Ξεκλείδωμα scrolling
+    }
+
+    closeBtn.addEventListener('click', closeModal);
+
+    // Κλείσιμο όταν πατηθεί σύνδεσμος (π.χ. Μενού)
+    modalLinks.forEach(link => {
+        link.addEventListener('click', closeModal);
+    });
 });
 </script>
 </body>
