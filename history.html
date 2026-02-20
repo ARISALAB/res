@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title data-lang-el="Η Ιστορία μας – Ο Κήπος της Πανδρόσου" data-lang-en="Our History – Pandrosou Garden">Η Ιστορία μας – Ο Κήπος της Πανδρόσου</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="favicon.ico.png">
+  <link rel="stylesheet" href="style.css">
+  
+  <style>
+/* Βασική Δομή */
+ .history-section {
+   max-width: 1100px;
+   margin: 60px auto;
+   padding: 0 20px;
+   overflow-x: hidden; /* Για να μην έχουμε scrollbar κατά την κίνηση */
+ }
+
+ .history-row {
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   gap: 60px;
+   align-items: center;
+   margin-bottom: 120px;
+ }
+
+ /* Εναλλάξ διάταξη */
+ .history-row:nth-child(even) .history-image {
+   order: -1;
+ }
+
+ /* --- Στυλ Κειμένου & Αρχική Κατάσταση Κίνησης --- */
+ .history-text {
+   opacity: 0;
+   transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+ }
+
+ /* Το κείμενο έρχεται από αριστερά ή δεξιά ανάλογα τη σειρά */
+ .history-row:nth-child(odd) .history-text {
+   transform: translateX(-50px);
+ }
+ .history-row:nth-child(even) .history-text {
+   transform: translateX(50px);
+ }
+
+ .history-text h2, .history-text h3 {
+   font-family: 'Playfair Display', serif;
+   font-size: clamp(1.8rem, 5vw, 2.5rem);
+   margin-bottom: 25px;
+ }
+
+ .history-text p {
+   line-height: 1.8;
+   font-size: 1.15rem;
+   color: #f8f8f8;
+   text-align: justify;
+ }
+
+ /* --- Στυλ Εικόνας & Αρχική Κατάσταση Zoom --- */
+ .history-image {
+   opacity: 0;
+   transform: scale(0.9); /* Ξεκινάει λίγο πιο μικρή */
+   transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+   border-radius: 20px;
+   overflow: hidden;
+ }
+
+ .history-image img {
+   width: 100%;
+   height: 450px;
+   object-fit: cover;
+   display: block;
+   transition: transform 0.6s ease;
+ }
+
+ /* --- Visible States (Όταν μπαίνει το .active από JS) --- */
+ .history-row.active .history-text {
+   opacity: 1;
+   transform: translateX(0);
+ }
+
+ .history-row.active .history-image {
+   opacity: 1;
+   transform: scale(1);
+ }
+
+ .history-image img:hover {
+   transform: scale(1.05); /* Μικρό zoom στο hover */
+ }
+
+ /* Closing Quote Animation */
+ .closing-quote {
+   text-align: center;
+   max-width: 750px;
+   margin: 80px auto;
+   padding: 50px 20px;
+   border-block: 1px solid #ddd;
+   position: relative;
+   opacity: 0;
+   transform: translateY(20px);
+   transition: all 1s ease;
+ }
+
+ .closing-quote.active {
+   opacity: 1;
+   transform: translateY(0);
+ }
+
+ .closing-quote::before {
+   content: "“";
+   font-family: 'Playfair Display';
+   font-size: 5rem;
+   color: #e0e0e0;
+   position: absolute;
+   top: -20px;
+   left: 50%;
+   transform: translateX(-50%);
+ }
+
+ /* Mobile Responsive */
+ @media (max-width: 850px) {
+   .history-row {
+     grid-template-columns: 1fr;
+     gap: 30px;
+     margin-bottom: 80px;
+   }
+   .history-row:nth-child(even) .history-image { order: 0; }
+   .history-row:nth-child(odd) .history-text,
+   .history-row:nth-child(even) .history-text {
+     transform: translateY(30px); /* Στο κινητό έρχεται από κάτω */
+   }
+   .history-image img { height: 300px; }
+   .history-text { text-align: center; }
+ }
+  </style>
+</head>
+
+<body>
+<div class="container">
+     <header>
+    <a href="index.html" class="brand"> 
+        <img src="favicon.ico.png" alt="Λογότυπο" class="header-logo">
+        <div>
+            <h1 data-lang-el="Ο Κήπος της Πανδρόσου" data-lang-en="Pandrosou Garden">Ο Κήπος της Πανδρόσου</h1>
+            <div class="sub" data-lang-el="Εστιατόριο · Πλάκα, Αθήνα" data-lang-en="Restaurant · Plaka, Athens">Εστιατόριο · Πλάκα, Αθήνα</div>
+        </div>
+    </a>
+
+    <nav class="nav-menu desktop-only">
+        <a href="index.html#menu" data-lang-el="Μενού" data-lang-en="Menu">Μενού</a>
+        <a href="history.html" data-lang-el="Ιστορία" data-lang-en="History">Ιστορία</a>
+        <a href="index.html#info" data-lang-el="Πληροφορίες" data-lang-en="Information">Πληροφορίες</a>
+        <a href="reservations.html" class="btn secondary" data-lang-el="Κράτηση" data-lang-en="Reservation">Κράτηση</a>
+        <div class="lang-switcher-flags">
+            <button class="lang-flag-btn" data-lang-val="en"><img src="https://flagcdn.com/w40/gb.png" alt="EN"></button>
+            <button class="lang-flag-btn" data-lang-val="el"><img src="https://flagcdn.com/w40/gr.png" alt="EL"></button>
+        </div>
+    </nav>
+
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+</header>
+
+<div id="mobileModal" class="mobile-nav-modal">
+    <div class="mobile-modal-content">
+        <button class="close-mobile-modal" id="closeMobileModal">&times;</button>
+        <nav class="mobile-links">
+            <a href="index.html#menu" data-lang-el="Μενού" data-lang-en="Menu">Μενού</a>
+            <a href="history.html" data-lang-el="Ιστορία" data-lang-en="History">Ιστορία</a>
+            <a href="index.html#info" data-lang-el="Πληροφορίες" data-lang-en="Information">Πληροφορίες</a>
+            <a href="reservations.html" data-lang-el="Κάντε Κράτηση" data-lang-en="Make a Reservation" style="color: var(--brand); font-weight: bold;">Κάντε Κράτηση</a>
+        </nav>
+        <hr>
+        <div class="mobile-lang-switcher">
+            <p data-lang-el="Επιλογή Γλώσσας:" data-lang-en="Select Language:">Επιλογή Γλώσσας:</p>
+            <div class="lang-flags">
+                <button class="lang-flag-btn" data-lang-val="en"><img src="https://flagcdn.com/w40/gb.png" alt="English"> EN</button>
+                <button class="lang-flag-btn" data-lang-val="el"><img src="https://flagcdn.com/w40/gr.png" alt="Ελληνικά"> EL</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <main class="history-section">
+      
+      <section class="history-row animate-on-scroll">
+        <div class="history-text">
+          <h2 data-lang-el="Το Ταξίδι μας από το 1981" data-lang-en="Our Journey since 1981">Το Ταξίδι μας από το 1981</h2>
+          <p data-lang-el="Η οδός Πανδρόσου είναι ένας δρόμος που από τον 19ο αιώνα υπήρξε το κέντρο του εμπορίου της πόλης. Μέσα σε αυτό το ιστορικό πλαίσιο, το 1981, ανοίξαμε τις πόρτες μας, δημιουργώντας μια όαση γεύσης στην καρδιά της παλιάς Αθήνας."
+             data-lang-en="Pandrosou Street is no ordinary street; since the 19th century, it has been the city's commercial center. In 1981, we opened our doors, creating an oasis of taste in the heart of old Athens.">
+          </p>
+        </div>
+        <div class="history-image">
+          <img src="DROSOU.jpg" alt="Athens Plaka">
+        </div>
+      </section>
+
+      <section class="history-row animate-on-scroll">
+        <div class="history-text">
+          <h3 data-lang-el="Η Φιλοσοφία μας" data-lang-en="Our Philosophy">Η Φιλοσοφία μας</h3>
+          <p data-lang-el="Το όνομά μας, 'Κήπος', αντικατοπτρίζει την επιθυμία μας να προσφέρουμε μια ανάσα δροσιάς κάτω από τον ιερό βράχο της Ακρόπολης. Πιστεύουμε στην αγνότητα των υλικών: το ελαιόλαδο μας και οι παραδοσιακές συνταγές είναι τα μυστικά μας."
+             data-lang-en="Our name, 'Garden', reflects our desire to provide a breath of fresh air under the Acropolis. We believe in the purity of ingredients: our olive oil and traditional recipes are our secrets.">
+          </p>
+        </div>
+        <div class="history-image">
+          <img src="PANDROSOU.webp" alt="Restaurant Interior">
+        </div>
+      </section>
+
+      <div class="closing-quote animate-on-scroll">
+        <p data-lang-el="«Η γεύση είναι μνήμη. Και στον Κήπο της Πανδρόσου, θέλουμε κάθε σας γεύμα να είναι μια όμορφη ανάμνηση από την Αθήνα.»" 
+           data-lang-en="“Taste is memory. And at Pandrosou Garden, we want every meal to be a beautiful memory of Athens.”">
+        </p>
+      </div>
+
+      <div style="text-align: center; margin-top: 40px;">
+        <a href="index.html" class="btn">
+          <span data-lang-el="← Επιστροφή στην Αρχική" data-lang-en="← Back to Home">← Επιστροφή στην Αρχική</span>
+        </a>
+      </div>
+    </main>
+
+    <footer>
+      <p>© 2025 <span data-lang-el="Ο Κήπος της Πανδρόσου" data-lang-en="Pandrosou Garden">Ο Κήπος της Πανδρόσου</span> · est. 1981</p>
+    </footer>
+  </div>
+
+  <script>
+    /* 1. Language Logic */
+    const flagButtons = document.querySelectorAll('.lang-flag-btn');
+    const body = document.body;
+
+    function setLanguage(lang) {
+      body.className = 'lang-' + lang;
+      localStorage.setItem('preferredLang', lang);
+      document.querySelectorAll('[data-lang-el], [data-lang-en]').forEach(el => {
+        const text = el.getAttribute(`data-lang-${lang}`);
+        if (text) el.textContent = text;
+      });
+    }
+
+    flagButtons.forEach(btn => {
+      btn.addEventListener('click', () => setLanguage(btn.getAttribute('data-lang-val')));
+    });
+
+    const savedLang = localStorage.getItem('preferredLang') || 'el';
+    setLanguage(savedLang);
+
+    /* 2. Enhanced Scroll Observer */
+    const observerOptions = {
+      threshold: 0.2
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.animate-on-scroll').forEach(el => {
+      observer.observe(el);
+    });
+  </script>
+
+  <script src="lang.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const mobileBtn = document.getElementById('mobileMenuBtn');
+    const closeBtn = document.getElementById('closeMobileModal');
+    const modal = document.getElementById('mobileModal');
+    const modalLinks = document.querySelectorAll('.mobile-links a');
+
+    // Άνοιγμα Modal
+    mobileBtn.addEventListener('click', () => {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden'; // Κλείδωμα scrolling
+    });
+
+    // Κλείσιμο Modal
+    function closeModal() {
+        modal.style.display = 'none';
+        document.body.style.overflow = ''; // Ξεκλείδωμα scrolling
+    }
+
+    closeBtn.addEventListener('click', closeModal);
+
+    // Κλείσιμο όταν πατηθεί σύνδεσμος (π.χ. Μενού)
+    modalLinks.forEach(link => {
+        link.addEventListener('click', closeModal);
+    });
+});
+</script>
+</body>
+</html>
