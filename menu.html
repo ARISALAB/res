@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title data-lang-el="Μενού – Ο Κήπος της Πανδρόσου" data-lang-en="Menu – Pandrosou Garden">Μενού – Ο Κήπος της Πανδρόσου</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="favicon.ico.png">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* Ειδικά στυλ για τη σελίδα του μενού */
+    .menu-page-header {
+        padding: 140px 20px 60px;
+        text-align: center;
+        background: linear-gradient(to bottom, rgba(34, 211, 238, 0.05), transparent);
+    }
+
+    .menu-page-header h1 {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(2.5rem, 8vw, 4rem);
+        margin-bottom: 10px;
+    }
+
+    .menu-container {
+        max-width: 1000px;
+        margin: 0 auto 100px;
+        padding: 0 20px;
+    }
+
+    .menu-category-block {
+        margin-bottom: 80px;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s ease-out;
+    }
+
+    .menu-category-block.active {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .category-title {
+        color: var(--brand);
+        font-family: 'Playfair Display', serif;
+        font-size: 32px;
+        text-align: center;
+        margin-bottom: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .category-title::before, .category-title::after {
+        content: "";
+        height: 1px;
+        width: 60px;
+        background: var(--brand);
+        opacity: 0.3;
+    }
+
+    .menu-items-list {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .menu-item-row {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .menu-item-main {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 15px;
+    }
+
+    .item-name {
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: var(--text);
+    }
+
+    .item-dots {
+        flex: 1;
+        border-bottom: 1px dotted rgba(255, 255, 255, 0.15);
+    }
+
+    .item-price {
+        font-weight: 700;
+        color: var(--brand);
+        font-size: 1.1rem;
+    }
+
+    .item-desc {
+        color: var(--muted);
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+
+    @media (min-width: 850px) {
+        .menu-items-list {
+            grid-template-columns: 1fr 1fr;
+            column-gap: 80px;
+        }
+    }
+  </style>
+</head>
+<body class="lang-el">
+
+  <div class="container">
+    <header>
+    <a href="index.html" class="brand"> 
+        <img src="favicon.ico.png" alt="Λογότυπο" class="header-logo">
+        <div>
+            <h1 data-lang-el="Ο Κήπος της Πανδρόσου" data-lang-en="Pandrosou Garden">Ο Κήπος της Πανδρόσου</h1>
+            <div class="sub" data-lang-el="Εστιατόριο · Πλάκα, Αθήνα" data-lang-en="Restaurant · Plaka, Athens">Εστιατόριο · Πλάκα, Αθήνα</div>
+        </div>
+    </a>
+
+    <nav class="nav-menu desktop-only">
+        <a href="index.html" data-lang-el="Αρχική" data-lang-en="Home">Αρχική</a>
+        <a href="menu.html" data-lang-el="Μενού" data-lang-en="Menu">Μενού</a>
+        <a href="history.html" data-lang-el="Ιστορία" data-lang-en="History">Ιστορία</a>
+        <a href="index.html#info" data-lang-el="Πληροφορίες" data-lang-en="Information">Πληροφορίες</a>
+        <a href="reservations.html" class="btn secondary" data-lang-el="Κράτηση" data-lang-en="Reservation">Κράτηση</a>
+        
+        <div class="lang-switcher-flags">
+            <button class="lang-flag-btn" data-lang-val="en"><img src="https://flagcdn.com/w40/gb.png" alt="EN"></button>
+            <button class="lang-flag-btn" data-lang-val="el"><img src="https://flagcdn.com/w40/gr.png" alt="EL"></button>
+        </div>
+    </nav>
+
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+</header>
+
+<div id="mobileModal" class="mobile-nav-modal">
+    <div class="mobile-modal-content">
+        <button class="close-mobile-modal" id="closeMobileModal">&times;</button>
+        <nav class="mobile-links">
+            <a href="index.html" data-lang-el="Αρχική" data-lang-en="Home">Αρχική</a>
+            <a href="menu.html" data-lang-el="Μενού" data-lang-en="Menu">Μενού</a>
+            <a href="history.html" data-lang-el="Ιστορία" data-lang-en="History">Ιστορία</a>
+            <a href="index.html#info" data-lang-el="Πληροφορίες" data-lang-en="Information">Πληροφορίες</a>
+            <a href="reservations.html" data-lang-el="Κάντε Κράτηση" data-lang-en="Make a Reservation" style="color: var(--brand); font-weight: bold;">Κάντε Κράτηση</a>
+        </nav>
+        <hr>
+        <div class="mobile-lang-switcher">
+            <p data-lang-el="Επιλογή Γλώσσας:" data-lang-en="Select Language:">Επιλογή Γλώσσας:</p>
+            <div class="lang-flags">
+                <button class="lang-flag-btn" data-lang-val="en"><img src="https://flagcdn.com/w40/gb.png" alt="English"> EN</button>
+                <button class="lang-flag-btn" data-lang-val="el"><img src="https://flagcdn.com/w40/gr.png" alt="Ελληνικά"> EL</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <main id="main-content">
+      <section class="menu-page-header">
+        <h1 data-lang-el="Το Μενού μας" data-lang-en="Our Menu">Το Μενού μας</h1>
+        <p class="muted" data-lang-el="Αυθεντικές γεύσεις με αγνά υλικά" data-lang-en="Authentic flavors with pure ingredients">Αυθεντικές γεύσεις με αγνά υλικά</p>
+      </section>
+
+      <div class="menu-container" id="full-menu-content">
+        </div>
+    </main>
+
+     <footer>
+      <p>
+        © 2025 <span data-lang-el="Ο Κήπος της Πανδρόσου" data-lang-en="Pandrosou Garden">Ο Κήπος της Πανδρόσου</span> · est. 1981
+      </p>
+    
+    </footer>
+<a href="tel:+302103247148" class="call-now-button">
+    <svg viewBox="0 0 24 24">
+        <path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21C10.61,21 3,13.39 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z" />
+    </svg>
+</a>
+
+  </div>
+ <div id="menuModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-content">
+      <button class="close-btn" aria-label="Close Menu">&times;</button>
+      <h3 id="modalTitle"></h3>
+      <div id="modalContent">
+        </div>
+    </div>
+  </div>
+
+<script>
+(function() {
+    const splashShown = sessionStorage.getItem('splashShown');
+    const splash = document.getElementById('splash-screen');
+    const targetLogo = document.querySelector('.logo-img') || document.querySelector('.header-logo');
+
+    // ΑΝ ΔΕΝ ΤΟ ΕΧΕΙ ΞΑΝΑΔΕΙ: Το εμφανίζουμε αμέσως
+    if (!splashShown) {
+        if (splash) splash.style.display = 'flex';
+        if (targetLogo) targetLogo.style.opacity = '0';
+    } else {
+        // ΑΝ ΤΟ ΕΧΕΙ ΞΑΝΑΔΕΙ: Το κρατάμε κρυμμένο και δείχνουμε το λογότυπο
+        if (targetLogo) targetLogo.style.opacity = '1';
+        return; // Τερματισμός, δεν τρέχει τίποτα άλλο
+    }
+
+    // Το animation τρέχει μόνο αν φτάσουμε εδώ (δηλαδή αν δεν υπάρχει το splashShown)
+    window.addEventListener('load', () => {
+        const movingLogo = document.getElementById('moving-logo');
+        
+        setTimeout(() => {
+            const startRect = movingLogo.getBoundingClientRect();
+            const endRect = targetLogo.getBoundingClientRect();
+
+            const deltaX = endRect.left - startRect.left;
+            const deltaY = endRect.top - startRect.top;
+            const scale = endRect.width / startRect.width;
+
+            document.querySelectorAll('.splash-content h1, .splash-content p').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transition = 'opacity 0.5s';
+            });
+
+            movingLogo.style.transformOrigin = 'top left';
+            movingLogo.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${scale})`;
+            
+            setTimeout(() => {
+                targetLogo.style.opacity = '1';
+                movingLogo.style.opacity = '0';
+                splash.style.opacity = '0';
+                splash.style.visibility = 'hidden';
+                
+                sessionStorage.setItem('splashShown', 'true');
+                
+                // Προαιρετικά το αφαιρούμε τελείως από το DOM μετά το animation
+                setTimeout(() => splash.style.display = 'none', 600);
+            }, 1800); 
+        }, 2500); 
+    });
+})();
+
+
+</script>
+
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const carousel = document.getElementById('reviewsCarousel');
+    const prevBtn = document.getElementById('reviewPrevBtn');
+    const nextBtn = document.getElementById('reviewNextBtn');
+    const cards = carousel.querySelectorAll('.review-card');
+    let currentIndex = 0;
+    let autoSlideInterval;
+
+    const GAP = 24; // Κενό που ορίστηκε στο CSS (gap: 24px)
+
+    // Επιστρέφει πόσες κάρτες εμφανίζονται σε κάθε slide (1 για mobile, 3 για desktop)
+    function getItemsPerSlide() {
+        // Ελέγχει το πλάτος του viewport
+        return window.innerWidth <= 900 ? 1 : 3; 
+    }
+
+    // Υπολογίζει πόσο πρέπει να μετακινηθεί το carousel (Πλάτος Κάρτας + Κενό)
+    function getCardMoveOffset() {
+        if (cards.length === 0) return 0;
+
+        const cardWidth = cards[0].offsetWidth;
+        const itemsPerSlide = getItemsPerSlide();
+        
+        // Σε mobile, το κενό είναι 0. Σε desktop, είναι 24px.
+        return itemsPerSlide === 1 ? cardWidth : cardWidth + GAP;
+    }
+
+    // Ενημερώνει τη θέση του carousel και την κατάσταση των κουμπιών
+    function updateCarousel() {
+        const moveOffset = getCardMoveOffset();
+        const slideTransform = moveOffset * currentIndex;
+
+        carousel.style.transform = `translateX(-${slideTransform}px)`;
+
+        const totalItems = cards.length;
+        const itemsPerSlide = getItemsPerSlide();
+        
+        // Ο μέγιστος δείκτης που μπορεί να φτάσει το carousel πριν φανεί η τελευταία κάρτα
+        const maxIndex = totalItems - itemsPerSlide;
+
+        nextBtn.disabled = currentIndex >= maxIndex;
+        prevBtn.disabled = currentIndex <= 0;
+    }
+
+    function nextSlide() {
+        const itemsPerSlide = getItemsPerSlide();
+        const maxIndex = cards.length - itemsPerSlide;
+        
+        currentIndex++;
+        if (currentIndex > maxIndex) {
+            currentIndex = 0; // Επαναφορά στην αρχή (Looping)
+        }
+        updateCarousel();
+    }
+    
+    // Έναρξη αυτόματης ολίσθησης
+    function startAutoSlide() {
+        clearInterval(autoSlideInterval);
+        autoSlideInterval = setInterval(nextSlide, 5000); 
+    }
+
+    // Χειροκίνητη πλοήγηση (διακόπτει και επανεκκινεί την αυτόματη)
+    prevBtn.addEventListener('click', () => {
+        clearInterval(autoSlideInterval);
+        currentIndex = Math.max(0, currentIndex - 1);
+        updateCarousel();
+        startAutoSlide();
+    });
+
+    nextBtn.addEventListener('click', () => {
+        clearInterval(autoSlideInterval);
+        nextSlide(); // Χρησιμοποιούμε την nextSlide για τη λογική looping
+        startAutoSlide();
+    });
+
+    // Χειρισμός αλλαγής μεγέθους οθόνης
+    window.addEventListener('resize', () => {
+        currentIndex = 0; // Επαναφορά στην αρχή για αποφυγή προβλημάτων εμφάνισης
+        updateCarousel();
+        startAutoSlide(); 
+    });
+
+    // Αρχική φόρτωση
+    startAutoSlide();
+    updateCarousel(); 
+});
+// Λογική για το Modal της Ιστορίας
+const historyModal = document.getElementById('historyModal');
+const readMoreBtn = document.getElementById('readMoreBtn');
+const closeHistoryBtn = document.querySelector('.close-history');
+
+readMoreBtn.addEventListener('click', () => {
+    historyModal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+});
+
+closeHistoryBtn.addEventListener('click', () => {
+    historyModal.style.display = 'none';
+    document.body.style.overflow = '';
+});
+
+historyModal.addEventListener('click', (e) => {
+    if (e.target === historyModal) {
+        historyModal.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const track = document.getElementById('heroTrack');
+    const prevBtn = document.getElementById('heroPrev');
+    const nextBtn = document.getElementById('heroNext');
+    const items = track.querySelectorAll('.hero-img-item');
+    let index = 0;
+    let autoPlayInterval;
+
+    function updateHeroPosition() {
+        const itemsVisible = window.innerWidth > 768 ? 3 : 1;
+        const maxIndex = items.length - itemsVisible;
+        
+        if (index > maxIndex) index = 0;
+        if (index < 0) index = maxIndex;
+
+        const gap = window.innerWidth > 768 ? 15 : 0;
+        const slideWidth = items[0].offsetWidth + gap;
+        track.style.transform = `translateX(-${index * slideWidth}px)`;
+    }
+
+    function startAutoPlay() {
+        stopAutoPlay();
+        autoPlayInterval = setInterval(() => {
+            index++;
+            updateHeroPosition();
+        }, 4000); // Αλλαγή κάθε 4 δευτερόλεπτα
+    }
+
+    function stopAutoPlay() {
+        clearInterval(autoPlayInterval);
+    }
+
+    nextBtn.addEventListener('click', () => {
+        index++;
+        updateHeroPosition();
+        startAutoPlay(); // Reset timer
+    });
+
+    prevBtn.addEventListener('click', () => {
+        index--;
+        updateHeroPosition();
+        startAutoPlay(); // Reset timer
+    });
+
+    // Παύση όταν το ποντίκι είναι πάνω, συνέχιση όταν βγαίνει
+    const wrapper = document.querySelector('.hero-carousel-wrapper');
+    wrapper.addEventListener('mouseenter', stopAutoPlay);
+    wrapper.addEventListener('mouseleave', startAutoPlay);
+
+    window.addEventListener('resize', updateHeroPosition);
+    
+    startAutoPlay();
+    updateHeroPosition();
+});
+</script>
+<script src="lang.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const mobileBtn = document.getElementById('mobileMenuBtn');
+    const closeBtn = document.getElementById('closeMobileModal');
+    const modal = document.getElementById('mobileModal');
+    const modalLinks = document.querySelectorAll('.mobile-links a');
+
+    // Άνοιγμα Modal
+    mobileBtn.addEventListener('click', () => {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden'; // Κλείδωμα scrolling
+    });
+
+    // Κλείσιμο Modal
+    function closeModal() {
+        modal.style.display = 'none';
+        document.body.style.overflow = ''; // Ξεκλείδωμα scrolling
+    }
+
+    closeBtn.addEventListener('click', closeModal);
+
+    // Κλείσιμο όταν πατηθεί σύνδεσμος (π.χ. Μενού)
+    modalLinks.forEach(link => {
+        link.addEventListener('click', closeModal);
+    });
+});
+</script>
+  <script src="lang.js"></script>
+  <script>
+    function updateMenuPage(lang) {
+        const container = document.getElementById('full-menu-content');
+        let html = '';
+
+        // Χρήση των δεδομένων από το menuData του lang.js
+        for (const [id, data] of Object.entries(menuData)) {
+            const category = data[lang];
+            html += `
+                <div class="menu-category-block animate-on-scroll">
+                    <h2 class="category-title">${category.title}</h2>
+                    <div class="menu-items-list">
+                        ${category.items.map(item => `
+                            <div class="menu-item-row">
+                                <div class="menu-item-main">
+                                    <span class="item-name">${item.name}</span>
+                                    <span class="item-dots"></span>
+                                    <span class="item-price">€${item.price}</span>
+                                </div>
+                                ${item.desc ? `<span class="item-desc">${item.desc}</span>` : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+        container.innerHTML = html;
+        
+        // Επανεκκίνηση του Observer για το animation
+        initObserver();
+    }
+
+    function initObserver() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+    }
+
+    // Override της setLanguage ή προσθήκη listener
+    document.querySelectorAll('.flag-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const lang = btn.getAttribute('data-lang-val');
+            updateMenuPage(lang);
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedLang = localStorage.getItem('preferredLang') || 'el';
+        updateMenuPage(savedLang);
+
+        // Mobile Menu Logic
+        const mobileBtn = document.getElementById('mobileMenuBtn');
+        const closeBtn = document.getElementById('closeMobileModal');
+        const modal = document.getElementById('mobileModal');
+
+        mobileBtn.addEventListener('click', () => {
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        });
+
+        const closeModal = () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+        };
+
+        closeBtn.addEventListener('click', closeModal);
+        document.querySelectorAll('.mobile-links a').forEach(link => link.addEventListener('click', closeModal));
+    });
+  </script>
+</body>
+</html>
