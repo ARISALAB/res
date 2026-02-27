@@ -748,3 +748,34 @@ header {
     .desktop-only { display: none; }
     .mobile-menu-btn { display: flex; }
 }
+/* Floating Phone Button */
+.call-now-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: #25d366; 
+    color: white;
+    border-radius: 50%;
+    display: flex; /* Εμφάνιση ως default (για κινητά) */
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 1000;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+.call-now-button svg {
+    width: 30px;
+    height: 30px;
+    fill: currentColor;
+}
+
+/* ΕΞΑΦΑΝΙΣΗ ΣΕ ΛΑΠΤΟΠ & ΥΠΟΛΟΓΙΣΤΕΣ (Οθόνες μεγαλύτερες από 1024px) */
+@media (min-width: 1024px) {
+    .call-now-button {
+        display: none !important;
+    }
+}
