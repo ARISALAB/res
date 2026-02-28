@@ -755,7 +755,7 @@ header {
     right: 20px;
     width: 60px;
     height: 60px;
-    background-color: #25d366; 
+    background-color: #113c0f; 
     color: white;
     border-radius: 50%;
     display: flex; /* Εμφάνιση ως default (για κινητά) */
@@ -779,3 +779,4 @@ header {
         display: none !important;
     }
 }
+
