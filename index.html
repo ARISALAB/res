@@ -15,26 +15,23 @@
 </head>
 <style>
 
-    /* Info Section General */
-.info-section {
-    padding: 80px 20px;
-    background-color: var(--bg); /* Χρησιμοποιεί το background του site σας */
-    color: white;
+    .info-section {
+    padding: 100px 20px;
+    background: #0f172a; /* Ελαφρώς διαφορετικό από το main bg για βάθος */
 }
 
 .section-header {
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 60px;
 }
 
-.divider {
+.header-line {
     width: 60px;
     height: 3px;
-    background: var(--brand); /* Το aqua χρώμα σας */
-    margin: 15px auto;
+    background: var(--brand);
+    margin: 20px auto;
 }
 
-/* Grid Layout */
 .info-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -42,58 +39,124 @@
     margin-bottom: 50px;
 }
 
-/* Κάρτες Πληροφοριών */
 .info-card {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 30px;
-    border-radius: 15px;
+    background: var(--card);
+    padding: 40px 30px;
+    border-radius: var(--radius-xl);
     text-align: center;
-    border: 1px solid rgba(34, 211, 238, 0.1);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    border: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .info-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-10px);
     border-color: var(--brand);
 }
 
-.icon-circle {
-    font-size: 2rem;
-    margin-bottom: 15px;
-    display: block;
+.card-icon {
+    width: 60px;
+    height: 60px;
+    background: rgba(34, 211, 238, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
 }
 
-.info-link {
+.card-icon svg {
+    width: 30px;
+    height: 30px;
+    fill: var(--brand);
+}
+
+.info-card h4 {
+    font-size: 1.25rem;
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+.main-tel {
+    font-size: 1.4rem;
+    font-weight: 700;
     color: var(--brand);
     text-decoration: none;
-    font-weight: bold;
-    font-size: 1.2rem;
 }
 
-/* Χάρτης */
-.map-container {
-    border-radius: 20px;
-    overflow: hidden;
-    border: 2px solid rgba(34, 211, 238, 0.2);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+.card-link {
+    margin-top: auto;
+    color: var(--brand);
+    text-decoration: underline;
+    font-size: 0.9rem;
 }
 
-/* Mobile Fixes (Για κινητά) */
+.card-btn {
+    margin-top: 20px;
+    padding: 10px 25px;
+    background: var(--brand);
+    color: #000;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+/* --- MOBILE OPTIMIZATION (Για οθόνες έως 768px) --- */
 @media (max-width: 768px) {
     .info-section {
-        padding: 50px 15px;
+        padding: 60px 15px; /* Λιγότερο κενό πάνω-κάτω, περισσότερο πλάι */
     }
-    
+
+    .section-header {
+        margin-bottom: 40px;
+    }
+
+    .section-header h2 {
+        font-size: 1.8rem; /* Πιο μικρός τίτλος για να χωράει σε μία γραμμή */
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr; /* Υποχρεωτικά μία κάρτα ανά σειρά */
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+
     .info-card {
-        padding: 20px;
+        padding: 30px 20px; /* Μικρότερο εσωτερικό κενό */
     }
-    
-    .map-container iframe {
-        height: 300px; /* Μικρότερο ύψος στο κινητό για ευκολότερο scroll */
+
+    .card-icon {
+        width: 50px; /* Πιο μικρά εικονίδια */
+        height: 50px;
+        margin-bottom: 15px;
+    }
+
+    .main-tel {
+        font-size: 1.2rem; /* Πιο μικρό τηλέφωνο για να μην σπάει η γραμμή */
+    }
+
+    .info-card h4 {
+        font-size: 1.1rem;
+    }
+
+    /* Ρύθμιση για τον χάρτη στο κινητό */
+    .map-wrapper iframe {
+        height: 300px; /* Μικρότερο ύψος για να μπορεί ο χρήστης να κάνει scroll το site */
     }
 }
+.map-wrapper {
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(255,255,255,0.1);
+}
 
-
+@media (max-width: 768px) {
+    .info-section { padding: 60px 20px; }
+    .info-card { padding: 30px 20px; }
+}
 
 /* Lightbox Styling */
 .hero-item img {
