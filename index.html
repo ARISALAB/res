@@ -14,6 +14,155 @@
   
 </head>
 <style>
+
+    .info-section {
+    padding: 100px 20px;
+    background: #0f172a; /* Ελαφρώς διαφορετικό από το main bg για βάθος */
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.header-line {
+    width: 60px;
+    height: 3px;
+    background: var(--brand);
+    margin: 20px auto;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.info-card {
+    background: var(--card);
+    padding: 40px 30px;
+    border-radius: var(--radius-xl);
+    text-align: center;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    border: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.info-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--brand);
+}
+
+.card-icon {
+    width: 60px;
+    height: 60px;
+    background: rgba(34, 211, 238, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.card-icon svg {
+    width: 30px;
+    height: 30px;
+    fill: var(--brand);
+}
+
+.info-card h4 {
+    font-size: 1.25rem;
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+.main-tel {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--brand);
+    text-decoration: none;
+}
+
+.card-link {
+    margin-top: auto;
+    color: var(--brand);
+    text-decoration: underline;
+    font-size: 0.9rem;
+}
+
+.card-btn {
+    margin-top: 20px;
+    padding: 10px 25px;
+    background: var(--brand);
+    color: #000;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.map-wrapper {
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+@media (max-width: 768px) {
+    .info-section { padding: 60px 20px; }
+    .info-card { padding: 30px 20px; }
+}
+
+/* Lightbox Styling */
+.hero-item img {
+    cursor: pointer; /* Δείχνει στον χρήστη ότι η φωτό πατιέται */
+    transition: opacity 0.3s ease;
+}
+
+.hero-item img:hover {
+    opacity: 0.9;
+}
+
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.9);
+    align-items: center;
+    justify-content: center;
+}
+
+.lightbox-content {
+    max-width: 90%;
+    max-height: 80%;
+    border-radius: var(--radius-sm);
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    animation: zoomIn 0.3s ease;
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.7); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.close-lightbox {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    color: white;
+    font-size: 50px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
 /* Hero Carousel Styling */
 .hero-carousel-wrapper {
     position: relative;
@@ -580,44 +729,70 @@
 </section>
 
 <section id="menu" class="section">
+<section id="info" class="info-section">
+    <div class="section-header">
+        <h2 data-lang-el="Πληροφορίες & Επικοινωνία" data-lang-en="Information & Contact">Πληροφορίες & Επικοινωνία</h2>
+        <div class="header-line"></div>
+        <p data-lang-el="Στην καρδιά της ιστορικής Αθήνας, σας περιμένουμε για μια αυθεντική γαστρονομική εμπειρία." 
+           data-lang-en="In the heart of historic Athens, we await you for an authentic gastronomic experience.">
+            Στην καρδιά της ιστορικής Αθήνας, σας περιμένουμε για μια αυθεντική γαστρονομική εμπειρία.
+        </p>
+    </div>
 
-<section id="info" class="section">
-    <h2 data-lang-el="Πληροφορίες & Επικοινωνία" data-lang-en="Information & Contact">Πληροφορίες & Επικοινωνία</h2>
-    <p data-lang-el="Βρισκόμαστε στην καρδιά της παλιάς Αθήνας και ανυπομονούμε να σας φιλοξενήσουμε." 
-       data-lang-en="We are located in the heart of old Athens and look forward to hosting you.">
-        Βρισκόμαστε στην καρδιά της παλιάς Αθήνας και ανυπομονούμε να σας φιλοξενήσουμε.
-    </p>
-    <div class="info-grid">
-        <div class="info-item">
-            <h4 data-lang-el="📍 Διεύθυνση" data-lang-en="📍 Address">📍 Διεύθυνση</h4>
-            <address>
-                <span data-lang-el="Οδός Πανδρόσου 15," data-lang-en="15 Pandrosou Street,">Οδός Πανδρόσου 15,</span><br>
-                <span data-lang-el="Πλάκα, Αθήνα, 10556" data-lang-en="Plaka, Athens, 10556">Πλάκα, Αθήνα, 10556</span>
-            </address>
+    <div class="info-container">
+        <div class="info-grid">
+            <div class="info-card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z"/></svg>
+                </div>
+                <h4 data-lang-el="Διεύθυνση" data-lang-en="Address">Διεύθυνση</h4>
+                <address>
+                    <span data-lang-el="Πανδρόσου 15," data-lang-en="15 Pandrosou St,">Πανδρόσου 15,</span><br>
+                    <span data-lang-el="Πλάκα, Αθήνα 105 56" data-lang-en="Plaka, Athens 105 56">Πλάκα, Αθήνα 105 56</span>
+                </address>
+                <a href="https://maps.google.com/?q=Pandrosou+15+Athens" target="_blank" class="card-link" data-lang-el="Οδηγίες Χάρτη" data-lang-en="Get Directions">Οδηγίες Χάρτη</a>
+            </div>
+
+            <div class="info-card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21C10.61,21 3,13.39 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"/></svg>
+                </div>
+                <h4 data-lang-el="Επικοινωνία" data-lang-en="Contact">Επικοινωνία</h4>
+                <p><a href="tel:+302103247148" class="main-tel">+30 210 3247 148</a></p>
+                <p class="email-text">info@okipostispandrosou.gr</p>
+                <a href="reservations.html" class="card-btn" data-lang-el="Κράτηση" data-lang-en="Book a Table">Κράτηση</a>
+            </div>
+
+            <div class="info-card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22C6.47,22 2,17.5 2,12A10,10 0 0,1 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z"/></svg>
+                </div>
+                <h4 data-lang-el="Ωράριο Λειτουργίας" data-lang-en="Opening Hours">Ωράριο Λειτουργίας</h4>
+                <p><strong data-lang-el="Καθημερινά:" data-lang-en="Daily:">Καθημερινά:</strong></p>
+                <p class="hours-text">12:00 – 23:30</p>
+                <p class="muted" data-lang-el="Η κουζίνα κλείνει στις 23:00" data-lang-en="Kitchen closes at 23:00">Η κουζίνα κλείνει στις 23:00</p>
+            </div>
         </div>
-        <div class="info-item">
-            <h4 data-lang-el="📞 Επικοινωνία" data-lang-en="📞 Contact">📞 Επικοινωνία</h4>
-            <p>
-                <span data-lang-el="Τηλέφωνο:" data-lang-en="Phone:">Τηλέφωνο:</span> 
-                <a href="tel:+302103247148"><strong>+30 210 32 47 148</strong></a>
-            </p>
-            <p>Email: <a href="mailto:info@okipostispandrosou.gr">info@okipostispandrosou.gr</a></p>
-        </div>
-        <div class="info-item">
-            <h4 data-lang-el="⏰ Ωράριο" data-lang-en="⏰ Opening Hours">⏰ Ωράριο</h4>
-            <p>
-                <span data-lang-el="Καθημερινά:" data-lang-en="Daily:">Καθημερινά:</span> 
-                <time datetime="12:00-23:00"><strong>12:00 – 23:00</strong></time>
-            </p>
-            <p>
-                <span data-lang-el="Για κρατήσεις:" data-lang-en="For reservations:">Για κρατήσεις:</span> 
-                <a href="reservations.html"><span data-lang-el="online εδώ" data-lang-en="book online">online εδώ</span></a>
-            </p>
-        </div>
+
+        <div class="map-wrapper">
+    <iframe 
+         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3145.081778021229!2d23.725751074354058!3d37.97522080059078!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14a1bd5d5513e895%3A0x8ca74afe95163378!2sPandrosou%20Garden%20Restaurant!5e0!3m2!1sel!2sgr!4v1772279146870!5m2!1sel!2sgr" 
+        width="100%" 
+        height="450" 
+        style="border:0;" 
+        allowfullscreen="" 
+        loading="lazy" 
+        referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+</div>
     </div>
 </section>
     </main>
-    
+    <div id="lightbox" class="lightbox" onclick="this.style.display='none'">
+    <span class="close-lightbox">&times;</span>
+    <img class="lightbox-content" id="lightbox-img">
+    <div id="caption"></div>
+</div>
     <footer>
       <p>
         © 2025 <span data-lang-el="Ο Κήπος της Πανδρόσου" data-lang-en="Pandrosou Garden">Ο Κήπος της Πανδρόσου</span> · est. 1981
@@ -639,26 +814,25 @@
         </div>
     </div>
   </div>
-
 <script>
+/* 1. SPLASH SCREEN LOGIC */
 (function() {
     const splashShown = sessionStorage.getItem('splashShown');
     const splash = document.getElementById('splash-screen');
     const targetLogo = document.querySelector('.logo-img') || document.querySelector('.header-logo');
 
-    // ΑΝ ΔΕΝ ΤΟ ΕΧΕΙ ΞΑΝΑΔΕΙ: Το εμφανίζουμε αμέσως
     if (!splashShown) {
         if (splash) splash.style.display = 'flex';
         if (targetLogo) targetLogo.style.opacity = '0';
     } else {
-        // ΑΝ ΤΟ ΕΧΕΙ ΞΑΝΑΔΕΙ: Το κρατάμε κρυμμένο και δείχνουμε το λογότυπο
         if (targetLogo) targetLogo.style.opacity = '1';
-        return; // Τερματισμός, δεν τρέχει τίποτα άλλο
+        if (splash) splash.style.display = 'none';
+        return;
     }
 
-    // Το animation τρέχει μόνο αν φτάσουμε εδώ (δηλαδή αν δεν υπάρχει το splashShown)
     window.addEventListener('load', () => {
         const movingLogo = document.getElementById('moving-logo');
+        if (!movingLogo || !targetLogo) return;
         
         setTimeout(() => {
             const startRect = movingLogo.getBoundingClientRect();
@@ -681,211 +855,142 @@
                 movingLogo.style.opacity = '0';
                 splash.style.opacity = '0';
                 splash.style.visibility = 'hidden';
-                
                 sessionStorage.setItem('splashShown', 'true');
-                
-                // Προαιρετικά το αφαιρούμε τελείως από το DOM μετά το animation
                 setTimeout(() => splash.style.display = 'none', 600);
             }, 1800); 
         }, 2500); 
     });
 })();
 
-
-</script>
-
-  <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const carousel = document.getElementById('reviewsCarousel');
-    const prevBtn = document.getElementById('reviewPrevBtn');
-    const nextBtn = document.getElementById('reviewNextBtn');
-    const cards = carousel.querySelectorAll('.review-card');
-    let currentIndex = 0;
-    let autoSlideInterval;
+    
+    /* 2. REVIEWS CAROUSEL LOGIC */
+    const revCarousel = document.getElementById('reviewsCarousel');
+    if (revCarousel) {
+        const prevBtn = document.getElementById('reviewPrevBtn');
+        const nextBtn = document.getElementById('reviewNextBtn');
+        const cards = revCarousel.querySelectorAll('.review-card');
+        let revIndex = 0;
+        const GAP = 24;
 
-    const GAP = 24; // Κενό που ορίστηκε στο CSS (gap: 24px)
+        function getItemsPerSlide() { return window.innerWidth <= 900 ? 1 : 3; }
 
-    // Επιστρέφει πόσες κάρτες εμφανίζονται σε κάθε slide (1 για mobile, 3 για desktop)
-    function getItemsPerSlide() {
-        // Ελέγχει το πλάτος του viewport
-        return window.innerWidth <= 900 ? 1 : 3; 
-    }
-
-    // Υπολογίζει πόσο πρέπει να μετακινηθεί το carousel (Πλάτος Κάρτας + Κενό)
-    function getCardMoveOffset() {
-        if (cards.length === 0) return 0;
-
-        const cardWidth = cards[0].offsetWidth;
-        const itemsPerSlide = getItemsPerSlide();
-        
-        // Σε mobile, το κενό είναι 0. Σε desktop, είναι 24px.
-        return itemsPerSlide === 1 ? cardWidth : cardWidth + GAP;
-    }
-
-    // Ενημερώνει τη θέση του carousel και την κατάσταση των κουμπιών
-    function updateCarousel() {
-        const moveOffset = getCardMoveOffset();
-        const slideTransform = moveOffset * currentIndex;
-
-        carousel.style.transform = `translateX(-${slideTransform}px)`;
-
-        const totalItems = cards.length;
-        const itemsPerSlide = getItemsPerSlide();
-        
-        // Ο μέγιστος δείκτης που μπορεί να φτάσει το carousel πριν φανεί η τελευταία κάρτα
-        const maxIndex = totalItems - itemsPerSlide;
-
-        nextBtn.disabled = currentIndex >= maxIndex;
-        prevBtn.disabled = currentIndex <= 0;
-    }
-
-    function nextSlide() {
-        const itemsPerSlide = getItemsPerSlide();
-        const maxIndex = cards.length - itemsPerSlide;
-        
-        currentIndex++;
-        if (currentIndex > maxIndex) {
-            currentIndex = 0; // Επαναφορά στην αρχή (Looping)
+        function updateRevCarousel() {
+            const cardWidth = cards[0].offsetWidth;
+            const itemsVisible = getItemsPerSlide();
+            const offset = itemsVisible === 1 ? cardWidth : cardWidth + GAP;
+            revCarousel.style.transform = `translateX(-${revIndex * offset}px)`;
+            
+            if(nextBtn) nextBtn.disabled = revIndex >= cards.length - itemsVisible;
+            if(prevBtn) prevBtn.disabled = revIndex <= 0;
         }
-        updateCarousel();
-    }
-    
-    // Έναρξη αυτόματης ολίσθησης
-    function startAutoSlide() {
-        clearInterval(autoSlideInterval);
-        autoSlideInterval = setInterval(nextSlide, 5000); 
-    }
 
-    // Χειροκίνητη πλοήγηση (διακόπτει και επανεκκινεί την αυτόματη)
-    prevBtn.addEventListener('click', () => {
-        clearInterval(autoSlideInterval);
-        currentIndex = Math.max(0, currentIndex - 1);
-        updateCarousel();
-        startAutoSlide();
-    });
+        if(nextBtn) nextBtn.addEventListener('click', () => {
+            revIndex++;
+            if (revIndex > cards.length - getItemsPerSlide()) revIndex = 0;
+            updateRevCarousel();
+        });
 
-    nextBtn.addEventListener('click', () => {
-        clearInterval(autoSlideInterval);
-        nextSlide(); // Χρησιμοποιούμε την nextSlide για τη λογική looping
-        startAutoSlide();
-    });
+        if(prevBtn) prevBtn.addEventListener('click', () => {
+            revIndex = Math.max(0, revIndex - 1);
+            updateRevCarousel();
+        });
 
-    // Χειρισμός αλλαγής μεγέθους οθόνης
-    window.addEventListener('resize', () => {
-        currentIndex = 0; // Επαναφορά στην αρχή για αποφυγή προβλημάτων εμφάνισης
-        updateCarousel();
-        startAutoSlide(); 
-    });
-
-    // Αρχική φόρτωση
-    startAutoSlide();
-    updateCarousel(); 
-});
-// Λογική για το Modal της Ιστορίας
-const historyModal = document.getElementById('historyModal');
-const readMoreBtn = document.getElementById('readMoreBtn');
-const closeHistoryBtn = document.querySelector('.close-history');
-
-readMoreBtn.addEventListener('click', () => {
-    historyModal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-});
-
-closeHistoryBtn.addEventListener('click', () => {
-    historyModal.style.display = 'none';
-    document.body.style.overflow = '';
-});
-
-historyModal.addEventListener('click', (e) => {
-    if (e.target === historyModal) {
-        historyModal.style.display = 'none';
-        document.body.style.overflow = '';
-    }
-});
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const track = document.getElementById('heroTrack');
-    const prevBtn = document.getElementById('heroPrev');
-    const nextBtn = document.getElementById('heroNext');
-    const items = track.querySelectorAll('.hero-img-item');
-    let index = 0;
-    let autoPlayInterval;
-
-    function updateHeroPosition() {
-        const itemsVisible = window.innerWidth > 768 ? 3 : 1;
-        const maxIndex = items.length - itemsVisible;
-        
-        if (index > maxIndex) index = 0;
-        if (index < 0) index = maxIndex;
-
-        const gap = window.innerWidth > 768 ? 15 : 0;
-        const slideWidth = items[0].offsetWidth + gap;
-        track.style.transform = `translateX(-${index * slideWidth}px)`;
+        window.addEventListener('resize', updateRevCarousel);
+        updateRevCarousel();
     }
 
-    function startAutoPlay() {
-        stopAutoPlay();
-        autoPlayInterval = setInterval(() => {
-            index++;
-            updateHeroPosition();
-        }, 4000); // Αλλαγή κάθε 4 δευτερόλεπτα
+    /* 3. HERO CAROUSEL & LIGHTBOX LOGIC (Εδώ είναι η αλλαγή!) */
+    const heroTrack = document.getElementById('heroTrack');
+    if (heroTrack) {
+        const hPrev = document.getElementById('heroPrev');
+        const hNext = document.getElementById('heroNext');
+        const hItems = heroTrack.querySelectorAll('.hero-img-item');
+        const hImgs = heroTrack.querySelectorAll('img');
+        let hIndex = 0;
+        let hAutoPlay;
+
+        // Δημιουργία Lightbox Element δυναμικά αν δεν υπάρχει στο HTML
+        let lightbox = document.getElementById('lightbox');
+        if (!lightbox) {
+            lightbox = document.createElement('div');
+            lightbox.id = 'lightbox';
+            lightbox.style.cssText = "display:none; position:fixed; z-index:10000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.9); align-items:center; justify-content:center; cursor:pointer;";
+            lightbox.innerHTML = `<span style="position:absolute; top:20px; right:30px; color:white; font-size:40px; font-weight:bold;">&times;</span><img id="lightbox-img" style="max-width:90%; max-height:80%; border-radius:8px; box-shadow:0 0 20px rgba(0,0,0,0.5);">`;
+            document.body.appendChild(lightbox);
+        }
+        const lightboxImg = document.getElementById('lightbox-img');
+
+        function updateHero() {
+            const visible = window.innerWidth > 768 ? 3 : 1;
+            const max = hItems.length - visible;
+            if (hIndex > max) hIndex = 0;
+            if (hIndex < 0) hIndex = max;
+            const gap = window.innerWidth > 768 ? 15 : 0;
+            const width = hItems[0].offsetWidth + gap;
+            heroTrack.style.transform = `translateX(-${hIndex * width}px)`;
+        }
+
+        function startHAuto() { 
+            stopHAuto(); 
+            hAutoPlay = setInterval(() => { hIndex++; updateHero(); }, 4000); 
+        }
+        function stopHAuto() { clearInterval(hAutoPlay); }
+
+        hNext.addEventListener('click', () => { hIndex++; updateHero(); startHAuto(); });
+        hPrev.addEventListener('click', () => { hIndex--; updateHero(); startHAuto(); });
+
+        // Προσθήκη Click στις εικόνες για άνοιγμα
+        hImgs.forEach(img => {
+            img.style.cursor = 'zoom-in';
+            img.addEventListener('click', () => {
+                lightboxImg.src = img.src;
+                lightbox.style.display = 'flex';
+                document.body.style.overflow = 'hidden'; // Stop scrolling
+            });
+        });
+
+        lightbox.addEventListener('click', () => {
+            lightbox.style.display = 'none';
+            document.body.style.overflow = ''; // Resume scrolling
+        });
+
+        window.addEventListener('resize', updateHero);
+        startHAuto();
+        updateHero();
     }
 
-    function stopAutoPlay() {
-        clearInterval(autoPlayInterval);
+    /* 4. HISTORY MODAL */
+    const histModal = document.getElementById('historyModal');
+    const readBtn = document.getElementById('readMoreBtn');
+    const closeHist = document.querySelector('.close-history');
+
+    if(readBtn && histModal) {
+        readBtn.addEventListener('click', () => {
+            histModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        });
+        closeHist.addEventListener('click', () => {
+            histModal.style.display = 'none';
+            document.body.style.overflow = '';
+        });
     }
 
-    nextBtn.addEventListener('click', () => {
-        index++;
-        updateHeroPosition();
-        startAutoPlay(); // Reset timer
-    });
-
-    prevBtn.addEventListener('click', () => {
-        index--;
-        updateHeroPosition();
-        startAutoPlay(); // Reset timer
-    });
-
-    // Παύση όταν το ποντίκι είναι πάνω, συνέχιση όταν βγαίνει
-    const wrapper = document.querySelector('.hero-carousel-wrapper');
-    wrapper.addEventListener('mouseenter', stopAutoPlay);
-    wrapper.addEventListener('mouseleave', startAutoPlay);
-
-    window.addEventListener('resize', updateHeroPosition);
-    
-    startAutoPlay();
-    updateHeroPosition();
+    /* 5. MOBILE MENU */
+    const mobBtn = document.getElementById('mobileMenuBtn');
+    const mobClose = document.getElementById('closeMobileModal');
+    const mobModal = document.getElementById('mobileModal');
+    if(mobBtn && mobModal) {
+        mobBtn.addEventListener('click', () => {
+            mobModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        });
+        const closeM = () => { mobModal.style.display = 'none'; document.body.style.overflow = ''; };
+        if(mobClose) mobClose.addEventListener('click', closeM);
+        document.querySelectorAll('.mobile-links a').forEach(l => l.addEventListener('click', closeM));
+    }
 });
 </script>
 <script src="lang.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const mobileBtn = document.getElementById('mobileMenuBtn');
-    const closeBtn = document.getElementById('closeMobileModal');
-    const modal = document.getElementById('mobileModal');
-    const modalLinks = document.querySelectorAll('.mobile-links a');
-
-    // Άνοιγμα Modal
-    mobileBtn.addEventListener('click', () => {
-        modal.style.display = 'flex';
-        document.body.style.overflow = 'hidden'; // Κλείδωμα scrolling
-    });
-
-    // Κλείσιμο Modal
-    function closeModal() {
-        modal.style.display = 'none';
-        document.body.style.overflow = ''; // Ξεκλείδωμα scrolling
-    }
-
-    closeBtn.addEventListener('click', closeModal);
-
-    // Κλείσιμο όταν πατηθεί σύνδεσμος (π.χ. Μενού)
-    modalLinks.forEach(link => {
-        link.addEventListener('click', closeModal);
-    });
-});
-</script>
 </body>
 </html>
