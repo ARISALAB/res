@@ -433,7 +433,7 @@
     position: absolute;
     inset: 0;
     background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-                url('garden-bg.jpg') no-repeat center center;
+                url('garden-bg.webp') no-repeat center center;
     background-size: cover;
     animation: kenBurns 6s ease-out forwards;
     z-index: -1;

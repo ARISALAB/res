@@ -9,7 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/png" href="favicon.ico.png">
+  <link rel="icon" type="image/png" sizes="180x180" href="favicon-180.png">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" href="style.css">
   
 </head>
@@ -587,7 +588,7 @@
   <div id="splash-screen">
     <div class="splash-bg"></div>
     <div class="splash-content">
-        <img src="favicon.ico.png" id="moving-logo" alt="Logo">
+        <img src="logo.webp" id="moving-logo" alt="Logo">
         <h1 id="splash-h1" data-lang-el="Καλωσορίσατε στον Κήπο της Πανδρόσου" data-lang-en="Welcome to Pandrosou Garden">Welcome to Pandrosou Garden</h1>
         <p id="splash-p" data-lang-el="Εστιατόριο • Est. 1981" data-lang-en="Restaurant • Est. 1981">Restaurant • Est. 1981</p>
     </div>
@@ -597,7 +598,7 @@
   <div class="container">
   <header>
     <a href="index.html" class="brand"> 
-        <img src="favicon.ico.png" alt="Λογότυπο" class="header-logo">
+        <img src="logo.webp" alt="Λογότυπο" class="header-logo">
         <div>
             <h1 data-lang-el="Ο Κήπος της Πανδρόσου" data-lang-en="Pandrosou Garden">Ο Κήπος της Πανδρόσου</h1>
             <div class="sub" data-lang-el="Εστιατόριο · Πλάκα, Αθήνα" data-lang-en="Restaurant · Plaka, Athens">Εστιατόριο · Πλάκα, Αθήνα</div>
@@ -666,15 +667,15 @@
       <button class="hero-nav-btn prev" id="heroPrev" aria-label="Previous slide">&#10094;</button>
       <div class="hero-carousel-container">
         <div class="hero-carousel-track" id="heroTrack">
-    <div class="hero-img-item"><img src="garden-bg.jpg" alt="Garden 1"></div>
-    <div class="hero-img-item"><img src="101.jpg" alt="Garden 2"></div>
-    <div class="hero-img-item"><img src="102.jpg" alt="Garden 3"></div>
-    <div class="hero-img-item"><img src="104.jpg" alt="Garden 5"></div>
-    <div class="hero-img-item"><img src="105.jpg" alt="Garden 6"></div>
-    <div class="hero-img-item"><img src="106.jpg" alt="Garden 7"></div>
-    <div class="hero-img-item"><img src="107.jpg" alt="Garden 8"></div>
-    <div class="hero-img-item"><img src="108.jpg" alt="Garden 9"></div>
-    <div class="hero-img-item"><img src="109.jpg" alt="Garden 10"></div>
+    <div class="hero-img-item"><img src="garden-bg.webp" alt="Garden 1" fetchpriority="high"></div>
+    <div class="hero-img-item"><img src="101.webp" alt="Garden 2" loading="lazy"></div>
+    <div class="hero-img-item"><img src="102.webp" alt="Garden 3" loading="lazy"></div>
+    <div class="hero-img-item"><img src="104.webp" alt="Garden 5" loading="lazy"></div>
+    <div class="hero-img-item"><img src="105.webp" alt="Garden 6" loading="lazy"></div>
+    <div class="hero-img-item"><img src="106.webp" alt="Garden 7" loading="lazy"></div>
+    <div class="hero-img-item"><img src="107.webp" alt="Garden 8" loading="lazy"></div>
+    <div class="hero-img-item"><img src="108.webp" alt="Garden 9" loading="lazy"></div>
+    <div class="hero-img-item"><img src="109.webp" alt="Garden 10" loading="lazy"></div>
 </div>
       </div>
       <button class="hero-nav-btn next" id="heroNext" aria-label="Next slide">&#10095;</button>
@@ -702,7 +703,7 @@
         
         <div class="teaser-image-wrapper">
             <div class="image-inner">
-<img src="2000.png" alt="Greek Appetizers">                <div class="image-overlay"></div>
+<img src="2000.webp" alt="Greek Appetizers" loading="lazy">                <div class="image-overlay"></div>
             </div>
         </div>
     </div>
@@ -905,7 +906,10 @@
         return;
     }
 
-    window.addEventListener('load', () => {
+    let logoAnimationStarted = false;
+    const runLogoAnimation = () => {
+        if (logoAnimationStarted) return;
+        logoAnimationStarted = true;
         const movingLogo = document.getElementById('moving-logo');
         if (!movingLogo || !targetLogo) return;
         
@@ -934,7 +938,21 @@
                 setTimeout(() => splash.style.display = 'none', 600);
             }, 1800); 
         }, 2500); 
-    });
+    };
+
+    const movingLogoEl = document.getElementById('moving-logo');
+    if (movingLogoEl) {
+        if (movingLogoEl.complete) {
+            runLogoAnimation();
+        } else {
+            movingLogoEl.addEventListener('load', runLogoAnimation, { once: true });
+            // Safety net: don't get stuck forever if the logo image fails to load
+            movingLogoEl.addEventListener('error', runLogoAnimation, { once: true });
+            setTimeout(runLogoAnimation, 4000);
+        }
+    } else {
+        runLogoAnimation();
+    }
 })();
 
 document.addEventListener('DOMContentLoaded', () => {
