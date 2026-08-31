@@ -313,9 +313,10 @@
   margin-top: 28px;
 }
 
-/* Πραγματική βαθμολογία Google/Tripadvisor (αντικαθιστά τις παλιές, εικονικές κάρτες κριτικών) */
+/* Πραγματική βαθμολογία Google/Tripadvisor/Facebook (αντικαθιστά τις παλιές, εικονικές κάρτες κριτικών) */
 .google-rating-badge,
-.tripadvisor-rating-badge {
+.tripadvisor-rating-badge,
+.facebook-rating-badge {
   position: relative;
   width: 100%;
   max-width: 380px;
@@ -333,7 +334,8 @@
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 .google-rating-badge::before,
-.tripadvisor-rating-badge::before {
+.tripadvisor-rating-badge::before,
+.facebook-rating-badge::before {
   content: "";
   position: absolute;
   top: 0; left: 0; right: 0;
@@ -345,8 +347,12 @@
 .tripadvisor-rating-badge::before {
   background: #00AF87;
 }
+.facebook-rating-badge::before {
+  background: #1877F2;
+}
 .google-rating-badge:hover,
-.tripadvisor-rating-badge:hover {
+.tripadvisor-rating-badge:hover,
+.facebook-rating-badge:hover {
   transform: translateY(-6px);
 }
 .google-rating-badge:hover {
@@ -354,6 +360,9 @@
 }
 .tripadvisor-rating-badge:hover {
   box-shadow: 0 14px 32px rgba(0,175,135,.3);
+}
+.facebook-rating-badge:hover {
+  box-shadow: 0 14px 32px rgba(24,119,242,.3);
 }
 
 .google-rating-badge .review-widget_net,
@@ -377,9 +386,15 @@
   height: auto;
 }
 
+.facebook-rating-badge .fb-page,
+.facebook-rating-badge iframe {
+  max-width: 100%;
+}
+
 @media (max-width: 600px) {
   .google-rating-badge,
-  .tripadvisor-rating-badge {
+  .tripadvisor-rating-badge,
+  .facebook-rating-badge {
     max-width: 340px;
   }
 }
