@@ -304,6 +304,85 @@
   padding: 40px 0;
   text-align: center;
 }
+
+.ratings-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 28px;
+}
+
+/* Πραγματική βαθμολογία Google/Tripadvisor (αντικαθιστά τις παλιές, εικονικές κάρτες κριτικών) */
+.google-rating-badge,
+.tripadvisor-rating-badge {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  padding: 32px 26px 26px;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(155deg, rgba(255,255,255,0.05), var(--card) 55%);
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: 0 8px 24px rgba(0,0,0,.35);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.google-rating-badge::before,
+.tripadvisor-rating-badge::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+}
+.google-rating-badge::before {
+  background: linear-gradient(90deg, #4285F4, #EA4335 33%, #FBBC05 66%, #34A853);
+}
+.tripadvisor-rating-badge::before {
+  background: #00AF87;
+}
+.google-rating-badge:hover,
+.tripadvisor-rating-badge:hover {
+  transform: translateY(-6px);
+}
+.google-rating-badge:hover {
+  box-shadow: 0 14px 32px rgba(66,133,244,.28);
+}
+.tripadvisor-rating-badge:hover {
+  box-shadow: 0 14px 32px rgba(0,175,135,.3);
+}
+
+.google-rating-badge .review-widget_net,
+.tripadvisor-rating-badge > div {
+  width: 100%;
+}
+
+.tripadvisor-rating-badge #TA_rated803,
+.tripadvisor-rating-badge #TA_cdsscrollingravenarrow370 {
+  display: flex;
+  justify-content: center;
+}
+
+.tripadvisor-rating-badge .TA_links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.tripadvisor-rating-badge img {
+  max-width: 100%;
+  height: auto;
+}
+
+@media (max-width: 600px) {
+  .google-rating-badge,
+  .tripadvisor-rating-badge {
+    max-width: 340px;
+  }
+}
 .carousel-wrapper {
   max-width: 1100px; /* Αυξάνω το max-width για καλύτερη εμφάνιση σε desktop */
   margin: 0 auto;
