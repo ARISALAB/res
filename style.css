@@ -469,7 +469,7 @@
     visibility: hidden;
     transition: all 1s ease-in-out;
 }
-#splash-screen h1 {
+#splash-screen .splash-title {
   color: #fff;
   font-size: clamp(24px, 5vw, 42px);
   margin: 20px 0 5px;
@@ -779,4 +779,3 @@ header {
         display: none !important;
     }
 }
-
