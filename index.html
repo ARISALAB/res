@@ -605,7 +605,7 @@
     <div class="splash-bg"></div>
     <div class="splash-content">
         <img src="logo.webp" id="moving-logo" alt="Logo">
-        <h1 id="splash-h1" data-lang-el="Καλωσορίσατε στον Κήπο της Πανδρόσου" data-lang-en="Welcome to Pandrosou Garden">Welcome to Pandrosou Garden</h1>
+        <p id="splash-h1" class="splash-title" data-lang-el="Καλωσορίσατε στον Κήπο της Πανδρόσου" data-lang-en="Welcome to Pandrosou Garden">Welcome to Pandrosou Garden</p>
         <p id="splash-p" data-lang-el="Εστιατόριο • Est. 1981" data-lang-en="Restaurant • Est. 1981">Restaurant • Est. 1981</p>
     </div>
 </div>
@@ -937,7 +937,7 @@
             const deltaY = endRect.top - startRect.top;
             const scale = endRect.width / startRect.width;
 
-            document.querySelectorAll('.splash-content h1, .splash-content p').forEach(el => {
+            document.querySelectorAll('.splash-content .splash-title, .splash-content p').forEach(el => {
                 el.style.opacity = '0';
                 el.style.transition = 'opacity 0.5s';
             });
