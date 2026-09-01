@@ -279,14 +279,25 @@
 
   /* 4. Media Queries (Responsive) */
 @media (max-width: 768px) {
-  /* ΣΕ MOBILE: Κάνουμε το container ελαφρώς ψηλότερο */
-  .carousel-container { 
-      padding-bottom: 65%; /* Πιο ψηλή αναλογία για καλύτερη θέαση σε κινητά */
-  } 
-  
-  /* ΝΕΑ & ΟΡΙΣΤΙΚΗ ΔΙΟΡΘΩΣΗ: Χρησιμοποιούμε CONTAIN για να εμφανίζεται ΟΛΟΚΛΗΡΟ το βίντεο (χωρίς να κόβεται) */
+  /* ΝΕΟ: Πιο εντυπωσιακό, ολοσέλιδο hero video σε κινητά αντί για μικρό, letterboxed βίντεο */
+  .video-hero-container.carousel-container {
+      width: calc(100% + 48px);
+      margin-left: -24px;
+      margin-right: -24px;
+      border-radius: 0 0 28px 28px;
+      padding-bottom: 100%; /* Πιο ψηλό, πιο εντυπωσιακό banner */
+      position: relative;
+  }
+  .video-hero-container.carousel-container::after {
+      content: "";
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 40%;
+      background: linear-gradient(to bottom, transparent, var(--bg) 92%);
+      pointer-events: none;
+  }
   .hero-video {
-      object-fit: contain;
+      object-fit: cover; /* Γεμίζει πλήρως το banner, χωρίς κενά περιθώρια */
   }
   
   .modal-content { max-width: 90%; margin: 20px; padding: 20px; }
