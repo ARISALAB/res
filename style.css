@@ -388,7 +388,8 @@
 
 .facebook-rating-badge .fb-page,
 .facebook-rating-badge iframe {
-  max-width: 100%;
+  max-width: 100% !important;
+  width: 100% !important;
 }
 
 @media (max-width: 600px) {
