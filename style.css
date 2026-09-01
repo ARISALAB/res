@@ -285,14 +285,14 @@
       margin-left: -24px;
       margin-right: -24px;
       border-radius: 0 0 28px 28px;
-      padding-bottom: 100%; /* Πιο ψηλό, πιο εντυπωσιακό banner */
+      padding-bottom: 60%; /* Κοντά στην πραγματική αναλογία του βίντεο (16:9 = 56.25%), ώστε να μην κόβεται πλάγια */
       position: relative;
   }
   .video-hero-container.carousel-container::after {
       content: "";
       position: absolute;
       left: 0; right: 0; bottom: 0;
-      height: 40%;
+      height: 28%;
       background: linear-gradient(to bottom, transparent, var(--bg) 92%);
       pointer-events: none;
   }
