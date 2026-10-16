@@ -28,7 +28,7 @@
   <link rel="icon" type="image/png" sizes="180x180" href="favicon-180.png">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" href="home.css">
-  <link rel="preload" as="image" href="garden-bg.webp">
+  <link rel="preload" as="image" href="PANDROSOU.webp">
   
   <script type="application/ld+json">
   {
@@ -116,10 +116,9 @@
   <main id="main-content">
 
     <section class="hero" aria-label="Ο Κήπος της Πανδρόσου">
-      <img class="hero-poster" src="garden-bg.webp" alt="" fetchpriority="high">
-      <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="garden-bg.webp" aria-hidden="true">
-        <source src="garden.mp4" type="video/mp4">
-      </video>
+      <picture>
+        <img class="hero-photo" src="PANDROSOU.webp" alt="Ο κήπος της Πανδρόσου γεμάτος το σούρουπο" fetchpriority="high" width="1360" height="1020">
+      </picture>
       <div class="wrap hero-content">
         <h1 data-lang-el="Ένας κήπος στην καρδιά της Πλάκας" data-lang-en="A garden in the heart of Plaka">Ένας κήπος στην καρδιά της Πλάκας</h1>
         <p class="hero-lead" data-lang-el="Παραδοσιακή ελληνική κουζίνα στον πεζόδρομο της Πανδρόσου, λίγα βήματα από το Μοναστηράκι και την Αρχαία Αγορά. Από το 1981." data-lang-en="Traditional Greek cooking on Pandrosou Street, a few steps from Monastiraki and the Ancient Agora. Since 1981.">Παραδοσιακή ελληνική κουζίνα στον πεζόδρομο της Πανδρόσου, λίγα βήματα από το Μοναστηράκι και την Αρχαία Αγορά. Από το 1981.</p>
@@ -149,7 +148,7 @@
 
     <section class="story" aria-labelledby="story-title">
       <div class="story-media">
-        <img src="101.webp" alt="Η είσοδος του εστιατορίου στην οδό Πανδρόσου" loading="lazy" width="1600" height="1200">
+        <img src="1.jpg" alt="Τραπέζια κάτω από το δέντρο του κήπου το βράδυ" loading="lazy" width="1200" height="1600">
       </div>
       <div class="story-text">
         <span class="since">1981</span>
@@ -160,19 +159,9 @@
       </div>
     </section>
 
-    <section class="section gallery-section" aria-labelledby="gallery-title">
-      <div class="wrap section-head">
-        <h2 id="gallery-title" data-lang-el="Ο κήπος, μέρα και νύχτα" data-lang-en="The garden, day and night">Ο κήπος, μέρα και νύχτα</h2>
-        <p data-lang-el="Κάτω από την κληματαριά το καλοκαίρι, ζεστό και προστατευμένο τον χειμώνα." data-lang-en="Under the vines in summer, warm and sheltered in winter.">Κάτω από την κληματαριά το καλοκαίρι, ζεστό και προστατευμένο τον χειμώνα.</p>
-      </div>
-      <div class="gallery">
-        <button class="g-a" aria-label="Μεγέθυνση φωτογραφίας"><img src="PANDROSOU.webp" alt="Ο κήπος γεμάτος το βράδυ" loading="lazy"></button>
-        <button class="g-b" aria-label="Μεγέθυνση φωτογραφίας"><img src="102.webp" alt="Τραπέζια στον κήπο με λουλούδια" loading="lazy"></button>
-        <button class="g-c" aria-label="Μεγέθυνση φωτογραφίας"><img src="109.webp" alt="Η εσωτερική σάλα" loading="lazy"></button>
-        <button class="g-d" aria-label="Μεγέθυνση φωτογραφίας"><img src="105.webp" alt="Ο κήπος με τα φωτάκια" loading="lazy"></button>
-        <button class="g-e" aria-label="Μεγέθυνση φωτογραφίας"><img src="1.jpg" alt="Βραδιά κάτω από τα δέντρα" loading="lazy"></button>
-      </div>
-    </section>
+    <figure class="photo-band" aria-label="Ο κήπος το βράδυ">
+      <img src="105.webp" alt="Ο κήπος με τα φωτάκια στην πέργκολα το βράδυ" loading="lazy" width="1600" height="1200">
+    </figure>
 
     <section class="kitchen" aria-labelledby="kitchen-title">
       <div class="kitchen-text">
@@ -190,6 +179,10 @@
         <img src="2000.webp" alt="Πιάτα σε τραπέζι στον κήπο" loading="lazy" width="896" height="1200">
       </div>
     </section>
+
+    <figure class="photo-band photo-band-day" aria-label="Ο κήπος την ημέρα">
+      <img src="102.webp" alt="Ο κήπος με τα λουλούδια την ημέρα" loading="lazy" width="1600" height="1200">
+    </figure>
 
     <section class="section reviews-section" id="reviews" aria-labelledby="reviews-title">
       <div class="wrap">
@@ -262,11 +255,6 @@
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21C10.61,21 3,13.39 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"/></svg>
   </a>
 
-  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Φωτογραφία">
-    <button class="btn btn-ghost lightbox-close" aria-label="Κλείσιμο">&times;</button>
-    <img id="lightbox-img" alt="">
-  </div>
-
   <!-- Απαιτείται από το lang.js (κοινό με τη σελίδα μενού) -->
   <div id="menuModal" class="modal-overlay" aria-hidden="true">
     <div class="modal-content"><button class="close-btn" tabindex="-1">&times;</button><h3 id="modalTitle"></h3><div id="modalContent"></div></div>
@@ -276,10 +264,6 @@
 document.addEventListener('DOMContentLoaded', function () {
   // Έτος στο footer
   var y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
-
-  // Βίντεο: όχι σε όσους έχουν ζητήσει λιγότερη κίνηση
-  var video = document.querySelector('.hero-video');
-  if (video && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { video.removeAttribute('autoplay'); video.pause(); video.style.display = 'none'; }
 
   // Μενού κινητού
   var mobBtn = document.getElementById('mobileMenuBtn');
@@ -292,21 +276,8 @@ document.addEventListener('DOMContentLoaded', function () {
     mobModal.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { mobModal.style.display = 'none'; document.body.style.overflow = ''; }); });
   }
 
-  // Γκαλερί: μεγέθυνση
-  var lb = document.getElementById('lightbox'), lbImg = document.getElementById('lightbox-img'), lastBtn = null;
-  document.querySelectorAll('.gallery button').forEach(function (b) {
-    b.addEventListener('click', function () {
-      var img = b.querySelector('img'); lastBtn = b;
-      lbImg.src = img.src; lbImg.alt = img.alt;
-      lb.classList.add('open'); document.body.style.overflow = 'hidden';
-      lb.querySelector('.lightbox-close').focus();
-    });
-  });
-  function closeLb() { lb.classList.remove('open'); document.body.style.overflow = ''; if (lastBtn) lastBtn.focus(); }
-  lb.addEventListener('click', closeLb);
   document.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape') return;
-    if (lb.classList.contains('open')) closeLb();
     if (mobModal && mobModal.style.display === 'flex') closeMenu();
   });
 });
