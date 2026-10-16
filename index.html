@@ -28,7 +28,7 @@
   <link rel="icon" type="image/png" sizes="180x180" href="favicon-180.png">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" href="home.css">
-  <link rel="preload" as="image" href="PANDROSOU.webp">
+  
   
   <script type="application/ld+json">
   {
@@ -115,40 +115,34 @@
 
   <main id="main-content">
 
-    <section class="hero" aria-label="Ο Κήπος της Πανδρόσου">
-      <picture>
-        <img class="hero-photo" src="PANDROSOU.webp" alt="Ο κήπος της Πανδρόσου γεμάτος το σούρουπο" fetchpriority="high" width="1360" height="1020">
-      </picture>
-      <div class="wrap hero-content">
-        <h1 data-lang-el="Ένας κήπος στην καρδιά της Πλάκας" data-lang-en="A garden in the heart of Plaka">Ένας κήπος στην καρδιά της Πλάκας</h1>
-        <p class="hero-lead" data-lang-el="Παραδοσιακή ελληνική κουζίνα στον πεζόδρομο της Πανδρόσου, λίγα βήματα από το Μοναστηράκι και την Αρχαία Αγορά. Από το 1981." data-lang-en="Traditional Greek cooking on Pandrosou Street, a few steps from Monastiraki and the Ancient Agora. Since 1981.">Παραδοσιακή ελληνική κουζίνα στον πεζόδρομο της Πανδρόσου, λίγα βήματα από το Μοναστηράκι και την Αρχαία Αγορά. Από το 1981.</p>
-        <div class="hero-actions">
-          <a href="https://restableres.netlify.app/?shop=pandrosougarden" class="btn btn-primary" data-lang-el="Κράτηση τραπεζιού" data-lang-en="Book a table">Κράτηση τραπεζιού</a>
-          <a href="menu.html" class="btn btn-ghost" data-lang-el="Δείτε το μενού" data-lang-en="See the menu">Δείτε το μενού</a>
+    <section class="hero-film" aria-label="Βίντεο: Ο Κήπος της Πανδρόσου">
+      <video class="film" autoplay muted playsinline preload="auto" poster="film-poster.webp" aria-hidden="true">
+        <source src="garden.mp4" type="video/mp4">
+      </video>
+      <button class="film-replay" type="button" hidden data-lang-el="Ξανά" data-lang-en="Replay">Ξανά</button>
+    </section>
+
+    <section class="intro" aria-labelledby="intro-title">
+      <div class="wrap intro-grid">
+        <div>
+          <h1 id="intro-title" data-lang-el="Ένας κήπος στην καρδιά της Πλάκας" data-lang-en="A garden in the heart of Plaka">Ένας κήπος στην καρδιά της Πλάκας</h1>
+          <p class="intro-lead" data-lang-el="Παραδοσιακή ελληνική κουζίνα στον πεζόδρομο της Πανδρόσου, λίγα βήματα από το Μοναστηράκι και την Αρχαία Αγορά. Από το 1981." data-lang-en="Traditional Greek cooking on Pandrosou Street, a few steps from Monastiraki and the Ancient Agora. Since 1981.">Παραδοσιακή ελληνική κουζίνα στον πεζόδρομο της Πανδρόσου, λίγα βήματα από το Μοναστηράκι και την Αρχαία Αγορά. Από το 1981.</p>
+          <div class="hero-actions">
+            <a href="https://restableres.netlify.app/?shop=pandrosougarden" class="btn btn-primary" data-lang-el="Κράτηση τραπεζιού" data-lang-en="Book a table">Κράτηση τραπεζιού</a>
+            <a href="menu.html" class="btn btn-ghost" data-lang-el="Δείτε το μενού" data-lang-en="See the menu">Δείτε το μενού</a>
+          </div>
         </div>
+        <dl class="intro-facts">
+          <div><dt data-lang-el="Ανοιχτά καθημερινά" data-lang-en="Open every day">Ανοιχτά καθημερινά</dt><dd>12:00 – 23:30</dd></div>
+          <div><dt data-lang-el="Διεύθυνση" data-lang-en="Address">Διεύθυνση</dt><dd><a href="https://maps.google.com/?q=Pandrosou+Garden+Restaurant+Pandrosou+15+Athens" target="_blank" rel="noopener" data-lang-el="Πανδρόσου 15, Πλάκα" data-lang-en="15 Pandrosou St, Plaka">Πανδρόσου 15, Πλάκα</a></dd></div>
+          <div><dt data-lang-el="Τηλέφωνο" data-lang-en="Phone">Τηλέφωνο</dt><dd><a href="tel:+302103247148">210 3247 148</a></dd></div>
+        </dl>
       </div>
     </section>
 
-    <div class="facts">
-      <div class="wrap">
-        <div class="fact">
-          <span class="fact-label" data-lang-el="Ανοιχτά καθημερινά" data-lang-en="Open every day">Ανοιχτά καθημερινά</span>
-          <span class="fact-value">12:00 – 23:30</span>
-        </div>
-        <div class="fact">
-          <span class="fact-label" data-lang-el="Διεύθυνση" data-lang-en="Address">Διεύθυνση</span>
-          <a class="fact-value" href="https://maps.google.com/?q=Pandrosou+Garden+Restaurant+Pandrosou+15+Athens" target="_blank" rel="noopener" data-lang-el="Πανδρόσου 15, Πλάκα" data-lang-en="15 Pandrosou St, Plaka">Πανδρόσου 15, Πλάκα</a>
-        </div>
-        <div class="fact">
-          <span class="fact-label" data-lang-el="Τηλέφωνο" data-lang-en="Phone">Τηλέφωνο</span>
-          <a class="fact-value" href="tel:+302103247148">210 3247 148</a>
-        </div>
-      </div>
-    </div>
-
     <section class="story" aria-labelledby="story-title">
       <div class="story-media">
-        <img src="5.jpg" alt="Επισκέπτες στον κήπο κάτω από την πέργκολα το βράδυ" loading="lazy" width="1200" height="1600">
+        <img src="PANDROSOU.webp" alt="Ο κήπος γεμάτος επισκέπτες το σούρουπο" loading="lazy" width="1360" height="1020">
       </div>
       <div class="story-text">
         <span class="since">1981</span>
@@ -159,8 +153,8 @@
       </div>
     </section>
 
-    <figure class="photo-band" aria-label="Ο κήπος το βράδυ">
-      <img src="4.jpg" alt="Ο κήπος γεμάτος επισκέπτες το βράδυ" loading="lazy" width="1200" height="1600" style="object-position:50% 72%">
+    <figure class="photo-band" aria-label="Ο κήπος τον χειμώνα">
+      <img src="garden-bg.webp" alt="Το τραπέζι υποδοχής στον κήπο τον χειμώνα" loading="lazy" width="1360" height="1020">
     </figure>
 
     <section class="kitchen" aria-labelledby="kitchen-title">
@@ -180,9 +174,10 @@
       </div>
     </section>
 
-    <figure class="photo-band photo-band-day" aria-label="Ο κήπος τον χειμώνα">
-      <img src="100.webp" alt="Επισκέπτες στον κλειστό, ζεστό κήπο τον χειμώνα" loading="lazy" width="1600" height="1200" style="object-position:50% 58%">
-    </figure>
+    <div class="photo-pair">
+      <figure><img src="106.webp" alt="Η εσωτερική σάλα με τα γιορτινά φωτάκια" loading="lazy" width="1600" height="1200"></figure>
+      <figure><img src="107.webp" alt="Ο γιορτινός πολυέλαιος της σάλας" loading="lazy" width="1600" height="1200"></figure>
+    </div>
 
     <section class="section reviews-section" id="reviews" aria-labelledby="reviews-title">
       <div class="wrap">
@@ -264,6 +259,14 @@
 document.addEventListener('DOMContentLoaded', function () {
   // Έτος στο footer
   var y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
+
+  // Βίντεο εισαγωγής
+  var film = document.querySelector('.film'), replay = document.querySelector('.film-replay');
+  if (film) {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { film.removeAttribute('autoplay'); film.pause(); if (replay) replay.hidden = false; }
+    film.addEventListener('ended', function () { if (replay) replay.hidden = false; });
+    if (replay) replay.addEventListener('click', function () { replay.hidden = true; film.currentTime = 0; film.play(); });
+  }
 
   // Μενού κινητού
   var mobBtn = document.getElementById('mobileMenuBtn');
