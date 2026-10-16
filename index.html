@@ -115,14 +115,11 @@
 
   <main id="main-content">
 
-    <section class="hero-film" aria-label="Βίντεο: Ο Κήπος της Πανδρόσου">
-      <video class="film" autoplay muted playsinline preload="auto" poster="film-poster.webp" aria-hidden="true">
+    <section class="intro" aria-labelledby="intro-title">
+      <video class="intro-video" autoplay muted loop playsinline preload="auto" poster="film-poster.webp" aria-hidden="true">
+        <source src="garden.webm" type="video/webm">
         <source src="garden.mp4" type="video/mp4">
       </video>
-      <button class="film-replay" type="button" hidden data-lang-el="Ξανά" data-lang-en="Replay">Ξανά</button>
-    </section>
-
-    <section class="intro" aria-labelledby="intro-title">
       <div class="wrap intro-grid">
         <div>
           <h1 id="intro-title" data-lang-el="Ένας κήπος στην καρδιά της Πλάκας" data-lang-en="A garden in the heart of Plaka">Ένας κήπος στην καρδιά της Πλάκας</h1>
@@ -132,13 +129,18 @@
             <a href="menu.html" class="btn btn-ghost" data-lang-el="Δείτε το μενού" data-lang-en="See the menu">Δείτε το μενού</a>
           </div>
         </div>
+      </div>
+    </section>
+
+    <div class="facts-strip">
+      <div class="wrap">
         <dl class="intro-facts">
           <div><dt data-lang-el="Ανοιχτά καθημερινά" data-lang-en="Open every day">Ανοιχτά καθημερινά</dt><dd>12:00 – 23:30</dd></div>
           <div><dt data-lang-el="Διεύθυνση" data-lang-en="Address">Διεύθυνση</dt><dd><a href="https://maps.google.com/?q=Pandrosou+Garden+Restaurant+Pandrosou+15+Athens" target="_blank" rel="noopener" data-lang-el="Πανδρόσου 15, Πλάκα" data-lang-en="15 Pandrosou St, Plaka">Πανδρόσου 15, Πλάκα</a></dd></div>
           <div><dt data-lang-el="Τηλέφωνο" data-lang-en="Phone">Τηλέφωνο</dt><dd><a href="tel:+302103247148">210 3247 148</a></dd></div>
         </dl>
       </div>
-    </section>
+    </div>
 
     <section class="story" aria-labelledby="story-title">
       <div class="story-media">
@@ -260,13 +262,9 @@ document.addEventListener('DOMContentLoaded', function () {
   // Έτος στο footer
   var y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
 
-  // Βίντεο εισαγωγής
-  var film = document.querySelector('.film'), replay = document.querySelector('.film-replay');
-  if (film) {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { film.removeAttribute('autoplay'); film.pause(); if (replay) replay.hidden = false; }
-    film.addEventListener('ended', function () { if (replay) replay.hidden = false; });
-    if (replay) replay.addEventListener('click', function () { replay.hidden = true; film.currentTime = 0; film.play(); });
-  }
+  // Βίντεο: σταματά για όσους έχουν ζητήσει λιγότερη κίνηση
+  var film = document.querySelector('.intro-video');
+  if (film && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { film.removeAttribute('autoplay'); film.pause(); }
 
   // Μενού κινητού
   var mobBtn = document.getElementById('mobileMenuBtn');
