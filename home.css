@@ -1,0 +1,268 @@
+/* Ο Κήπος της Πανδρόσου — Αρχική σελίδα
+   Χρώματα από το logo και τον κήπο το βράδυ: πράσινο κληματαριάς, φως από τα φωτάκια, λινό. */
+
+:root {
+  --vine: #13251b;        /* φόντο */
+  --vine-2: #1a3124;      /* δεύτερη επιφάνεια */
+  --vine-3: #24402f;      /* γραμμές, hover */
+  --lamp: #e7b766;        /* έμφαση: το φως των φαναριών */
+  --lamp-ink: #13251b;    /* κείμενο πάνω στο κεχριμπαρένιο */
+  --linen: #f2ebdd;       /* κύριο κείμενο */
+  --sage: #aebba9;        /* δευτερεύον κείμενο */
+  --rule: rgba(242, 235, 221, .14);
+
+  --serif: "Literata", Georgia, "Times New Roman", serif;
+  --sans: "Commissioner", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+  --gutter: clamp(20px, 5vw, 72px);
+  --max: 1240px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--vine);
+  color: var(--linen);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+img, video, iframe { display: block; max-width: 100%; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--lamp); outline-offset: 3px; border-radius: 2px; }
+
+.skip-link { position: absolute; left: -9999px; top: 0; background: var(--lamp); color: var(--lamp-ink); padding: 10px 16px; z-index: 100; }
+.skip-link:focus { left: 16px; top: 16px; }
+
+.wrap { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+
+h1, h2, h3 { font-family: var(--serif); font-weight: 500; letter-spacing: -.01em; margin: 0; }
+h2 { font-size: clamp(30px, 3.6vw, 46px); line-height: 1.12; }
+p { margin: 0; }
+
+/* ---------- Κουμπιά ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 50px; padding: 0 26px; border-radius: 999px;
+  font: 600 16px/1 var(--sans); text-decoration: none; white-space: nowrap;
+  transition: background-color .2s, color .2s, border-color .2s;
+}
+.btn-primary { background: var(--lamp); color: var(--lamp-ink); }
+.btn-primary:hover { background: #f1c77d; }
+.btn-ghost { border: 1px solid rgba(242, 235, 221, .55); color: var(--linen); }
+.btn-ghost:hover { border-color: var(--linen); background: rgba(242, 235, 221, .08); }
+.text-link {
+  font-weight: 600; color: var(--lamp); text-decoration: none;
+  border-bottom: 1px solid rgba(231, 183, 102, .45); padding-bottom: 2px;
+}
+.text-link:hover { border-bottom-color: var(--lamp); }
+
+/* ---------- Κεφαλίδα ---------- */
+.site-header {
+  position: absolute; inset: 0 0 auto 0; z-index: 20;
+  background: linear-gradient(to bottom, rgba(10, 20, 14, .72), rgba(10, 20, 14, 0));
+}
+.site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 92px; max-width: none; }
+.brand { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+.brand img { width: 52px; height: 52px; border-radius: 50%; }
+.brand-name { font-family: var(--serif); font-size: 21px; line-height: 1.15; }
+.brand-place { display: block; font-family: var(--sans); font-size: 13px; color: var(--sage); }
+
+.main-nav { display: flex; align-items: center; gap: 30px; }
+.main-nav a:not(.btn) { text-decoration: none; font-size: 15.5px; font-weight: 500; opacity: .9; }
+.main-nav a:not(.btn):hover { opacity: 1; color: var(--lamp); }
+.main-nav .btn { min-height: 44px; padding: 0 22px; font-size: 15px; }
+
+.lang-switch { display: flex; border: 1px solid var(--rule); border-radius: 999px; padding: 3px; }
+.lang-flag-btn {
+  font: 600 13px/1 var(--sans); color: var(--sage); background: none; border: 0;
+  padding: 8px 11px; border-radius: 999px; cursor: pointer;
+}
+.lang-flag-btn.active { background: var(--linen); color: var(--vine); }
+
+.mobile-menu-btn { display: none; width: 46px; height: 46px; background: none; border: 1px solid var(--rule); border-radius: 50%; cursor: pointer; padding: 0; }
+.mobile-menu-btn span { display: block; width: 18px; height: 2px; background: var(--linen); margin: 4px auto; border-radius: 2px; }
+
+/* Μενού κινητού */
+.mobile-nav-modal {
+  display: none; position: fixed; inset: 0; z-index: 50;
+  background: var(--vine); flex-direction: column; padding: 24px var(--gutter);
+}
+.mobile-nav-top { display: flex; justify-content: space-between; align-items: center; min-height: 52px; }
+.close-mobile-modal { background: none; border: 1px solid var(--rule); color: var(--linen); width: 46px; height: 46px; border-radius: 50%; font-size: 26px; line-height: 1; cursor: pointer; }
+.mobile-links { display: flex; flex-direction: column; margin-top: 36px; }
+.mobile-links a { font-family: var(--serif); font-size: 30px; text-decoration: none; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.mobile-nav-modal .btn { margin-top: 32px; }
+.mobile-nav-modal .lang-switch { align-self: flex-start; margin-top: 28px; }
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative; min-height: 100svh; display: flex; align-items: flex-end;
+  overflow: hidden; isolation: isolate;
+}
+.hero video, .hero .hero-poster {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2;
+}
+.hero::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    linear-gradient(to top, rgba(12, 24, 17, .94) 0%, rgba(12, 24, 17, .55) 42%, rgba(12, 24, 17, .15) 70%),
+    linear-gradient(to right, rgba(12, 24, 17, .55), rgba(12, 24, 17, 0) 60%);
+}
+.hero-content { padding-bottom: clamp(56px, 9vh, 104px); padding-top: 140px; max-width: none; }
+.hero h1 {
+  font-size: clamp(46px, 7.4vw, 108px); line-height: 1.02; letter-spacing: -.025em;
+  max-width: 12ch; font-weight: 450;
+}
+.hero-lead { margin-top: 24px; max-width: 34em; font-size: clamp(17px, 1.5vw, 20px); color: rgba(242, 235, 221, .88); }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 36px; }
+
+/* ---------- Γραμμή πληροφοριών ---------- */
+.facts { background: var(--vine-2); border-bottom: 1px solid var(--rule); }
+.facts .wrap { display: grid; grid-template-columns: repeat(3, 1fr); max-width: none; }
+.fact { padding: 26px 0; display: flex; flex-direction: column; gap: 2px; }
+.fact + .fact { border-left: 1px solid var(--rule); padding-left: clamp(20px, 3vw, 44px); }
+.fact-label { font-size: 14px; color: var(--sage); }
+.fact-value { font-family: var(--serif); font-size: clamp(18px, 1.7vw, 22px); text-decoration: none; }
+a.fact-value:hover { color: var(--lamp); }
+
+/* ---------- Ενότητες ---------- */
+.section { padding: clamp(80px, 11vw, 150px) 0; }
+.section-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: clamp(32px, 4vw, 52px); }
+.section-head p { color: var(--sage); max-width: 30em; }
+
+/* Ιστορία: φωτογραφία που ακουμπά την άκρη */
+.story { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: center; }
+.story-media { height: clamp(420px, 62vw, 760px); }
+.story-media img { width: 100%; height: 100%; object-fit: cover; }
+.story-text { padding: clamp(48px, 7vw, 110px) var(--gutter); max-width: 640px; }
+.story-text h2 { margin-bottom: 26px; }
+.story-text p + p { margin-top: 18px; }
+.story-text p { color: rgba(242, 235, 221, .86); }
+.story-text .since {
+  display: block; font-family: var(--serif); font-size: clamp(64px, 8vw, 112px); line-height: 1;
+  color: var(--lamp); margin-bottom: 18px; font-weight: 400; letter-spacing: -.03em;
+}
+.story-text .text-link { display: inline-block; margin-top: 30px; }
+
+/* Γκαλερί από άκρη σε άκρη */
+.gallery-section { padding-bottom: 0; }
+.gallery {
+  display: grid; gap: 6px;
+  grid-template-columns: 1.6fr 1fr 1fr 1.2fr;
+  grid-template-rows: repeat(2, clamp(200px, 22vw, 340px));
+}
+.gallery button { all: unset; cursor: zoom-in; overflow: hidden; position: relative; display: block; }
+.gallery button:focus-visible { outline: 2px solid var(--lamp); outline-offset: -2px; }
+.gallery img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
+.gallery button:hover img { transform: scale(1.03); }
+.gallery .g-a { grid-column: 1; grid-row: 1 / span 2; }
+.gallery .g-b { grid-column: 2; grid-row: 1; }
+.gallery .g-c { grid-column: 3; grid-row: 1; }
+.gallery .g-d { grid-column: 2 / span 2; grid-row: 2; }
+.gallery .g-e { grid-column: 4; grid-row: 1 / span 2; }
+
+.lightbox {
+  position: fixed; inset: 0; z-index: 60; display: none; align-items: center; justify-content: center;
+  background: rgba(8, 15, 11, .94); padding: 24px; cursor: zoom-out;
+}
+.lightbox.open { display: flex; }
+.lightbox img { max-width: 100%; max-height: 88vh; object-fit: contain; }
+.lightbox-close { position: absolute; top: 18px; right: 18px; }
+
+/* Κουζίνα */
+.kitchen { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: stretch; background: var(--vine-2); }
+.kitchen-text { padding: clamp(64px, 9vw, 130px) var(--gutter); max-width: 640px; justify-self: end; width: 100%; }
+.kitchen-text > p { color: rgba(242, 235, 221, .86); margin-top: 22px; }
+.dishes { list-style: none; padding: 0; margin: 36px 0 40px; border-top: 1px solid var(--rule); }
+.dishes li { padding: 16px 0; border-bottom: 1px solid var(--rule); display: flex; flex-direction: column; gap: 2px; }
+.dish-name { font-family: var(--serif); font-size: 21px; }
+.dish-note { font-size: 15px; color: var(--sage); }
+.kitchen-media { min-height: 520px; overflow: hidden; }
+/* +12% ύψος και στοίχιση πάνω: η κάτω άκρη της φωτογραφίας (με το σήμα) μένει εκτός κάδρου */
+.kitchen-media img { width: 100%; height: 112%; object-fit: cover; object-position: 50% 0; }
+
+/* Κριτικές */
+.reviews-section .section-head { margin-bottom: 8px; }
+.reviews-section .widget-host { margin: 0 -28px; }
+.reviews-more { margin-top: 28px; color: var(--sage); font-size: 15.5px; }
+
+/* Επίσκεψη */
+.visit { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); border-top: 1px solid var(--rule); }
+.visit-map { min-height: 520px; background: var(--vine-2); }
+.visit-map iframe { width: 100%; height: 100%; min-height: 520px; border: 0; filter: grayscale(.35) contrast(1.05); }
+.visit-text { padding: clamp(56px, 7vw, 110px) var(--gutter); max-width: 620px; }
+.visit-list { margin: 32px 0 36px; display: grid; gap: 22px; }
+.visit-list dt { font-size: 14px; color: var(--sage); }
+.visit-list dd { margin: 2px 0 0; font-family: var(--serif); font-size: 21px; line-height: 1.4; }
+.visit-list dd a { text-decoration: none; }
+.visit-list dd a:hover { color: var(--lamp); }
+.visit-list .small { display: block; font-family: var(--sans); font-size: 15px; color: var(--sage); }
+.visit-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* Footer */
+.site-footer { background: #0e1c14; padding: 56px 0 34px; font-size: 15px; color: var(--sage); }
+.footer-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 32px; padding-bottom: 36px; border-bottom: 1px solid var(--rule); }
+.footer-brand { display: flex; gap: 16px; align-items: center; color: var(--linen); }
+.footer-brand img { width: 64px; height: 64px; border-radius: 50%; }
+.footer-brand strong { display: block; font-family: var(--serif); font-weight: 500; font-size: 20px; }
+.footer-nav { display: flex; flex-wrap: wrap; gap: 10px 28px; align-items: center; }
+.footer-nav a { text-decoration: none; color: var(--linen); }
+.footer-nav a:hover { color: var(--lamp); }
+.footer-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-top: 24px; font-size: 14px; }
+.footer-bottom a { text-decoration: none; }
+.footer-bottom a:hover { color: var(--linen); }
+
+/* Κουμπί κλήσης (μόνο κινητό) */
+.call-now-button { display: none; }
+
+/* Κρυφό: απαιτείται από το lang.js */
+#menuModal { display: none; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1080px) {
+  .main-nav a.nav-link { display: none; }
+}
+@media (max-width: 900px) {
+  .main-nav { display: none; }
+  .mobile-menu-btn { display: block; }
+  .story, .kitchen, .visit { grid-template-columns: 1fr; }
+  .story-media { height: 64vw; min-height: 300px; }
+  .kitchen-media { min-height: 0; height: 70vw; order: -1; }
+  .kitchen-media img { height: 100%; object-position: 50% 62%; }
+  .kitchen-text { justify-self: stretch; max-width: none; }
+  .visit-map, .visit-map iframe { min-height: 360px; }
+  .visit-text { max-width: none; }
+  .gallery { grid-template-columns: 1fr 1fr; grid-template-rows: none; grid-auto-rows: 46vw; }
+  .gallery .g-a { grid-column: 1 / span 2; grid-row: auto; }
+  .gallery .g-b, .gallery .g-c { grid-column: auto; grid-row: auto; }
+  .gallery .g-d { grid-column: 1 / span 2; grid-row: auto; }
+  .gallery .g-e { display: none; }
+  .section-head { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 640px) {
+  body { font-size: 16px; }
+  .brand-name { font-size: 18px; }
+  .brand img { width: 44px; height: 44px; }
+  .site-header .wrap { min-height: 76px; }
+  .hero-actions .btn { flex: 1 1 100%; }
+  .facts .wrap { grid-template-columns: 1fr; }
+  .fact { padding: 16px 0; flex-direction: row; justify-content: space-between; align-items: baseline; gap: 16px; }
+  .fact + .fact { border-left: 0; border-top: 1px solid var(--rule); padding-left: 0; }
+  .fact-value { text-align: right; }
+  .reviews-section .widget-host { margin: 0 -20px; }
+  .visit-actions .btn { flex: 1 1 100%; }
+  .call-now-button {
+    display: flex; position: fixed; right: 16px; bottom: 16px; z-index: 30;
+    width: 56px; height: 56px; border-radius: 50%; align-items: center; justify-content: center;
+    background: var(--lamp); color: var(--lamp-ink); box-shadow: 0 6px 20px rgba(0, 0, 0, .35);
+  }
+  .call-now-button svg { width: 24px; height: 24px; fill: currentColor; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .gallery img { transition: none; }
+}
