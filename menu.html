@@ -4,538 +4,191 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title data-lang-el="Μενού – Ο Κήπος της Πανδρόσου" data-lang-en="Menu – Pandrosou Garden">Μενού – Ο Κήπος της Πανδρόσου</title>
-  <meta name="description" content="Δείτε το πλήρες μενού του Ο Κήπος της Πανδρόσου: παραδοσιακά ελληνικά πιάτα και ορεκτικά στην καρδιά της Πλάκας." data-lang-el="Δείτε το πλήρες μενού του Ο Κήπος της Πανδρόσου: παραδοσιακά ελληνικά πιάτα και ορεκτικά στην καρδιά της Πλάκας." data-lang-en="Explore the full menu at Pandrosou Garden: traditional Greek dishes and appetizers in the heart of Plaka."/>
+  <meta name="description" content="Το μενού του Κήπου της Πανδρόσου: παραδοσιακά ελληνικά μαγειρευτά, σχάρα, θαλασσινά και σαλάτες στην Πλάκα." />
   <link rel="canonical" href="https://pandrosougarden-reservation.gr/menu.html" />
-
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Pandrosou Garden" />
   <meta property="og:title" content="Μενού – Ο Κήπος της Πανδρόσου" />
-  <meta property="og:description" content="Δείτε το πλήρες μενού μας: παραδοσιακά ελληνικά πιάτα και ορεκτικά στην καρδιά της Πλάκας." />
+  <meta property="og:description" content="Το μενού του Κήπου της Πανδρόσου: παραδοσιακά ελληνικά μαγειρευτά, σχάρα, θαλασσινά και σαλάτες στην Πλάκα." />
   <meta property="og:url" content="https://pandrosougarden-reservation.gr/menu.html" />
-  <meta property="og:image" content="https://pandrosougarden-reservation.gr/2000.webp" />
+  <meta property="og:image" content="https://pandrosougarden-reservation.gr/PANDROSOU.webp" />
   <meta property="og:locale" content="el_GR" />
-
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Μενού – Ο Κήπος της Πανδρόσου" />
-  <meta name="twitter:description" content="Δείτε το πλήρες μενού μας: παραδοσιακά ελληνικά πιάτα και ορεκτικά στην καρδιά της Πλάκας." />
-  <meta name="twitter:image" content="https://pandrosougarden-reservation.gr/2000.webp" />
-  
+  <meta name="twitter:description" content="Το μενού του Κήπου της Πανδρόσου: παραδοσιακά ελληνικά μαγειρευτά, σχάρα, θαλασσινά και σαλάτες στην Πλάκα." />
+  <meta name="twitter:image" content="https://pandrosougarden-reservation.gr/PANDROSOU.webp" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@400;500;600&family=Literata:opsz,wght@7..72,400;7..72,450;7..72,500&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" sizes="180x180" href="favicon-180.png">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="stylesheet" href="style.css">
-
-  <style>
-    /* Ειδικά στυλ για τη σελίδα του μενού */
-    .menu-page-header {
-        padding: 140px 20px 60px;
-        text-align: center;
-        background: linear-gradient(to bottom, rgba(34, 211, 238, 0.05), transparent);
-    }
-
-    .menu-page-header h1 {
-        font-family: 'Playfair Display', serif;
-        font-size: clamp(2.5rem, 8vw, 4rem);
-        margin-bottom: 10px;
-    }
-
-    .menu-container {
-        max-width: 1000px;
-        margin: 0 auto 100px;
-        padding: 0 20px;
-    }
-
-    .menu-category-block {
-        margin-bottom: 80px;
-        opacity: 0;
-        transform: translateY(30px);
-        transition: all 0.8s ease-out;
-    }
-
-    .menu-category-block.active {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    .category-title {
-        color: var(--brand);
-        font-family: 'Playfair Display', serif;
-        font-size: 32px;
-        text-align: center;
-        margin-bottom: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 20px;
-    }
-
-    .category-title::before, .category-title::after {
-        content: "";
-        height: 1px;
-        width: 60px;
-        background: var(--brand);
-        opacity: 0.3;
-    }
-
-    .menu-items-list {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 40px;
-    }
-
-    .menu-item-row {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    .menu-item-main {
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-        gap: 15px;
-    }
-
-    .item-name {
-        font-weight: 600;
-        font-size: 1.1rem;
-        color: var(--text);
-    }
-
-    .item-dots {
-        flex: 1;
-        border-bottom: 1px dotted rgba(255, 255, 255, 0.15);
-    }
-
-    .item-price {
-        font-weight: 700;
-        color: var(--brand);
-        font-size: 1.1rem;
-    }
-
-    .item-desc {
-        color: var(--muted);
-        font-size: 0.95rem;
-        line-height: 1.5;
-    }
-
-    @media (min-width: 850px) {
-        .menu-items-list {
-            grid-template-columns: 1fr 1fr;
-            column-gap: 80px;
-        }
-    }
-  </style>
+  <link rel="stylesheet" href="home.css">
 </head>
-<body class="lang-el">
+<body>
+  <a href="#main-content" class="skip-link" data-lang-el="Μετάβαση στο περιεχόμενο" data-lang-en="Skip to content">Μετάβαση στο περιεχόμενο</a>
 
-  <div class="container">
-    <header>
-    <a href="index.html" class="brand"> 
-        <img src="logo.webp" alt="Λογότυπο" class="header-logo">
-        <div>
-            <h1 data-lang-el="Ο Κήπος της Πανδρόσου" data-lang-en="Pandrosou Garden">Ο Κήπος της Πανδρόσου</h1>
-            <div class="sub" data-lang-el="Εστιατόριο · Πλάκα, Αθήνα" data-lang-en="Restaurant · Plaka, Athens">Εστιατόριο · Πλάκα, Αθήνα</div>
+  <header class="site-header">
+    <div class="wrap">
+      <a href="index.html" class="brand">
+        <img src="logo.webp" alt="" width="52" height="52">
+        <span class="brand-name">
+          <span data-lang-el="Ο Κήπος της Πανδρόσου" data-lang-en="Pandrosou Garden">Ο Κήπος της Πανδρόσου</span>
+          <span class="brand-place" data-lang-el="Πλάκα, Αθήνα" data-lang-en="Plaka, Athens">Πλάκα, Αθήνα</span>
+        </span>
+      </a>
+
+      <nav class="main-nav" aria-label="Κύριο μενού">
+        <a href="menu.html" class="nav-link" aria-current="page" data-lang-el="Μενού" data-lang-en="Menu">Μενού</a>
+        <a href="history.html" class="nav-link" data-lang-el="Ιστορία" data-lang-en="Our story">Ιστορία</a>
+        <a href="index.html#visit" class="nav-link" data-lang-el="Επικοινωνία" data-lang-en="Contact">Επικοινωνία</a>
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button class="lang-flag-btn" data-lang-val="el" lang="el">EL</button>
+          <button class="lang-flag-btn" data-lang-val="en" lang="en">EN</button>
         </div>
-    </a>
+        <a href="https://restableres.netlify.app/?shop=pandrosougarden" class="btn btn-primary" data-lang-el="Κράτηση τραπεζιού" data-lang-en="Book a table">Κράτηση τραπεζιού</a>
+      </nav>
 
-    <nav class="nav-menu desktop-only">
-        <a href="index.html" data-lang-el="Αρχική" data-lang-en="Home">Αρχική</a>
-        <a href="menu.html" data-lang-el="Μενού" data-lang-en="Menu">Μενού</a>
-        <a href="history.html" data-lang-el="Ιστορία" data-lang-en="History">Ιστορία</a>
-        <a href="index.html#info" data-lang-el="Πληροφορίες" data-lang-en="Information">Πληροφορίες</a>
-        <a href="https://restableres.netlify.app/?shop=pandrosougarden" class="btn secondary" data-lang-el="Κράτηση" data-lang-en="Reservation">Κράτηση</a>
-        
-        <div class="lang-switcher-flags">
-            <button class="lang-flag-btn" data-lang-val="en"><img src="https://flagcdn.com/w40/gb.png" alt="EN"></button>
-            <button class="lang-flag-btn" data-lang-val="el"><img src="https://flagcdn.com/w40/gr.png" alt="EL"></button>
-        </div>
-    </nav>
-
-    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
-</header>
-
-<div id="mobileModal" class="mobile-nav-modal">
-    <div class="mobile-modal-content">
-        <button class="close-mobile-modal" id="closeMobileModal">&times;</button>
-        <nav class="mobile-links">
-            <a href="index.html" data-lang-el="Αρχική" data-lang-en="Home">Αρχική</a>
-            <a href="menu.html" data-lang-el="Μενού" data-lang-en="Menu">Μενού</a>
-            <a href="history.html" data-lang-el="Ιστορία" data-lang-en="History">Ιστορία</a>
-            <a href="index.html#info" data-lang-el="Πληροφορίες" data-lang-en="Information">Πληροφορίες</a>
-            <a href="https://restableres.netlify.app/?shop=pandrosougarden" data-lang-el="Κάντε Κράτηση" data-lang-en="Make a Reservation" style="color: var(--brand); font-weight: bold;">Κάντε Κράτηση</a>
-        </nav>
-        <hr>
-        <div class="mobile-lang-switcher">
-            <p data-lang-el="Επιλογή Γλώσσας:" data-lang-en="Select Language:">Επιλογή Γλώσσας:</p>
-            <div class="lang-flags">
-                <button class="lang-flag-btn" data-lang-val="en"><img src="https://flagcdn.com/w40/gb.png" alt="English"> EN</button>
-                <button class="lang-flag-btn" data-lang-val="el"><img src="https://flagcdn.com/w40/gr.png" alt="Ελληνικά"> EL</button>
-            </div>
-        </div>
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Μενού" aria-controls="mobileModal">
+        <span></span><span></span><span></span>
+      </button>
     </div>
-</div>
+  </header>
+
+  <div id="mobileModal" class="mobile-nav-modal" role="dialog" aria-modal="true" aria-label="Μενού">
+    <div class="mobile-nav-top">
+      <a href="index.html" class="brand"><img src="logo.webp" alt="" width="44" height="44"></a>
+      <button class="close-mobile-modal" id="closeMobileModal" aria-label="Κλείσιμο">&times;</button>
+    </div>
+    <nav class="mobile-links">
+      <a href="index.html" data-lang-el="Αρχική" data-lang-en="Home">Αρχική</a>
+      <a href="menu.html" data-lang-el="Μενού" data-lang-en="Menu">Μενού</a>
+      <a href="history.html" data-lang-el="Ιστορία" data-lang-en="Our story">Ιστορία</a>
+      <a href="index.html#visit" data-lang-el="Επικοινωνία" data-lang-en="Contact">Επικοινωνία</a>
+    </nav>
+    <a href="https://restableres.netlify.app/?shop=pandrosougarden" class="btn btn-primary" data-lang-el="Κράτηση τραπεζιού" data-lang-en="Book a table">Κράτηση τραπεζιού</a>
+    <div class="lang-switch" role="group" aria-label="Language">
+      <button class="lang-flag-btn" data-lang-val="el" lang="el">Ελληνικά</button>
+      <button class="lang-flag-btn" data-lang-val="en" lang="en">English</button>
+    </div>
+  </div>
 
     <main id="main-content">
-      <section class="menu-page-header">
-        <h1 data-lang-el="Το Μενού μας" data-lang-en="Our Menu">Το Μενού μας</h1>
-        <p class="muted" data-lang-el="Αυθεντικές γεύσεις με αγνά υλικά" data-lang-en="Authentic flavors with pure ingredients">Αυθεντικές γεύσεις με αγνά υλικά</p>
-      </section>
+    <section class="page-hero">
+      <img src="102.webp" alt="Τραπέζια στον κήπο με τα λουλούδια" fetchpriority="high" style="object-position:50% 60%">
+      <div class="wrap page-hero-content">
+        <h1 data-lang-el="Το μενού μας" data-lang-en="Our menu">Το μενού μας</h1>
+        <p data-lang-el="Κλασικές ελληνικές συνταγές, ψητά στη σχάρα και θαλασσινά, με τοπικά υλικά." data-lang-en="Classic Greek recipes, grills and seafood, made with local ingredients.">Κλασικές ελληνικές συνταγές, ψητά στη σχάρα και θαλασσινά, με τοπικά υλικά.</p>
+      </div>
+    </section>
 
-      <div class="menu-container" id="full-menu-content">
-        </div>
+    <nav class="menu-tabs" aria-label="Κατηγορίες μενού">
+      <div class="wrap menu-tabs-inner" id="menu-tabs"></div>
+    </nav>
+
+    <div class="wrap menu-body" id="full-menu-content" aria-live="polite"></div>
+
+    <section class="wrap menu-foot">
+      <p class="menu-note" data-lang-el="* Κατεψυγμένο προϊόν. Για αλλεργίες ή διατροφικές ανάγκες ενημερώστε το προσωπικό μας." data-lang-en="* Frozen product. Please let our staff know about any allergies or dietary needs.">* Κατεψυγμένο προϊόν. Για αλλεργίες ή διατροφικές ανάγκες ενημερώστε το προσωπικό μας.</p>
+      <a href="https://restableres.netlify.app/?shop=pandrosougarden" class="btn btn-primary" data-lang-el="Κράτηση τραπεζιού" data-lang-en="Book a table">Κράτηση τραπεζιού</a>
+    </section>
     </main>
 
-     <footer>
-      <p>
-        © 2025 <span data-lang-el="Ο Κήπος της Πανδρόσου" data-lang-en="Pandrosou Garden">Ο Κήπος της Πανδρόσου</span> · est. 1981
-      </p>
-    
-    </footer>
-<a href="tel:+302103247148" class="call-now-button">
-    <svg viewBox="0 0 24 24">
-        <path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21C10.61,21 3,13.39 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z" />
-    </svg>
-</a>
-
-  </div>
- <div id="menuModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal-content">
-      <button class="close-btn" aria-label="Close Menu">&times;</button>
-      <h3 id="modalTitle"></h3>
-      <div id="modalContent">
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="logo.webp" alt="" width="64" height="64" loading="lazy">
+          <div>
+            <strong data-lang-el="Ο Κήπος της Πανδρόσου" data-lang-en="Pandrosou Garden">Ο Κήπος της Πανδρόσου</strong>
+            <span data-lang-el="Εστιατόριο στην Πλάκα από το 1981" data-lang-en="Restaurant in Plaka since 1981">Εστιατόριο στην Πλάκα από το 1981</span>
+          </div>
         </div>
+        <nav class="footer-nav" aria-label="Footer">
+          <a href="menu.html" data-lang-el="Μενού" data-lang-en="Menu">Μενού</a>
+          <a href="history.html" data-lang-el="Ιστορία" data-lang-en="Our story">Ιστορία</a>
+          <a href="https://restableres.netlify.app/?shop=pandrosougarden" data-lang-el="Κράτηση" data-lang-en="Reservations">Κράτηση</a>
+          <a href="tel:+302103247148">+30 210 3247 148</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="year">2026</span> Pandrosou Garden</span>
+        <a href="https://arakronservices.gr" target="_blank" rel="noopener" data-lang-el="Σχεδιασμός: AR Akron Services" data-lang-en="Website by AR Akron Services">Σχεδιασμός: AR Akron Services</a>
+      </div>
     </div>
+  </footer>
+
+  <a href="tel:+302103247148" class="call-now-button" aria-label="Κλήση στο εστιατόριο">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21C10.61,21 3,13.39 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"/></svg>
+  </a>
+
+  <!-- Απαιτείται από το lang.js (κοινό με τη σελίδα μενού) -->
+  <div id="menuModal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-content"><button class="close-btn" tabindex="-1">&times;</button><h3 id="modalTitle"></h3><div id="modalContent"></div></div>
   </div>
 
 <script>
-(function() {
-    const splashShown = sessionStorage.getItem('splashShown');
-    const splash = document.getElementById('splash-screen');
-    const targetLogo = document.querySelector('.logo-img') || document.querySelector('.header-logo');
+document.addEventListener('DOMContentLoaded', function () {
+  // Έτος στο footer
+  var y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
 
-    // ΑΝ ΔΕΝ ΤΟ ΕΧΕΙ ΞΑΝΑΔΕΙ: Το εμφανίζουμε αμέσως
-    if (!splashShown) {
-        if (splash) splash.style.display = 'flex';
-        if (targetLogo) targetLogo.style.opacity = '0';
-    } else {
-        // ΑΝ ΤΟ ΕΧΕΙ ΞΑΝΑΔΕΙ: Το κρατάμε κρυμμένο και δείχνουμε το λογότυπο
-        if (targetLogo) targetLogo.style.opacity = '1';
-        return; // Τερματισμός, δεν τρέχει τίποτα άλλο
-    }
+  // Μενού κινητού
+  var mobBtn = document.getElementById('mobileMenuBtn');
+  var mobModal = document.getElementById('mobileModal');
+  var mobClose = document.getElementById('closeMobileModal');
+  function closeMenu() { mobModal.style.display = 'none'; document.body.style.overflow = ''; mobBtn.focus(); }
+  if (mobBtn && mobModal) {
+    mobBtn.addEventListener('click', function () { mobModal.style.display = 'flex'; document.body.style.overflow = 'hidden'; mobClose.focus(); });
+    mobClose.addEventListener('click', closeMenu);
+    mobModal.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { mobModal.style.display = 'none'; document.body.style.overflow = ''; }); });
+  }
 
-    // Το animation τρέχει μόνο αν φτάσουμε εδώ (δηλαδή αν δεν υπάρχει το splashShown)
-    window.addEventListener('load', () => {
-        const movingLogo = document.getElementById('moving-logo');
-        
-        setTimeout(() => {
-            const startRect = movingLogo.getBoundingClientRect();
-            const endRect = targetLogo.getBoundingClientRect();
-
-            const deltaX = endRect.left - startRect.left;
-            const deltaY = endRect.top - startRect.top;
-            const scale = endRect.width / startRect.width;
-
-            document.querySelectorAll('.splash-content h1, .splash-content p').forEach(el => {
-                el.style.opacity = '0';
-                el.style.transition = 'opacity 0.5s';
-            });
-
-            movingLogo.style.transformOrigin = 'top left';
-            movingLogo.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${scale})`;
-            
-            setTimeout(() => {
-                targetLogo.style.opacity = '1';
-                movingLogo.style.opacity = '0';
-                splash.style.opacity = '0';
-                splash.style.visibility = 'hidden';
-                
-                sessionStorage.setItem('splashShown', 'true');
-                
-                // Προαιρετικά το αφαιρούμε τελείως από το DOM μετά το animation
-                setTimeout(() => splash.style.display = 'none', 600);
-            }, 1800); 
-        }, 2500); 
-    });
-})();
-
-
-</script>
-
-  <script>
-document.addEventListener('DOMContentLoaded', () => {
-    const carousel = document.getElementById('reviewsCarousel');
-    const prevBtn = document.getElementById('reviewPrevBtn');
-    const nextBtn = document.getElementById('reviewNextBtn');
-    const cards = carousel.querySelectorAll('.review-card');
-    let currentIndex = 0;
-    let autoSlideInterval;
-
-    const GAP = 24; // Κενό που ορίστηκε στο CSS (gap: 24px)
-
-    // Επιστρέφει πόσες κάρτες εμφανίζονται σε κάθε slide (1 για mobile, 3 για desktop)
-    function getItemsPerSlide() {
-        // Ελέγχει το πλάτος του viewport
-        return window.innerWidth <= 900 ? 1 : 3; 
-    }
-
-    // Υπολογίζει πόσο πρέπει να μετακινηθεί το carousel (Πλάτος Κάρτας + Κενό)
-    function getCardMoveOffset() {
-        if (cards.length === 0) return 0;
-
-        const cardWidth = cards[0].offsetWidth;
-        const itemsPerSlide = getItemsPerSlide();
-        
-        // Σε mobile, το κενό είναι 0. Σε desktop, είναι 24px.
-        return itemsPerSlide === 1 ? cardWidth : cardWidth + GAP;
-    }
-
-    // Ενημερώνει τη θέση του carousel και την κατάσταση των κουμπιών
-    function updateCarousel() {
-        const moveOffset = getCardMoveOffset();
-        const slideTransform = moveOffset * currentIndex;
-
-        carousel.style.transform = `translateX(-${slideTransform}px)`;
-
-        const totalItems = cards.length;
-        const itemsPerSlide = getItemsPerSlide();
-        
-        // Ο μέγιστος δείκτης που μπορεί να φτάσει το carousel πριν φανεί η τελευταία κάρτα
-        const maxIndex = totalItems - itemsPerSlide;
-
-        nextBtn.disabled = currentIndex >= maxIndex;
-        prevBtn.disabled = currentIndex <= 0;
-    }
-
-    function nextSlide() {
-        const itemsPerSlide = getItemsPerSlide();
-        const maxIndex = cards.length - itemsPerSlide;
-        
-        currentIndex++;
-        if (currentIndex > maxIndex) {
-            currentIndex = 0; // Επαναφορά στην αρχή (Looping)
-        }
-        updateCarousel();
-    }
-    
-    // Έναρξη αυτόματης ολίσθησης
-    function startAutoSlide() {
-        clearInterval(autoSlideInterval);
-        autoSlideInterval = setInterval(nextSlide, 5000); 
-    }
-
-    // Χειροκίνητη πλοήγηση (διακόπτει και επανεκκινεί την αυτόματη)
-    prevBtn.addEventListener('click', () => {
-        clearInterval(autoSlideInterval);
-        currentIndex = Math.max(0, currentIndex - 1);
-        updateCarousel();
-        startAutoSlide();
-    });
-
-    nextBtn.addEventListener('click', () => {
-        clearInterval(autoSlideInterval);
-        nextSlide(); // Χρησιμοποιούμε την nextSlide για τη λογική looping
-        startAutoSlide();
-    });
-
-    // Χειρισμός αλλαγής μεγέθους οθόνης
-    window.addEventListener('resize', () => {
-        currentIndex = 0; // Επαναφορά στην αρχή για αποφυγή προβλημάτων εμφάνισης
-        updateCarousel();
-        startAutoSlide(); 
-    });
-
-    // Αρχική φόρτωση
-    startAutoSlide();
-    updateCarousel(); 
-});
-// Λογική για το Modal της Ιστορίας
-const historyModal = document.getElementById('historyModal');
-const readMoreBtn = document.getElementById('readMoreBtn');
-const closeHistoryBtn = document.querySelector('.close-history');
-
-readMoreBtn.addEventListener('click', () => {
-    historyModal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-});
-
-closeHistoryBtn.addEventListener('click', () => {
-    historyModal.style.display = 'none';
-    document.body.style.overflow = '';
-});
-
-historyModal.addEventListener('click', (e) => {
-    if (e.target === historyModal) {
-        historyModal.style.display = 'none';
-        document.body.style.overflow = '';
-    }
-});
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const track = document.getElementById('heroTrack');
-    const prevBtn = document.getElementById('heroPrev');
-    const nextBtn = document.getElementById('heroNext');
-    const items = track.querySelectorAll('.hero-img-item');
-    let index = 0;
-    let autoPlayInterval;
-
-    function updateHeroPosition() {
-        const itemsVisible = window.innerWidth > 768 ? 3 : 1;
-        const maxIndex = items.length - itemsVisible;
-        
-        if (index > maxIndex) index = 0;
-        if (index < 0) index = maxIndex;
-
-        const gap = window.innerWidth > 768 ? 15 : 0;
-        const slideWidth = items[0].offsetWidth + gap;
-        track.style.transform = `translateX(-${index * slideWidth}px)`;
-    }
-
-    function startAutoPlay() {
-        stopAutoPlay();
-        autoPlayInterval = setInterval(() => {
-            index++;
-            updateHeroPosition();
-        }, 4000); // Αλλαγή κάθε 4 δευτερόλεπτα
-    }
-
-    function stopAutoPlay() {
-        clearInterval(autoPlayInterval);
-    }
-
-    nextBtn.addEventListener('click', () => {
-        index++;
-        updateHeroPosition();
-        startAutoPlay(); // Reset timer
-    });
-
-    prevBtn.addEventListener('click', () => {
-        index--;
-        updateHeroPosition();
-        startAutoPlay(); // Reset timer
-    });
-
-    // Παύση όταν το ποντίκι είναι πάνω, συνέχιση όταν βγαίνει
-    const wrapper = document.querySelector('.hero-carousel-wrapper');
-    wrapper.addEventListener('mouseenter', stopAutoPlay);
-    wrapper.addEventListener('mouseleave', startAutoPlay);
-
-    window.addEventListener('resize', updateHeroPosition);
-    
-    startAutoPlay();
-    updateHeroPosition();
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    if (mobModal && mobModal.style.display === 'flex') closeMenu();
+  });
 });
 </script>
 <script src="lang.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    const mobileBtn = document.getElementById('mobileMenuBtn');
-    const closeBtn = document.getElementById('closeMobileModal');
-    const modal = document.getElementById('mobileModal');
-    const modalLinks = document.querySelectorAll('.mobile-links a');
-
-    // Άνοιγμα Modal
-    mobileBtn.addEventListener('click', () => {
-        modal.style.display = 'flex';
-        document.body.style.overflow = 'hidden'; // Κλείδωμα scrolling
+/* Μενού χωρίς τιμές: διαβάζει τα πιάτα από το lang.js (menuData) */
+(function () {
+  var SWEET = { el: '(Γλυκός Επίλογος)', en: '(Sweet Endings)' };
+  var SWEET_TITLE = { el: 'Γλυκός επίλογος', en: 'Sweet endings' };
+  var SEA_TITLE = { el: 'Θαλασσινά', en: 'Seafood' };
+  function esc(s) { return String(s || '').replace(/[&<>"]/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function clean(s) { return String(s || '').replace(/''/g, '«').replace(/«([^«]*)«/g, '«$1»'); }
+  function groups(lang) {
+    var out = [];
+    Object.keys(menuData).forEach(function (id) {
+      var cat = menuData[id][lang];
+      if (id === 'seafood-desserts') {
+        var sea = cat.items.filter(function (i) { return i.desc !== SWEET[lang]; });
+        var sweet = cat.items.filter(function (i) { return i.desc === SWEET[lang]; }).map(function (i) { return { name: i.name, desc: null }; });
+        out.push({ id: 'seafood', title: SEA_TITLE[lang], items: sea });
+        out.push({ id: 'desserts', title: SWEET_TITLE[lang], items: sweet });
+      } else out.push({ id: id, title: cat.title.replace(/\.\.\.$/, ''), items: cat.items });
     });
-
-    // Κλείσιμο Modal
-    function closeModal() {
-        modal.style.display = 'none';
-        document.body.style.overflow = ''; // Ξεκλείδωμα scrolling
-    }
-
-    closeBtn.addEventListener('click', closeModal);
-
-    // Κλείσιμο όταν πατηθεί σύνδεσμος (π.χ. Μενού)
-    modalLinks.forEach(link => {
-        link.addEventListener('click', closeModal);
-    });
-});
+    return out;
+  }
+  function render(lang) {
+    var g = groups(lang);
+    document.getElementById('menu-tabs').innerHTML = g.map(function (c) {
+      return '<a href="#cat-' + c.id + '">' + esc(c.title) + '</a>';
+    }).join('');
+    document.getElementById('full-menu-content').innerHTML = g.map(function (c) {
+      return '<section class="menu-cat" id="cat-' + c.id + '"><h2>' + esc(c.title) + '</h2><ul class="dishes">' +
+        c.items.map(function (i) {
+          return '<li><span class="dish-name">' + esc(clean(i.name)) + '</span>' +
+            (i.desc ? '<span class="dish-note">' + esc(clean(i.desc)) + '</span>' : '') + '</li>';
+        }).join('') + '</ul></section>';
+    }).join('');
+  }
+  function current() { var m = document.body.className.match(/lang-(el|en)/); return m ? m[1] : 'el'; }
+  document.addEventListener('DOMContentLoaded', function () {
+    render(current());
+    new MutationObserver(function () { render(current()); }).observe(document.body, { attributes: true, attributeFilter: ['class'] });
+  });
+})();
 </script>
-  <script src="lang.js"></script>
-  <script>
-    function updateMenuPage(lang) {
-        const container = document.getElementById('full-menu-content');
-        let html = '';
-
-        // Χρήση των δεδομένων από το menuData του lang.js
-        for (const [id, data] of Object.entries(menuData)) {
-            const category = data[lang];
-            html += `
-                <div class="menu-category-block animate-on-scroll">
-                    <h2 class="category-title">${category.title}</h2>
-                    <div class="menu-items-list">
-                        ${category.items.map(item => `
-                            <div class="menu-item-row">
-                                <div class="menu-item-main">
-                                    <span class="item-name">${item.name}</span>
-                                    <span class="item-dots"></span>
-                                    <span class="item-price">€${item.price}</span>
-                                </div>
-                                ${item.desc ? `<span class="item-desc">${item.desc}</span>` : ''}
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
-        }
-        container.innerHTML = html;
-        
-        // Επανεκκίνηση του Observer για το animation
-        initObserver();
-    }
-
-    function initObserver() {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
-    }
-
-    // Override της setLanguage ή προσθήκη listener
-    document.querySelectorAll('.flag-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const lang = btn.getAttribute('data-lang-val');
-            updateMenuPage(lang);
-        });
-    });
-
-    document.addEventListener('DOMContentLoaded', () => {
-        const savedLang = localStorage.getItem('preferredLang') || 'el';
-        updateMenuPage(savedLang);
-
-        // Mobile Menu Logic
-        const mobileBtn = document.getElementById('mobileMenuBtn');
-        const closeBtn = document.getElementById('closeMobileModal');
-        const modal = document.getElementById('mobileModal');
-
-        mobileBtn.addEventListener('click', () => {
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        });
-
-        const closeModal = () => {
-            modal.style.display = 'none';
-            document.body.style.overflow = '';
-        };
-
-        closeBtn.addEventListener('click', closeModal);
-        document.querySelectorAll('.mobile-links a').forEach(link => link.addEventListener('click', closeModal));
-    });
-  </script>
 </body>
 </html>

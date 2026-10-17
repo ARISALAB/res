@@ -3,321 +3,174 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title data-lang-el="Η Ιστορία μας – Ο Κήπος της Πανδρόσου" data-lang-en="Our History – Pandrosou Garden">Η Ιστορία μας – Ο Κήπος της Πανδρόσου</title>
-  <meta name="description" content="Η ιστορία του Ο Κήπος της Πανδρόσου, ενός εστιατορίου με δεκαετίες παρουσίας στην καρδιά της Πλάκας, από το 1981." data-lang-el="Η ιστορία του Ο Κήπος της Πανδρόσου, ενός εστιατορίου με δεκαετίες παρουσίας στην καρδιά της Πλάκας, από το 1981." data-lang-en="The story of Pandrosou Garden, a restaurant with decades of presence in the heart of Plaka, since 1981."/>
+  <title data-lang-el="Η ιστορία μας – Ο Κήπος της Πανδρόσου" data-lang-en="Our story – Pandrosou Garden">Η ιστορία μας – Ο Κήπος της Πανδρόσου</title>
+  <meta name="description" content="Η ιστορία του Κήπου της Πανδρόσου: από το 1981 στον πιο ιστορικό εμπορικό δρόμο της Αθήνας." />
   <link rel="canonical" href="https://pandrosougarden-reservation.gr/history.html" />
-
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Pandrosou Garden" />
-  <meta property="og:title" content="Η Ιστορία μας – Ο Κήπος της Πανδρόσου" />
-  <meta property="og:description" content="Η ιστορία μας, από το 1981, στην καρδιά της Πλάκας." />
+  <meta property="og:title" content="Η ιστορία μας – Ο Κήπος της Πανδρόσου" />
+  <meta property="og:description" content="Η ιστορία του Κήπου της Πανδρόσου: από το 1981 στον πιο ιστορικό εμπορικό δρόμο της Αθήνας." />
   <meta property="og:url" content="https://pandrosougarden-reservation.gr/history.html" />
-  <meta property="og:image" content="https://pandrosougarden-reservation.gr/garden-bg.webp" />
+  <meta property="og:image" content="https://pandrosougarden-reservation.gr/PANDROSOU.webp" />
   <meta property="og:locale" content="el_GR" />
-
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Η Ιστορία μας – Ο Κήπος της Πανδρόσου" />
-  <meta name="twitter:description" content="Η ιστορία μας, από το 1981, στην καρδιά της Πλάκας." />
-  <meta name="twitter:image" content="https://pandrosougarden-reservation.gr/garden-bg.webp" />
-  
+  <meta name="twitter:title" content="Η ιστορία μας – Ο Κήπος της Πανδρόσου" />
+  <meta name="twitter:description" content="Η ιστορία του Κήπου της Πανδρόσου: από το 1981 στον πιο ιστορικό εμπορικό δρόμο της Αθήνας." />
+  <meta name="twitter:image" content="https://pandrosougarden-reservation.gr/PANDROSOU.webp" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@400;500;600&family=Literata:opsz,wght@7..72,400;7..72,450;7..72,500&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" sizes="180x180" href="favicon-180.png">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="stylesheet" href="style.css">
-  
-  <style>
-/* Βασική Δομή */
- .history-section {
-   max-width: 1100px;
-   margin: 60px auto;
-   padding: 0 20px;
-   overflow-x: hidden; /* Για να μην έχουμε scrollbar κατά την κίνηση */
- }
-
- .history-row {
-   display: grid;
-   grid-template-columns: 1fr 1fr;
-   gap: 60px;
-   align-items: center;
-   margin-bottom: 120px;
- }
-
- /* Εναλλάξ διάταξη */
- .history-row:nth-child(even) .history-image {
-   order: -1;
- }
-
- /* --- Στυλ Κειμένου & Αρχική Κατάσταση Κίνησης --- */
- .history-text {
-   opacity: 0;
-   transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
- }
-
- /* Το κείμενο έρχεται από αριστερά ή δεξιά ανάλογα τη σειρά */
- .history-row:nth-child(odd) .history-text {
-   transform: translateX(-50px);
- }
- .history-row:nth-child(even) .history-text {
-   transform: translateX(50px);
- }
-
- .history-text h2, .history-text h3 {
-   font-family: 'Playfair Display', serif;
-   font-size: clamp(1.8rem, 5vw, 2.5rem);
-   margin-bottom: 25px;
- }
-
- .history-text p {
-   line-height: 1.8;
-   font-size: 1.15rem;
-   color: #f8f8f8;
-   text-align: justify;
- }
-
- /* --- Στυλ Εικόνας & Αρχική Κατάσταση Zoom --- */
- .history-image {
-   opacity: 0;
-   transform: scale(0.9); /* Ξεκινάει λίγο πιο μικρή */
-   transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-   border-radius: 20px;
-   overflow: hidden;
- }
-
- .history-image img {
-   width: 100%;
-   height: 450px;
-   object-fit: cover;
-   display: block;
-   transition: transform 0.6s ease;
- }
-
- /* --- Visible States (Όταν μπαίνει το .active από JS) --- */
- .history-row.active .history-text {
-   opacity: 1;
-   transform: translateX(0);
- }
-
- .history-row.active .history-image {
-   opacity: 1;
-   transform: scale(1);
- }
-
- .history-image img:hover {
-   transform: scale(1.05); /* Μικρό zoom στο hover */
- }
-
- /* Closing Quote Animation */
- .closing-quote {
-   text-align: center;
-   max-width: 750px;
-   margin: 80px auto;
-   padding: 50px 20px;
-   border-block: 1px solid #ddd;
-   position: relative;
-   opacity: 0;
-   transform: translateY(20px);
-   transition: all 1s ease;
- }
-
- .closing-quote.active {
-   opacity: 1;
-   transform: translateY(0);
- }
-
- .closing-quote::before {
-   content: "“";
-   font-family: 'Playfair Display';
-   font-size: 5rem;
-   color: #e0e0e0;
-   position: absolute;
-   top: -20px;
-   left: 50%;
-   transform: translateX(-50%);
- }
-
- /* Mobile Responsive */
- @media (max-width: 850px) {
-   .history-row {
-     grid-template-columns: 1fr;
-     gap: 30px;
-     margin-bottom: 80px;
-   }
-   .history-row:nth-child(even) .history-image { order: 0; }
-   .history-row:nth-child(odd) .history-text,
-   .history-row:nth-child(even) .history-text {
-     transform: translateY(30px); /* Στο κινητό έρχεται από κάτω */
-   }
-   .history-image img { height: 300px; }
-   .history-text { text-align: center; }
- }
-  </style>
+  <link rel="stylesheet" href="home.css">
 </head>
-
 <body>
-<div class="container">
-     <header>
-    <a href="index.html" class="brand"> 
-        <img src="logo.webp" alt="Λογότυπο" class="header-logo">
-        <div>
-            <h1 data-lang-el="Ο Κήπος της Πανδρόσου" data-lang-en="Pandrosou Garden">Ο Κήπος της Πανδρόσου</h1>
-            <div class="sub" data-lang-el="Εστιατόριο · Πλάκα, Αθήνα" data-lang-en="Restaurant · Plaka, Athens">Εστιατόριο · Πλάκα, Αθήνα</div>
-        </div>
-    </a>
+  <a href="#main-content" class="skip-link" data-lang-el="Μετάβαση στο περιεχόμενο" data-lang-en="Skip to content">Μετάβαση στο περιεχόμενο</a>
 
-    <nav class="nav-menu desktop-only">
-        <a href="menu.html" data-lang-el="Μενού" data-lang-en="Menu">Μενού</a>
-        <a href="history.html" data-lang-el="Ιστορία" data-lang-en="History">Ιστορία</a>
-        <a href="index.html#info" data-lang-el="Πληροφορίες" data-lang-en="Information">Πληροφορίες</a>
-        <a href="https://restableres.netlify.app/?shop=pandrosougarden" class="btn secondary" data-lang-el="Κράτηση" data-lang-en="Reservation">Κράτηση</a>
-        <div class="lang-switcher-flags">
-            <button class="lang-flag-btn" data-lang-val="en"><img src="https://flagcdn.com/w40/gb.png" alt="EN"></button>
-            <button class="lang-flag-btn" data-lang-val="el"><img src="https://flagcdn.com/w40/gr.png" alt="EL"></button>
-        </div>
-    </nav>
+  <header class="site-header">
+    <div class="wrap">
+      <a href="index.html" class="brand">
+        <img src="logo.webp" alt="" width="52" height="52">
+        <span class="brand-name">
+          <span data-lang-el="Ο Κήπος της Πανδρόσου" data-lang-en="Pandrosou Garden">Ο Κήπος της Πανδρόσου</span>
+          <span class="brand-place" data-lang-el="Πλάκα, Αθήνα" data-lang-en="Plaka, Athens">Πλάκα, Αθήνα</span>
+        </span>
+      </a>
 
-    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
-</header>
-
-<div id="mobileModal" class="mobile-nav-modal">
-    <div class="mobile-modal-content">
-        <button class="close-mobile-modal" id="closeMobileModal">&times;</button>
-        <nav class="mobile-links">
-            <a href="menu.html" data-lang-el="Μενού" data-lang-en="Menu">Μενού</a>
-            <a href="history.html" data-lang-el="Ιστορία" data-lang-en="History">Ιστορία</a>
-            <a href="index.html#info" data-lang-el="Πληροφορίες" data-lang-en="Information">Πληροφορίες</a>
-            <a href="https://restableres.netlify.app/?shop=pandrosougarden" data-lang-el="Κάντε Κράτηση" data-lang-en="Make a Reservation" style="color: var(--brand); font-weight: bold;">Κάντε Κράτηση</a>
-        </nav>
-        <hr>
-        <div class="mobile-lang-switcher">
-            <p data-lang-el="Επιλογή Γλώσσας:" data-lang-en="Select Language:">Επιλογή Γλώσσας:</p>
-            <div class="lang-flags">
-                <button class="lang-flag-btn" data-lang-val="en"><img src="https://flagcdn.com/w40/gb.png" alt="English"> EN</button>
-                <button class="lang-flag-btn" data-lang-val="el"><img src="https://flagcdn.com/w40/gr.png" alt="Ελληνικά"> EL</button>
-            </div>
+      <nav class="main-nav" aria-label="Κύριο μενού">
+        <a href="menu.html" class="nav-link" data-lang-el="Μενού" data-lang-en="Menu">Μενού</a>
+        <a href="history.html" class="nav-link" aria-current="page" data-lang-el="Ιστορία" data-lang-en="Our story">Ιστορία</a>
+        <a href="index.html#visit" class="nav-link" data-lang-el="Επικοινωνία" data-lang-en="Contact">Επικοινωνία</a>
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button class="lang-flag-btn" data-lang-val="el" lang="el">EL</button>
+          <button class="lang-flag-btn" data-lang-val="en" lang="en">EN</button>
         </div>
+        <a href="https://restableres.netlify.app/?shop=pandrosougarden" class="btn btn-primary" data-lang-el="Κράτηση τραπεζιού" data-lang-en="Book a table">Κράτηση τραπεζιού</a>
+      </nav>
+
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Μενού" aria-controls="mobileModal">
+        <span></span><span></span><span></span>
+      </button>
     </div>
-</div>
+  </header>
 
-    <main class="history-section">
-      
-      <section class="history-row animate-on-scroll">
-        <div class="history-text">
-          <h2 data-lang-el="Το Ταξίδι μας από το 1981" data-lang-en="Our Journey since 1981">Το Ταξίδι μας από το 1981</h2>
-          <p data-lang-el="Η οδός Πανδρόσου είναι ένας δρόμος που από τον 19ο αιώνα υπήρξε το κέντρο του εμπορίου της πόλης. Μέσα σε αυτό το ιστορικό πλαίσιο, το 1981, ανοίξαμε τις πόρτες μας, δημιουργώντας μια όαση γεύσης στην καρδιά της παλιάς Αθήνας."
-             data-lang-en="Pandrosou Street is no ordinary street; since the 19th century, it has been the city's commercial center. In 1981, we opened our doors, creating an oasis of taste in the heart of old Athens.">
-          </p>
-        </div>
-        <div class="history-image">
-          <img src="DROSOU.jpg" alt="Athens Plaka">
-        </div>
-      </section>
+  <div id="mobileModal" class="mobile-nav-modal" role="dialog" aria-modal="true" aria-label="Μενού">
+    <div class="mobile-nav-top">
+      <a href="index.html" class="brand"><img src="logo.webp" alt="" width="44" height="44"></a>
+      <button class="close-mobile-modal" id="closeMobileModal" aria-label="Κλείσιμο">&times;</button>
+    </div>
+    <nav class="mobile-links">
+      <a href="index.html" data-lang-el="Αρχική" data-lang-en="Home">Αρχική</a>
+      <a href="menu.html" data-lang-el="Μενού" data-lang-en="Menu">Μενού</a>
+      <a href="history.html" data-lang-el="Ιστορία" data-lang-en="Our story">Ιστορία</a>
+      <a href="index.html#visit" data-lang-el="Επικοινωνία" data-lang-en="Contact">Επικοινωνία</a>
+    </nav>
+    <a href="https://restableres.netlify.app/?shop=pandrosougarden" class="btn btn-primary" data-lang-el="Κράτηση τραπεζιού" data-lang-en="Book a table">Κράτηση τραπεζιού</a>
+    <div class="lang-switch" role="group" aria-label="Language">
+      <button class="lang-flag-btn" data-lang-val="el" lang="el">Ελληνικά</button>
+      <button class="lang-flag-btn" data-lang-val="en" lang="en">English</button>
+    </div>
+  </div>
 
-      <section class="history-row animate-on-scroll">
-        <div class="history-text">
-          <h3 data-lang-el="Η Φιλοσοφία μας" data-lang-en="Our Philosophy">Η Φιλοσοφία μας</h3>
-          <p data-lang-el="Το όνομά μας, 'Κήπος', αντικατοπτρίζει την επιθυμία μας να προσφέρουμε μια ανάσα δροσιάς κάτω από τον ιερό βράχο της Ακρόπολης. Πιστεύουμε στην αγνότητα των υλικών: το ελαιόλαδο μας και οι παραδοσιακές συνταγές είναι τα μυστικά μας."
-             data-lang-en="Our name, 'Garden', reflects our desire to provide a breath of fresh air under the Acropolis. We believe in the purity of ingredients: our olive oil and traditional recipes are our secrets.">
-          </p>
-        </div>
-        <div class="history-image">
-          <img src="PANDROSOU.webp" alt="Restaurant Interior">
-        </div>
-      </section>
-
-      <div class="closing-quote animate-on-scroll">
-        <p data-lang-el="«Η γεύση είναι μνήμη. Και στον Κήπο της Πανδρόσου, θέλουμε κάθε σας γεύμα να είναι μια όμορφη ανάμνηση από την Αθήνα.»" 
-           data-lang-en="“Taste is memory. And at Pandrosou Garden, we want every meal to be a beautiful memory of Athens.”">
-        </p>
+    <main id="main-content">
+    <section class="page-hero">
+      <img src="3.jpg" alt="Ο κήπος γεμάτος επισκέπτες το βράδυ" fetchpriority="high" style="object-position:50% 70%">
+      <div class="wrap page-hero-content">
+        <h1 data-lang-el="Η ιστορία μας" data-lang-en="Our story">Η ιστορία μας</h1>
+        <p data-lang-el="Από το 1981 στην οδό Πανδρόσου, στην καρδιά της Πλάκας." data-lang-en="Since 1981 on Pandrosou Street, in the heart of Plaka.">Από το 1981 στην οδό Πανδρόσου, στην καρδιά της Πλάκας.</p>
       </div>
-
-      <div style="text-align: center; margin-top: 40px;">
-        <a href="index.html" class="btn">
-          <span data-lang-el="← Επιστροφή στην Αρχική" data-lang-en="← Back to Home">← Επιστροφή στην Αρχική</span>
-        </a>
+    </section>
+    <section class="story">
+      <div class="story-media"><img src="DROSOU.jpg" alt="Ο πολυέλαιος της σάλας" loading="lazy"></div>
+      <div class="story-text">
+        <span class="since">1981</span>
+        <h2 data-lang-el="Ένας δρόμος με ιστορία" data-lang-en="A street with a history">Ένας δρόμος με ιστορία</h2>
+        <p data-lang-el="Η οδός Πανδρόσου δεν είναι ένας τυχαίος δρόμος· από τον 19ο αιώνα υπήρξε το κέντρο του εμπορίου της πόλης, φιλοξενώντας τα περίφημα «αμπατζίδικα» (εργαστήρια υφασμάτων) και αργότερα τους καλύτερους τεχνίτες δερμάτινων ειδών και λαϊκής τέχνης." data-lang-en="Pandrosou Street is no ordinary street; since the 19th century it has been the city’s commercial centre, home to the famous abatzidika (fabric workshops) and later to the finest leather and folk-art craftsmen.">Η οδός Πανδρόσου δεν είναι ένας τυχαίος δρόμος· από τον 19ο αιώνα υπήρξε το κέντρο του εμπορίου της πόλης, φιλοξενώντας τα περίφημα «αμπατζίδικα» (εργαστήρια υφασμάτων) και αργότερα τους καλύτερους τεχνίτες δερμάτινων ειδών και λαϊκής τέχνης.</p>
+        <p data-lang-el="Μέσα σε αυτό το ιστορικό πλαίσιο, το 1981, ανοίξαμε τις πόρτες μας: για να προσφέρουμε μια αυθεντική εμπειρία ελληνικής κουζίνας, μακριά από τον θόρυβο της πόλης αλλά ακριβώς στο κέντρο της." data-lang-en="In this historic setting we opened our doors in 1981, to offer an authentic Greek dining experience, away from the city’s noise yet right at its centre.">Μέσα σε αυτό το ιστορικό πλαίσιο, το 1981, ανοίξαμε τις πόρτες μας: για να προσφέρουμε μια αυθεντική εμπειρία ελληνικής κουζίνας, μακριά από τον θόρυβο της πόλης αλλά ακριβώς στο κέντρο της.</p>
       </div>
+    </section>
+    <section class="story story-rev">
+      <div class="story-media"><img src="102.webp" alt="Ο κήπος με τα λουλούδια" loading="lazy"></div>
+      <div class="story-text">
+        <h2 data-lang-el="Η φιλοσοφία μας" data-lang-en="Our philosophy">Η φιλοσοφία μας</h2>
+        <p data-lang-el="Το όνομά μας δεν είναι τυχαίο. Θέλαμε έναν χώρο που να θυμίζει τις παλιές αθηναϊκές αυλές, όπου η μυρωδιά του φρεσκομαγειρεμένου φαγητού και η δροσιά του κήπου χαρίζουν στιγμές χαλάρωσης κάτω από το αττικό φως." data-lang-en="Our name is no accident. We wanted a place that recalls the old Athenian courtyards, where the smell of freshly cooked food and the cool of the garden make for relaxed moments under the Attic light.">Το όνομά μας δεν είναι τυχαίο. Θέλαμε έναν χώρο που να θυμίζει τις παλιές αθηναϊκές αυλές, όπου η μυρωδιά του φρεσκομαγειρεμένου φαγητού και η δροσιά του κήπου χαρίζουν στιγμές χαλάρωσης κάτω από το αττικό φως.</p>
+        <p data-lang-el="Με σεβασμό στην παράδοση και μεράκι για την ποιότητα, διαλέγουμε αγνά τοπικά υλικά για τις κλασικές ελληνικές συνταγές: από τον παραδοσιακό μουσακά μέχρι τις φρέσκες σαλάτες και τα ψητά μας." data-lang-en="With respect for tradition and care for quality, we choose pure local ingredients for classic Greek recipes: from traditional moussaka to fresh salads and our grills.">Με σεβασμό στην παράδοση και μεράκι για την ποιότητα, διαλέγουμε αγνά τοπικά υλικά για τις κλασικές ελληνικές συνταγές: από τον παραδοσιακό μουσακά μέχρι τις φρέσκες σαλάτες και τα ψητά μας.</p>
+      </div>
+    </section>
+    <section class="story">
+      <div class="story-media"><img src="6.jpg" alt="Επισκέπτες στον κήπο" loading="lazy"></div>
+      <div class="story-text">
+        <h2 data-lang-el="Σήμερα" data-lang-en="Today">Σήμερα</h2>
+        <p data-lang-el="Ο Κήπος της Πανδρόσου συνεχίζει να υποδέχεται επισκέπτες από όλο τον κόσμο, προσφέροντας όχι μόνο φαγητό αλλά και ένα κομμάτι της αθηναϊκής παράδοσης." data-lang-en="Pandrosou Garden continues to welcome guests from all over the world, offering not only food but a piece of Athenian tradition.">Ο Κήπος της Πανδρόσου συνεχίζει να υποδέχεται επισκέπτες από όλο τον κόσμο, προσφέροντας όχι μόνο φαγητό αλλά και ένα κομμάτι της αθηναϊκής παράδοσης.</p>
+        <p data-lang-el="Σας περιμένουμε στον κήπο μας, το καλοκαίρι κάτω από την κληματαριά και τον χειμώνα στον ζεστό, κλειστό μας χώρο." data-lang-en="We look forward to welcoming you to our garden: under the vines in summer, and in our warm, covered space in winter.">Σας περιμένουμε στον κήπο μας, το καλοκαίρι κάτω από την κληματαριά και τον χειμώνα στον ζεστό, κλειστό μας χώρο.</p>
+      </div>
+    </section>
+    <section class="quote">
+      <div class="wrap">
+        <blockquote data-lang-el="«Η γεύση είναι μνήμη. Θέλουμε κάθε σας γεύμα στον Κήπο να γίνει μια όμορφη ανάμνηση από την Αθήνα.»" data-lang-en="“Taste is memory. We want every meal in our garden to become a beautiful memory of Athens.”">«Η γεύση είναι μνήμη. Θέλουμε κάθε σας γεύμα στον Κήπο να γίνει μια όμορφη ανάμνηση από την Αθήνα.»</blockquote>
+        <div class="hero-actions">
+          <a href="https://restableres.netlify.app/?shop=pandrosougarden" class="btn btn-primary" data-lang-el="Κράτηση τραπεζιού" data-lang-en="Book a table">Κράτηση τραπεζιού</a>
+          <a href="menu.html" class="btn btn-ghost" data-lang-el="Δείτε το μενού" data-lang-en="See the menu">Δείτε το μενού</a>
+        </div>
+      </div>
+    </section>
     </main>
 
-    <footer>
-      <p>© 2025 <span data-lang-el="Ο Κήπος της Πανδρόσου" data-lang-en="Pandrosou Garden">Ο Κήπος της Πανδρόσου</span> · est. 1981</p>
-    </footer>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="logo.webp" alt="" width="64" height="64" loading="lazy">
+          <div>
+            <strong data-lang-el="Ο Κήπος της Πανδρόσου" data-lang-en="Pandrosou Garden">Ο Κήπος της Πανδρόσου</strong>
+            <span data-lang-el="Εστιατόριο στην Πλάκα από το 1981" data-lang-en="Restaurant in Plaka since 1981">Εστιατόριο στην Πλάκα από το 1981</span>
+          </div>
+        </div>
+        <nav class="footer-nav" aria-label="Footer">
+          <a href="menu.html" data-lang-el="Μενού" data-lang-en="Menu">Μενού</a>
+          <a href="history.html" data-lang-el="Ιστορία" data-lang-en="Our story">Ιστορία</a>
+          <a href="https://restableres.netlify.app/?shop=pandrosougarden" data-lang-el="Κράτηση" data-lang-en="Reservations">Κράτηση</a>
+          <a href="tel:+302103247148">+30 210 3247 148</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="year">2026</span> Pandrosou Garden</span>
+        <a href="https://arakronservices.gr" target="_blank" rel="noopener" data-lang-el="Σχεδιασμός: AR Akron Services" data-lang-en="Website by AR Akron Services">Σχεδιασμός: AR Akron Services</a>
+      </div>
+    </div>
+  </footer>
+
+  <a href="tel:+302103247148" class="call-now-button" aria-label="Κλήση στο εστιατόριο">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21C10.61,21 3,13.39 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"/></svg>
+  </a>
+
+  <!-- Απαιτείται από το lang.js (κοινό με τη σελίδα μενού) -->
+  <div id="menuModal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-content"><button class="close-btn" tabindex="-1">&times;</button><h3 id="modalTitle"></h3><div id="modalContent"></div></div>
   </div>
-<a href="tel:+302103247148" class="call-now-button">
-    <svg viewBox="0 0 24 24">
-        <path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21C10.61,21 3,13.39 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z" />
-    </svg>
-</a>
-  <script>
-    /* 1. Language Logic */
-    const flagButtons = document.querySelectorAll('.lang-flag-btn');
-    const body = document.body;
 
-    function setLanguage(lang) {
-      body.className = 'lang-' + lang;
-      localStorage.setItem('preferredLang', lang);
-      document.querySelectorAll('[data-lang-el], [data-lang-en]').forEach(el => {
-        const text = el.getAttribute(`data-lang-${lang}`);
-        if (text) el.textContent = text;
-      });
-    }
-
-    flagButtons.forEach(btn => {
-      btn.addEventListener('click', () => setLanguage(btn.getAttribute('data-lang-val')));
-    });
-
-    const savedLang = localStorage.getItem('preferredLang') || 'el';
-    setLanguage(savedLang);
-
-    /* 2. Enhanced Scroll Observer */
-    const observerOptions = {
-      threshold: 0.2
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('active');
-        }
-      });
-    }, observerOptions);
-
-    document.querySelectorAll('.animate-on-scroll').forEach(el => {
-      observer.observe(el);
-    });
-  </script>
-
-  <script src="lang.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    const mobileBtn = document.getElementById('mobileMenuBtn');
-    const closeBtn = document.getElementById('closeMobileModal');
-    const modal = document.getElementById('mobileModal');
-    const modalLinks = document.querySelectorAll('.mobile-links a');
+document.addEventListener('DOMContentLoaded', function () {
+  // Έτος στο footer
+  var y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
 
-    // Άνοιγμα Modal
-    mobileBtn.addEventListener('click', () => {
-        modal.style.display = 'flex';
-        document.body.style.overflow = 'hidden'; // Κλείδωμα scrolling
-    });
+  // Μενού κινητού
+  var mobBtn = document.getElementById('mobileMenuBtn');
+  var mobModal = document.getElementById('mobileModal');
+  var mobClose = document.getElementById('closeMobileModal');
+  function closeMenu() { mobModal.style.display = 'none'; document.body.style.overflow = ''; mobBtn.focus(); }
+  if (mobBtn && mobModal) {
+    mobBtn.addEventListener('click', function () { mobModal.style.display = 'flex'; document.body.style.overflow = 'hidden'; mobClose.focus(); });
+    mobClose.addEventListener('click', closeMenu);
+    mobModal.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { mobModal.style.display = 'none'; document.body.style.overflow = ''; }); });
+  }
 
-    // Κλείσιμο Modal
-    function closeModal() {
-        modal.style.display = 'none';
-        document.body.style.overflow = ''; // Ξεκλείδωμα scrolling
-    }
-
-    closeBtn.addEventListener('click', closeModal);
-
-    // Κλείσιμο όταν πατηθεί σύνδεσμος (π.χ. Μενού)
-    modalLinks.forEach(link => {
-        link.addEventListener('click', closeModal);
-    });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    if (mobModal && mobModal.style.display === 'flex') closeMenu();
+  });
 });
 </script>
+<script src="lang.js"></script>
 </body>
 </html>
